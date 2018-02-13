@@ -13,6 +13,8 @@ gem 'therubyracer', platforms: :ruby
 gem 'jbuilder', '~> 2.5'
 gem 'redis', '~> 3.0'
 gem 'sidekiq'
+gem 'sidekiq-scheduler'
+gem 'dotenv-rails'
 
 # Use Capistrano for deployment
 gem 'capistrano-rails', group: :development
