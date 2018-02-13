@@ -15,8 +15,7 @@ gem 'redis', '~> 3.0'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 gem 'dotenv-rails'
-
-# Use Capistrano for deployment
+gem 'listen'
 gem 'capistrano-rails', group: :development
 
 group :development, :test do
