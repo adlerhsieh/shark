@@ -17,7 +17,7 @@ class Service
 
   OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'
   APPLICATION_NAME = 'Gmail API Ruby Quickstart'
-  CLIENT_SECRETS_PATH = '/Users/hsiehadler/projects/shark/google_api_client_secret.json'
+  CLIENT_SECRETS_PATH = './google_api_client_secret.json'
   CREDENTIALS_PATH = File.join(Dir.home, '.credentials', "gmail-ruby-quickstart.yaml")
   SCOPE = Google::Apis::GmailV1::AUTH_GMAIL_READONLY
   
