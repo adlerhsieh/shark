@@ -24,6 +24,7 @@ group :development, :test do
   gem 'capybara', '~> 2.13'
   gem 'rspec-rails'
   gem 'factory_bot_rails'
+  gem 'seed_dump'
 end
 
 group :development do
