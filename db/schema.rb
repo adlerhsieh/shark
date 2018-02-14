@@ -10,6 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20180214111413) do
+
+  create_table "shark_signals", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "gmail_id"
+    t.string "raw"
+    t.string "signal"
+    t.integer "pair_id"
+    t.decimal "enter", precision: 10, scale: 5
+    t.decimal "tp", precision: 10, scale: 5
+    t.decimal "sl", precision: 10, scale: 5
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pair_id"], name: "index_shark_signals_on_pair_id"
+  end
 
 end

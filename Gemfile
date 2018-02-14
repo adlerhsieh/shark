@@ -17,6 +17,8 @@ gem 'sidekiq-scheduler'
 gem 'dotenv-rails'
 gem 'listen'
 gem 'capistrano-rails', group: :development
+gem 'google-api-client'
+gem 'pry'
 
 group :development, :test do
   gem 'capybara', '~> 2.13'
