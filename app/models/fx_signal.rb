@@ -19,10 +19,24 @@ class FxSignal < ApplicationRecord
     opened_at.blank? && closed_at.blank?
   end
 
-  def self.process!
-    recent.each do |sig|
+  def self.update!
+    service = IG::Service.new
 
+    recent.each do |sig|
+      sig.update_with(service.price(
+        sig.pair.ig_epic,
+        param(sig.created_at),
+        param(sig.created_at + 1.day)
+      ))
     end
+  end
+
+  def self.param(date)
+    date.strftime("%Y-%m-%d")
+  end
+
+  def update_with(price_list)
+    PriceUpdate.new(price_list, self).update!
   end
 
 end
