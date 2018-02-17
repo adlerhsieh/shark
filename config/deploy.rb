@@ -45,6 +45,14 @@ set :keep_releases, 3
 # set :ssh_options, verify_host_key: :secure
 
 namespace :deploy do
+  namespace :db do
+    task :migrate do
+      on roles(:web) do
+        execute "cd #{fetch(:deploy_to)}/current && RAILS_ENV=bundle exec rake db:migrate"
+      end
+    end
+  end
+
   task :config do
     on roles(:web) do
       execute "cp #{fetch(:deploy_to)}/shared/.env #{fetch(:deploy_to)}/current"
@@ -53,3 +61,4 @@ namespace :deploy do
 end
 
 after :deploy, "deploy:config"
+after :deploy, "deploy:db:migrate"
