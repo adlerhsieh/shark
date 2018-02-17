@@ -13,7 +13,7 @@ gem 'therubyracer', platforms: :ruby
 gem 'jbuilder', '~> 2.5'
 gem 'redis', '~> 3.0'
 gem 'sidekiq'
-gem 'sidekiq-scheduler'
+gem "sidekiq-cron", "~> 0.6.3"
 gem 'dotenv-rails'
 gem 'listen'
 gem 'google-api-client'

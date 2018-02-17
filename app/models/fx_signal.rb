@@ -36,7 +36,7 @@ class FxSignal < ApplicationRecord
   end
 
   def update_with(price_list)
-    PriceUpdate.new(price_list, self).update!
+    IG::PriceUpdate.new(price_list, self).update!
   end
 
 end
