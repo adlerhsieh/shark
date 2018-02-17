@@ -21,6 +21,7 @@ gem 'pry'
 gem 'bulk_insert'
 gem 'nokogiri', '~> 1.8.1'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'turbolinks'
 
 gem 'capistrano-rails', group: :development
 gem 'capistrano-rbenv'

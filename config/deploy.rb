@@ -46,7 +46,9 @@ set :keep_releases, 3
 
 namespace :deploy do
   task :config do
-    execute "cp #{fetch(:deploy_to)}/shared/.env #{fetch(:deploy_to)}/current"
+    on roles(:web) do
+      execute "cp #{fetch(:deploy_to)}/shared/.env #{fetch(:deploy_to)}/current"
+    end
   end
 end
 
