@@ -20,22 +20,22 @@ gem 'google-api-client'
 gem 'pry'
 gem 'bulk_insert'
 gem 'nokogiri', '~> 1.8.1'
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'capistrano-rails', group: :development
 gem 'capistrano-rbenv'
 gem 'capistrano-bundler'
 
+gem 'capybara', '~> 2.13'
+gem 'poltergeist'
+gem 'selenium-webdriver'
+
 group :development, :test do
-  gem 'capybara', '~> 2.13'
-  gem 'poltergeist'
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'seed_dump'
-  gem 'selenium-webdriver'
 end
 
 group :development do
 end
 
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
