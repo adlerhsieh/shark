@@ -53,7 +53,7 @@ namespace :deploy do
 
   task :restart do
     on roles(:web) do
-      execute "/home/#{ENV["DEPLOY_USERNAME"]}/.rbenv/shims/bundle exec pumactl -S /home/#{ENV["DEPLOY_USERNAME"]}/rails/shark/shared/pids/puma.state stop"
+      execute "cd /home/#{ENV["DEPLOY_USERNAME"]}/rails/shark/current && /home/#{ENV["DEPLOY_USERNAME"]}/.rbenv/shims/bundle exec pumactl -S /home/#{ENV["DEPLOY_USERNAME"]}/rails/shark/shared/pids/puma.state stop"
       sleep(2)
       execute "cd /home/#{ENV["DEPLOY_USERNAME"]}/rails/shark/current && RAILS_ENV=production /home/#{ENV["DEPLOY_USERNAME"]}/.rbenv/shims/bundle exec puma -C /home/#{ENV["DEPLOY_USERNAME"]}/rails/shark/current/config/puma.rb --daemon"
     end
