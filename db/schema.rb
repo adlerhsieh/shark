@@ -10,7 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180214122922) do
+ActiveRecord::Schema.define(version: 20180217031754) do
+
+  create_table "fx_signals", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "source_id"
+    t.string "source_type"
+    t.integer "pair_id"
+    t.string "direction"
+    t.decimal "entry", precision: 10, scale: 5
+    t.decimal "take_profit", precision: 10, scale: 5
+    t.decimal "stop_loss", precision: 10, scale: 5
+    t.datetime "opened_at"
+    t.decimal "closed", precision: 10, scale: 5
+    t.datetime "closed_at"
+    t.text "raw"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pair_id"], name: "index_fx_signals_on_pair_id"
+    t.index ["source_id"], name: "index_fx_signals_on_source_id"
+    t.index ["source_type"], name: "index_fx_signals_on_source_type"
+  end
 
   create_table "pairs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "base"
@@ -19,19 +38,6 @@ ActiveRecord::Schema.define(version: 20180214122922) do
     t.string "ig_epic"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "shark_signals", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "gmail_id"
-    t.string "raw"
-    t.string "signal"
-    t.integer "pair_id"
-    t.decimal "enter", precision: 10, scale: 5
-    t.decimal "tp", precision: 10, scale: 5
-    t.decimal "sl", precision: 10, scale: 5
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["pair_id"], name: "index_shark_signals_on_pair_id"
   end
 
 end

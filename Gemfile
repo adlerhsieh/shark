@@ -16,10 +16,14 @@ gem 'sidekiq'
 gem 'sidekiq-scheduler'
 gem 'dotenv-rails'
 gem 'listen'
-gem 'capistrano-rails', group: :development
 gem 'google-api-client'
 gem 'pry'
 gem 'bulk_insert'
+gem 'nokogiri', '~> 1.8.1'
+
+gem 'capistrano-rails', group: :development
+gem 'capistrano-rbenv'
+gem 'capistrano-bundler'
 
 group :development, :test do
   gem 'capybara', '~> 2.13'
