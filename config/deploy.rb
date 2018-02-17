@@ -51,14 +51,25 @@ namespace :deploy do
     end
   end
 
-  task :restart do
-    on roles(:web) do
-      execute "/etc/init.d/puma stop"
-      sleep 1
-      execute "/etc/init.d/puma start"
+  namespace :restart do
+    task :puma do
+      on roles(:web) do
+        execute "/etc/init.d/puma stop"
+        sleep 1
+        execute "/etc/init.d/puma start"
+      end
+    end
+
+    task :sidekiq do
+      on roles(:web) do
+        execute "/etc/init.d/sidekiq stop"
+        sleep 1
+        execute "/etc/init.d/sidekiq start"
+      end
     end
   end
 end
 
 after :deploy, "deploy:config"
-after :deploy, "deploy:restart"
+after :deploy, "deploy:restart:puma"
+after :deploy, "deploy:restart:sidekiq"
