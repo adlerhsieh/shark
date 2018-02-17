@@ -19,7 +19,7 @@ module Gmail
     OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'
     APPLICATION_NAME = 'Gmail API Ruby Quickstart'
     CLIENT_SECRETS_PATH = "#{Rails.root}/lib/google_api_client_secret.json"
-    CREDENTIALS_PATH = File.join(Dir.home, '.credentials', "gmail-ruby-quickstart.yaml")
+    CREDENTIALS_PATH = File.join(Rails.root, '.credentials', "gmail-ruby-quickstart.yaml")
     SCOPE = Google::Apis::GmailV1::AUTH_GMAIL_READONLY
     
     ##

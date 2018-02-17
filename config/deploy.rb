@@ -53,7 +53,8 @@ namespace :deploy do
 
   task :restart do
     on roles(:web) do
-      # execute "sudo systemctl stop puma"
+      execute "kill -9 #{fetch(:deploy_to)/shared/pids/puma.pid}"
+      execute "/etc/init.d/puma start"
     end
   end
 end
