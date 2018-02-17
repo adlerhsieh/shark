@@ -1,0 +1,7 @@
+concurrency: 2
+development:
+  pidfile: tmp/pids/sidekiq_development.pid
+  logfile: log/sidekiq_development.log
+production:
+  pidfile: /tmp/sidekiq.pid
+  logfile: log/sidekiq_production.log
