@@ -19,12 +19,15 @@ gem 'listen'
 gem 'capistrano-rails', group: :development
 gem 'google-api-client'
 gem 'pry'
+gem 'bulk_insert'
 
 group :development, :test do
   gem 'capybara', '~> 2.13'
+  gem 'poltergeist'
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'seed_dump'
+  gem 'selenium-webdriver'
 end
 
 group :development do

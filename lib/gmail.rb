@@ -59,11 +59,11 @@ module Gmail
     end
 
     def shark
-      messages(max_results: 10, q: "Shark-Tips")
+      messages(max_results: 20, q: "Shark-Tips")
     end
 
     def fs
-      messages(max_results: 10, q: "ForexSignals")
+      messages(max_results: 20, q: "ForexSignals")
     end
 
     def message(id)

@@ -17,4 +17,10 @@ namespace :ig do
       end
     end
   end
+
+  task signals: :environment do
+    service = IG::Service.new
+
+    puts service.signals["signals"]["signals"]
+  end
 end
