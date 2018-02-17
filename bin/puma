@@ -1,0 +1,2 @@
+cd /home/nkj20932/rails/shark/current &&
+RAILS_ENV=production /home/nkj20932/.rbenv/shims/bundle exec puma -C config/puma.rb
