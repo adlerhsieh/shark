@@ -48,7 +48,7 @@ namespace :deploy do
   namespace :db do
     task :migrate do
       on roles(:db) do
-        execute "cd #{fetch(:deploy_to)}/current && RAILS_ENV=production bundle exec rake db:migrate"
+        execute "cd #{fetch(:deploy_to)}/current && RAILS_ENV=production /home/#{ENV["DEPLOY_USERNAME"]}/.rbenv/shims/bundle exec rake db:migrate"
       end
     end
   end
