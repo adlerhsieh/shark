@@ -15,7 +15,7 @@ port        ENV.fetch("PORT") { 3000 }
 #
 environment ENV.fetch("RAILS_ENV") { "development" }
 
-if Rails.env.production? || Rails.env == "staging"
+unless defined?(Rails) && Rails.env.development?
   app_dir = File.expand_path("../../../..", __FILE__)
   shared_dir = "#{app_dir}/shared"
 
