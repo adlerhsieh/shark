@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180217031754) do
+ActiveRecord::Schema.define(version: 20180218045311) do
 
   create_table "fx_signals", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "source_id"
@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(version: 20180217031754) do
     t.text "raw"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "closed_price", precision: 10, scale: 5
+    t.index ["created_at"], name: "index_fx_signals_on_created_at"
     t.index ["pair_id"], name: "index_fx_signals_on_pair_id"
     t.index ["source_id"], name: "index_fx_signals_on_source_id"
     t.index ["source_type"], name: "index_fx_signals_on_source_type"
