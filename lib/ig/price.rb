@@ -1,12 +1,20 @@
 module IG
   class Price
+     attr_reader :time, :open, :close, :high, :low
 
     def initialize(price = {})
-      @time = Segment.new  price["snapshotTime"]
-      @open = Segment.new  price["openPrice"]
+      @time = parse_time(price["snapshotTimeUTC"])
+      # @time = parse_time(price["snapshotTime"])
+      @open = Segment.new price["openPrice"]
       @close = Segment.new price["closePrice"]
-      @high = Segment.new  price["highPrice"]
-      @low = Segment.new   price["lowPrice"]
+      @high = Segment.new price["highPrice"]
+      @low = Segment.new price["lowPrice"]
+    end
+
+    def parse_time(t)
+      Time.parse(t.gsub("T", " ") + " UTC")
+      # Time.parse(t.gsub("T", " ") + " Sydney")
+      # t.gsub("T", " ") << " Sydney"
     end
 
     class Segment

@@ -1,8 +1,11 @@
 FactoryBot.define do
   factory :pair do
-    base "MyString"
-    quote "MyString"
     mini false
-    ig_epic "MyString"
+
+    trait :audusd do
+      base "AUD"
+      quote "USD"
+      ig_epic "AUD.USD"
+    end
   end
 end
