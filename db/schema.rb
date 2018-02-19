@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180218045311) do
+ActiveRecord::Schema.define(version: 20180219094230) do
+
+  create_table "audit_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "source_type"
+    t.integer "source_id"
+    t.string "event"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["source_id"], name: "index_audit_logs_on_source_id"
+    t.index ["source_type"], name: "index_audit_logs_on_source_type"
+  end
 
   create_table "fx_signals", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "source_id"
