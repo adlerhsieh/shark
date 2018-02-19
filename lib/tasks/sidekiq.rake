@@ -1,11 +1,11 @@
 namespace :sidekiq do
   namespace :cron do
-    task :create do
-      unless Sidekiq::Cron::Job.find("Signal Update")
+    task :update do
+      unless Sidekiq::Cron::Job.find("Update All Signals")
         Sidekiq::Cron::Job.create(
-          name: "Signal Update", 
-          cron: "0 */2 * * *", 
-          class: "SignalUpdateJob"
+          name: "Update All Signals", 
+          cron: "0 * * * *", 
+          class: "FindAllAvailableSignalsJob"
         )
       end
     end
