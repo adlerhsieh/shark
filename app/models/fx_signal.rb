@@ -20,4 +20,8 @@ class FxSignal < ApplicationRecord
     opened_at.blank? && closed_at.blank?
   end
 
+  def source
+    
+  end
+
 end

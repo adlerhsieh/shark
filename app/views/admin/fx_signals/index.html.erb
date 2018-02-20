@@ -1,0 +1,32 @@
+<table class="table table-bordered table-stripped table-hover">
+  <thead>
+    <th>#</th>
+    <th>Source</th>
+    <th>Pair</th>
+    <th>Direction</th>
+    <th>Entry</th>
+    <th>TP</th>
+    <th>SL</th>
+    <th>Created at</th>
+    <th>Opened at</th>
+    <th>Closed at</th>
+    <th>Result</th>
+  </thead>
+  <tbody>
+    <% @signals.each do |signal| %>
+      <tr>
+        <td><%= link_to signal.id, admin_fx_signal_path(signal) %></td>
+        <td><%= signal.source %></td>
+        <td><%= signal.pair.pair %></td>
+        <td><%= signal.direction %></td>
+        <td><%= signal.entry %></td>
+        <td><%= signal.take_profit %></td>
+        <td><%= signal.stop_loss %></td>
+        <td><%= signal.created_at.try(:strftime, "%m/%d %H:%M") %></td>
+        <td><%= signal.opened_at.try(:strftime, "%m/%d %H:%M") %></td>
+        <td><%= signal.closed_at.try(:strftime, "%m/%d %H:%M") %></td>
+        <td><%= signal.closed %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
