@@ -8,6 +8,8 @@ class FxSignal < ApplicationRecord
   scope :in_progress, -> { where(closed_at: nil) }
   scope :pending, -> { where(opened_at: nil) }
 
+  before_create :init_evaluated_at
+
   def opened?
     opened_at.present? && closed_at.blank?
   end
@@ -22,6 +24,10 @@ class FxSignal < ApplicationRecord
 
   def source
     
+  end
+
+  def init_evaluated_at
+    self.evaluated_at ||= Time.current
   end
 
 end
