@@ -1,42 +1,56 @@
 module IG
-  class PriceUpdate
+  class SignalUpdate
     attr_reader :prices, :signal, :opened_at, :closed_at, :closed_price
 
     def initialize(price_list, signal)
-      @prices = parse_list(price_list)
+      @prices = price_list
       @signal = signal
     end
 
     def update!
+      puts "looping"
+
       case signal.direction
       when "buy"
         long_trade!
       when "sell"
         short_trade!
       end
+
+      signal.last.update(evaluated_at: @prices.last.time)
     end
 
     private
 
-      def parse_list(list)
-        list["prices"].map do |price|
-          Price.new(price)
-        end
-      end
+      # def parse_list(list)
+      #   list["prices"].map do |price|
+      #     Price.new(price)
+      #   end
+      # end
 
       def long_trade!
+        puts "LONG"
         prices.each do |price|
+          puts "#{price.time}:"
           break if signal.opened_at && signal.closed_at
 
+          puts "  - LOW:  #{price.low.ask}"
+          puts "  - HIGH: #{price.high.ask}"
           if signal.opened_at.nil? && signal.entry >= price.low.ask && signal.entry <= price.high.ask
             signal.update(opened_at: price.time)
+            puts "OPENED!!!"
           end
 
           next if signal.reload.opened_at.blank?
 
+          puts "#{price.time}:"
+          puts "  - LOW:  #{price.low.bid}"
+          puts "  - HIGH: #{price.high.bid}"
           if price.high.bid >= signal.take_profit
+            puts "TAKE PROFIT"
             signal.update(closed_at: price.time, closed: signal.take_profit)
           elsif price.low.bid <= signal.stop_loss
+            puts "STOP LOSS"
             signal.update(closed_at: price.time, closed: signal.stop_loss)
           end
         end
