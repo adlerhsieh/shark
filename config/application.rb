@@ -20,6 +20,9 @@ module Shark
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    config.time_zone = "Sydney"
+    config.active_record.default_timezone = :local
+
     Dir["#{Rails.root}/lib/**/*"].each do |file|
       require file if File.file?(file) && file =~ /\.rb$/
     end
