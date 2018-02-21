@@ -31,7 +31,7 @@ module IG
       def long_trade!
         puts "LONG"
         prices.each do |price|
-          puts "#{price.time}:"
+          puts "#{price.time.in_time_zone(Time.zone.name)}:"
           break if @signal.opened_at && @signal.closed_at
 
           puts "  - LOW:  #{price.low.ask}"
