@@ -85,10 +85,10 @@ module IG
          )
     end
     
-    def price(epic, start_date, end_date)
-      resolution = "MINUTE_5"
+    def price(epic, start_date, end_date, page_number = 1)
+      resolution = "MINUTE"
 
-      get("#{api_host}/gateway/deal/prices/#{epic}?resolution=#{resolution}&from=#{start_date}&to=#{end_date}", headers: { "Version" => "3" })
+      get("#{api_host}/gateway/deal/prices/#{epic}?resolution=#{resolution}&from=#{start_date}&to=#{end_date}&pageSize=20&pageNumber=#{page_number}", headers: { "Version" => "3" })
     end
 
   end
