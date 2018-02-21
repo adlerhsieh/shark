@@ -17,7 +17,7 @@ gem "sidekiq-cron", "~> 0.6.3"
 gem 'dotenv-rails'
 gem 'listen'
 gem 'google-api-client'
-gem 'pry'
+gem 'pry-rails'
 gem 'bulk_insert'
 gem 'nokogiri', '~> 1.8.1'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
