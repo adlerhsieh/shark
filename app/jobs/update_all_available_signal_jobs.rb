@@ -2,10 +2,11 @@ class UpdateAllAvailableSignalsJob < ApplicationJob
   queue_as :default
  
   def perform
+    return if signals.blank?
     service = IG::Service.new
     log.write("Logged in: #{Time.current}")
 
-    FxSignal.includes(:pair).recent.in_progress.each do |signal|
+    signals.each do |signal|
       log.write("Processing: #{signal.id}: #{signal.pair.pair}")
       price_list = IG::PriceCollect.new(signal, service).collect
 
@@ -14,9 +15,15 @@ class UpdateAllAvailableSignalsJob < ApplicationJob
     end
   end
 
-  def log
-    @log ||= AuditLog.create(event: self.class)
-  end
+  private
+
+    def log
+      @log ||= AuditLog.create(event: self.class)
+    end
+
+    def signals
+      @signals ||= FxSignal.includes(:pair).recent.in_progress
+    end
 
 end
 
