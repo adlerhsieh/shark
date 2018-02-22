@@ -1,4 +1,6 @@
-<table class="table table-bordered table-stripped table-hover">
+<%= link_to "New", new_admin_fx_signal_path, class: "btn btn-primary", style: "margin-bottom: 10px; margin-top: 5px;" %>
+
+<table class="table">
   <thead>
     <th>#</th>
     <th>Source</th>
@@ -14,8 +16,8 @@
   </thead>
   <tbody>
     <% @signals.each do |signal| %>
-      <tr>
-        <td><%= link_to signal.id, admin_fx_signal_path(signal) %></td>
+      <tr class="<%= result_class(signal) %>">
+        <td><%= link_to signal.id, edit_admin_fx_signal_path(signal) %></td>
         <td><%= signal.source %></td>
         <td><%= signal.pair.pair %></td>
         <td><%= signal.direction %></td>

@@ -30,4 +30,12 @@ class FxSignal < ApplicationRecord
     self.evaluated_at ||= Time.current
   end
 
+  def long?
+    direction == "buy"
+  end
+
+  def short?
+    direction == "sell"
+  end
+
 end
