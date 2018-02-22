@@ -22,12 +22,6 @@ module IG
 
     private
 
-      # def parse_list(list)
-      #   list["prices"].map do |price|
-      #     Price.new(price)
-      #   end
-      # end
-
       def long_trade!
         puts "LONG"
         prices.each do |price|

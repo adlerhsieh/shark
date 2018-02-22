@@ -2,7 +2,7 @@ class FxSignal < ApplicationRecord
 
   belongs_to :pair
 
-  scope :recent, -> { where("created_at > ?", Date.today - 7.days) }
+  scope :recent, -> { where("created_at > ?", (Date.today - 1.day).to_s + " 00:00:00") }
   scope :closed, -> { where.not(closed_at: nil) }
   scope :opened, -> { where.not(opened_at: nil).where(closed_at: nil) }
   scope :in_progress, -> { where(closed_at: nil) }
