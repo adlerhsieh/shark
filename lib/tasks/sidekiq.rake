@@ -5,7 +5,7 @@ namespace :sidekiq do
         Sidekiq::Cron::Job.create(
           name: "Update All Signals", 
           cron: "0 * * * *", 
-          class: "FindAllAvailableSignalsJob"
+          class: "UpdateAllAvailableSignalsJob"
         )
       end
     end
