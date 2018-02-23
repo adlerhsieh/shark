@@ -4,7 +4,7 @@ namespace :sidekiq do
       unless Sidekiq::Cron::Job.find("Update All Signals")
         Sidekiq::Cron::Job.create(
           name: "Update All Signals", 
-          cron: "0 * * * *", 
+          cron: "*/10 * * * *", 
           class: "UpdateAllAvailableSignalsJob"
         )
       end

@@ -5,3 +5,7 @@ development:
 production:
   pidfile: /tmp/sidekiq.pid
   logfile: log/sidekiq_production.log
+:queues:
+  - default
+  - shark.production.default
+  - shark.development.default
