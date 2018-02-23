@@ -3,7 +3,10 @@ class UpdateAllAvailableSignalsJob < ApplicationJob
  
   def perform
     log.write("Task started")
-    return if signals.blank?
+    if signals.blank?
+      log.write("No available signals")
+      return
+    end
 
     service = IG::Service.new
     log.write("Logged in: #{Time.current}")
