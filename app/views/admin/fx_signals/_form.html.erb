@@ -1,31 +1,32 @@
 <%= form_for [:admin, @fx_signal] do |form| %>
   Pair id
-  <%= form.number_field :pair_id, placeholder: "pair id", class: "form-control" %>
+  <%= form.select :pair_id, @pairs.map { |pair| [pair.pair, pair.id] }, class: "form-control" %>
+  <p></p>
   Direction
-  <%= form.text_field :direction, placeholder: "direction", class: "form-control" %>
+  <%= form.text_field :direction, class: "form-control" %>
   Entry
-  <%= form.number_field :entry, placeholder: "entry", class: "form-control", step: :any %>
+  <%= form.number_field :entry, class: "form-control", step: :any %>
   TP
-  <%= form.number_field :take_profit, placeholder: "take profit", class: "form-control", step: :any %>
+  <%= form.number_field :take_profit, class: "form-control", step: :any %>
   SL
-  <%= form.number_field :stop_loss, placeholder: "stop loss", class: "form-control", step: :any %>
+  <%= form.number_field :stop_loss, class: "form-control", step: :any %>
   Opened at
-  <%= form.text_field :opened_at, placeholder: "Opened at", class: "form-control" %>
+  <%= form.text_field :opened_at, class: "form-control" %>
   Closed at
-  <%= form.text_field :closed_at, placeholder: "Closed at", class: "form-control" %>
+  <%= form.text_field :closed_at, class: "form-control" %>
   Closed price
-  <%= form.number_field :closed, placeholder: "Closed price", class: "form-control", step: :any %>
+  <%= form.number_field :closed, class: "form-control", step: :any %>
   Evaluated at
-  <%= form.text_field :evaluated_at, placeholder: "Evaluated at", class: "form-control" %>
-  <%= form.submit "Save", class: "btn btn-primary" %>
-<% end %>
+  <%= form.text_field :evaluated_at, class: "form-control" %>
+  <p></p>
 
-<% if params[:action] == "edit" %>
-  <%= link_to "Delete", admin_fx_signal_path(@fx_signal), method: :delete, class: "btn btn-danger" %>
-<% end %>
+  <%= form.submit "Save", class: "btn btn-primary" %>
+
+  <% if params[:action] == "edit" %>
+    <%= link_to "Delete", admin_fx_signal_path(@fx_signal), method: :delete, class: "btn btn-danger", data: { confirm: "Sure?" } %>
+  <% end %>
 
   <%= link_to "Back", admin_fx_signals_path, class: "btn btn-default" %>
-
-<% Pair.all.each do |pair| %>
-  <p>#<%= pair.id %> <%= pair.base %>/<%= pair.quote %></p>
 <% end %>
+
+

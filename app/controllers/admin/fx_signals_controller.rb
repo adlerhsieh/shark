@@ -1,5 +1,6 @@
 class Admin::FxSignalsController < Admin::BaseController
   before_action :load_fx_signal, only: %i[show edit update destroy]
+  before_action :load_pairs
 
   def index
     @signals = FxSignal.includes(:pair).all.order(created_at: :desc)
@@ -40,6 +41,10 @@ class Admin::FxSignalsController < Admin::BaseController
 
     def fx_signal_params
       params.require(:fx_signal).permit(:pair_id, :direction, :entry, :take_profit, :stop_loss, :opened_at, :closed_at, :evaluated_at, :closed)
+    end
+
+    def load_pairs
+      @pairs = Pair.all.order(:base, :quote)
     end
 
 end

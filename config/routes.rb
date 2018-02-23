@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   mount Sidekiq::Web => '/sidekiq'
 
-  root "root#show"
+  root "admin/fx_signals#index"
 
   namespace :admin do
     resources :fx_signals do
