@@ -2,7 +2,9 @@ class UpdateAllAvailableSignalsJob < ApplicationJob
   queue_as :default
  
   def perform
+    log.write("Task started")
     return if signals.blank?
+
     service = IG::Service.new
     log.write("Logged in: #{Time.current}")
 
