@@ -18,6 +18,9 @@ class UpdateAllAvailableSignalsJob < ApplicationJob
       IG::SignalUpdate.new(price_list, signal.id).update!
       log.write("Updated: signal evaluated_at to #{signal.reload.evaluated_at}")
     end
+  rescue => ex
+    log.write("#{ex}\n#{ex.backtrace.join('\n')}")
+    $slack.ping("Error when executing #{self.class}. Check audit log for more info.") if Rails.env.production?
   end
 
   private

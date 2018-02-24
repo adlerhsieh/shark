@@ -25,14 +25,11 @@ module IG
       def long_trade!
         puts "LONG"
         prices.each do |price|
-          puts "#{price.time.in_time_zone(Time.zone.name)}:"
           break if @signal.opened_at && @signal.closed_at
 
-          puts "  - LOW:  #{price.low.ask}"
-          puts "  - HIGH: #{price.high.ask}"
           if @signal.opened_at.nil? && @signal.entry >= price.low.ask && @signal.entry <= price.high.ask
             @signal.update(opened_at: price.time)
-            puts "OPENED!!!"
+            $slack.ping("Signal ##{@signal.id} opened.") if Rails.env.production?
           end
 
           next if @signal.reload.opened_at.blank?
@@ -41,11 +38,11 @@ module IG
           puts "  - LOW:  #{price.low.bid}"
           puts "  - HIGH: #{price.high.bid}"
           if price.high.bid >= @signal.take_profit
-            puts "TAKE PROFIT"
             @signal.update(closed_at: price.time, closed: @signal.take_profit)
+            $slack.ping("Signal ##{@signal.id} closed.") if Rails.env.production?
           elsif price.low.bid <= @signal.stop_loss
-            puts "STOP LOSS"
             @signal.update(closed_at: price.time, closed: @signal.stop_loss)
+            $slack.ping("Signal ##{@signal.id} closed.") if Rails.env.production?
           end
         end
       end
