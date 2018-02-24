@@ -23,6 +23,7 @@ gem 'nokogiri', '~> 1.8.1'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'turbolinks'
 gem 'uglifier'
+gem 'slack-notifier'
 
 gem 'capistrano-rails', group: :development
 gem 'capistrano-rbenv'
