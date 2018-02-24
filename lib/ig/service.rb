@@ -1,5 +1,9 @@
 module IG
   class Service
+
+    DEAL_HOST = "https://deal.ig.com"
+    API_HOST = "https://api.ig.com"
+
     def initialize
       uri = URI('https://api.ig.com/gateway/deal/session')
       Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
@@ -29,14 +33,6 @@ module IG
       @cst
     end
 
-    def deal_host
-      "https://deal.ig.com"
-    end
-
-    def api_host
-      "https://api.ig.com"
-    end
-
     def get(url, options = {})
       puts "GET #{url}"
       uri = URI(url)
@@ -54,15 +50,6 @@ module IG
         request["CST"] = options[:cst] || cst
         request["IG-ACCOUNT-ID"] = ENV["IG_ACCOUNT_ID"]
 
-        # request["HOST"] = "deal.ig.com"
-        # request["ORIGIN"] = "https://deal.ig.com"
-        # request["Content-Length"] = "2"
-        # request["ADRUM"] = "isAjax:true"
-        # request["Referer"] = "https://deal.ig.com/wtp"
-        # request["X-Device-User-Agent"] = "vendor=IG Group | applicationType=ig | platform=WTP | version=0.2432.0+f418e8b1"
-        # request["X-Requested-With"] = "XMLHttpRequest"
-        # request["Cookie"] = ""
-
         res = http.request(request)
         puts res.code
 
@@ -71,15 +58,15 @@ module IG
     end
 
     def watchlist(list_id)
-      get("#{api_host}/gateway/deal/watchlists/#{list_id}")
+      get("#{API_HOST}/gateway/deal/watchlists/#{list_id}")
     end
 
     def watchlists
-      get("#{api_host}/gateway/deal/watchlists")
+      get("#{API_HOST}/gateway/deal/watchlists")
     end
 
     def signals
-      get("#{deal_host}/signals-gateway/signalsFiltered/0/1000", 
+      get("#{DEAL_HOST}/signals-gateway/signalsFiltered/0/1000", 
           cst: "",
           xst: ""
          )
@@ -88,7 +75,7 @@ module IG
     def price(epic, start_date, end_date, page_number = 1)
       resolution = "MINUTE"
 
-      get("#{api_host}/gateway/deal/prices/#{epic}?resolution=#{resolution}&from=#{start_date}&to=#{end_date}&pageSize=20&pageNumber=#{page_number}", headers: { "Version" => "3" })
+      get("#{API_HOST}/gateway/deal/prices/#{epic}?resolution=#{resolution}&from=#{start_date}&to=#{end_date}&pageSize=20&pageNumber=#{page_number}", headers: { "Version" => "3" })
     end
 
   end
