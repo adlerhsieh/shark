@@ -19,15 +19,10 @@ class UpdateAllAvailableSignalsJob < ApplicationJob
       log.write("Updated: signal evaluated_at to #{signal.reload.evaluated_at}")
     end
   rescue => ex
-    log.write("#{ex}\n#{ex.backtrace.join('\n')}")
-    $slack.ping("Error when executing #{self.class}. Check audit log for more info.") if Rails.env.production?
+    log.error(ex)
   end
 
   private
-
-    def log
-      @log ||= AuditLog.create(event: self.class)
-    end
 
     def signals
       @signals ||= FxSignal.includes(:pair).recent.in_progress

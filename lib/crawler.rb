@@ -3,9 +3,9 @@ require 'capybara/dsl'
 require 'capybara/poltergeist'
 
 Capybara.run_server = true
-Capybara.current_driver = :selenium
-# Capybara.current_driver = :poltergeist
-# Capybara.javascript_driver = :poltergeist
+# Capybara.current_driver = :selenium
+Capybara.current_driver = :poltergeist
+Capybara.javascript_driver = :poltergeist
 # Capybara.app_host = "https://live-forex-signals.com"
 
 Capybara.register_driver :poltergeist do |app|
@@ -17,6 +17,19 @@ end
 module Crawler
   class Base
     include Capybara::DSL
+
+    def initialize(options = {})
+      
+      if options[:app_host]
+        Capybara.app_host = options[:app_host]
+      end
+
+      @log = if options[:log]
+               options[:log]
+             else
+               AuditLog.new(event: self.class)
+             end
+    end
 
     def get_document(url, use_ssl = true, headers = {})
       uri = URI(url)
@@ -32,6 +45,10 @@ module Crawler
 
         Nokogiri::HTML(res.body)
       end
+    end
+
+    def wrap_up
+      Capybara.app_host = nil
     end
 
   end
