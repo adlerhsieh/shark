@@ -2,10 +2,9 @@ module IG
   class Service
 
     DEAL_HOST = "https://deal.ig.com"
-    API_HOST = "https://api.ig.com"
 
     def initialize
-      uri = URI('https://api.ig.com/gateway/deal/session')
+      uri = URI("#{ENV['IG_API_HOST']}/gateway/deal/session")
       Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
         request = Net::HTTP::Post.new uri
 
@@ -17,6 +16,7 @@ module IG
           "identifier" => ENV["IG_USERNAME"],
           "password" => ENV["IG_PASSWORD"]
         }.to_json)
+        puts res.code
 
         @cst = res.header["CST"]
         puts @cst
@@ -58,11 +58,11 @@ module IG
     end
 
     def watchlist(list_id)
-      get("#{API_HOST}/gateway/deal/watchlists/#{list_id}")
+      get("#{ENV['IG_API_HOST']}/gateway/deal/watchlists/#{list_id}")
     end
 
     def watchlists
-      get("#{API_HOST}/gateway/deal/watchlists")
+      get("#{ENV['IG_API_HOST']}/gateway/deal/watchlists")
     end
 
     def signals
@@ -75,7 +75,7 @@ module IG
     def price(epic, start_date, end_date, page_number = 1)
       resolution = "MINUTE"
 
-      get("#{API_HOST}/gateway/deal/prices/#{epic}?resolution=#{resolution}&from=#{start_date}&to=#{end_date}&pageSize=20&pageNumber=#{page_number}", headers: { "Version" => "3" })
+      get("#{ENV['IG_API_HOST']}/gateway/deal/prices/#{epic}?resolution=#{resolution}&from=#{start_date}&to=#{end_date}&pageSize=20&pageNumber=#{page_number}", headers: { "Version" => "3" })
     end
 
   end
