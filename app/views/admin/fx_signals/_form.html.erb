@@ -1,14 +1,14 @@
-<%= form_for [:admin, @fx_signal] do |form| %>
-  Pair id
-  <%= form.select :pair_id, @pairs.map { |pair| [pair.pair, pair.id] }, class: "form-control" %>
+<%= form_for [:admin, @fx_signal], class: "form-group" do |form| %>
+  Pair
+  <%= form.select :pair_id, @pairs.map { |pair| [pair.pair, pair.id] }, {}, class: "form-control" %>
   <p></p>
   Direction
-  <%= form.text_field :direction, class: "form-control" %>
+  <%= form.select :direction, ["buy", "sell"], {}, { class: "form-control" }%>
   Entry
   <%= form.number_field :entry, class: "form-control", step: :any %>
-  TP
+  Take Profit
   <%= form.number_field :take_profit, class: "form-control", step: :any %>
-  SL
+  Stop Loss
   <%= form.number_field :stop_loss, class: "form-control", step: :any %>
   Opened at
   <%= form.text_field :opened_at, class: "form-control" %>
