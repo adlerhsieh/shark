@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180221103313) do
+ActiveRecord::Schema.define(version: 20180227094744) do
 
   create_table "audit_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "source_type"
@@ -23,9 +23,15 @@ ActiveRecord::Schema.define(version: 20180221103313) do
     t.index ["source_type"], name: "index_audit_logs_on_source_type"
   end
 
+  create_table "fx_signal_sources", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.string "username"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "fx_signals", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "source_id"
-    t.string "source_type"
     t.integer "pair_id"
     t.string "direction"
     t.decimal "entry", precision: 10, scale: 5
@@ -39,10 +45,10 @@ ActiveRecord::Schema.define(version: 20180221103313) do
     t.datetime "updated_at", null: false
     t.decimal "closed_price", precision: 10, scale: 5
     t.datetime "evaluated_at"
+    t.datetime "force_close_at"
     t.index ["created_at"], name: "index_fx_signals_on_created_at"
     t.index ["pair_id"], name: "index_fx_signals_on_pair_id"
     t.index ["source_id"], name: "index_fx_signals_on_source_id"
-    t.index ["source_type"], name: "index_fx_signals_on_source_type"
   end
 
   create_table "pairs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
