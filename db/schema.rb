@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180227094744) do
+ActiveRecord::Schema.define(version: 20180302114914) do
 
   create_table "audit_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "source_type"
@@ -56,6 +56,19 @@ ActiveRecord::Schema.define(version: 20180227094744) do
     t.string "quote"
     t.boolean "mini"
     t.string "ig_epic"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "positions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "pair_id"
+    t.string "direction"
+    t.decimal "entry", precision: 10, scale: 5
+    t.decimal "take_profit", precision: 10, scale: 5
+    t.decimal "stop_loss", precision: 10, scale: 5
+    t.datetime "opened_at"
+    t.decimal "closed", precision: 10, scale: 5
+    t.datetime "closed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
