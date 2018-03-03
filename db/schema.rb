@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180302114914) do
+ActiveRecord::Schema.define(version: 20180303130754) do
 
   create_table "audit_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "source_type"
@@ -51,6 +51,21 @@ ActiveRecord::Schema.define(version: 20180302114914) do
     t.index ["source_id"], name: "index_fx_signals_on_source_id"
   end
 
+  create_table "orders", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "pair_id"
+    t.string "ig_deal_id"
+    t.integer "position_id"
+    t.decimal "size", precision: 10, scale: 5
+    t.datetime "expired_at"
+    t.decimal "take_profit", precision: 10, scale: 5
+    t.decimal "stop_loss", precision: 10, scale: 5
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ig_deal_id"], name: "index_orders_on_ig_deal_id"
+    t.index ["pair_id"], name: "index_orders_on_pair_id"
+    t.index ["position_id"], name: "index_orders_on_position_id"
+  end
+
   create_table "pairs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "base"
     t.string "quote"
@@ -62,8 +77,10 @@ ActiveRecord::Schema.define(version: 20180302114914) do
 
   create_table "positions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "pair_id"
+    t.string "ig_deal_id"
     t.string "direction"
     t.decimal "entry", precision: 10, scale: 5
+    t.decimal "size", precision: 10, scale: 5
     t.decimal "take_profit", precision: 10, scale: 5
     t.decimal "stop_loss", precision: 10, scale: 5
     t.datetime "opened_at"
