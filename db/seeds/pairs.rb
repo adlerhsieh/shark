@@ -216,5 +216,6 @@ Pair.create!([
   {base: "USD", quote: "INR", mini: false, ig_epic: "CS.D.USDINR.CFD.IP"},
   {base: "USD", quote: "MYR", mini: false, ig_epic: "CS.D.USDMYR.CFD.IP"},
   {base: "USD", quote: "RUB", mini: false, ig_epic: "CS.D.sp_USDRUB.CFD.IP"},
-  {base: "USD", quote: "TWD", mini: false, ig_epic: "CS.D.USDTWD.CFD.IP"}
+  {base: "USD", quote: "TWD", mini: false, ig_epic: "CS.D.USDTWD.CFD.IP"},
+  {base: "XRP", quote: "USD", mini: false, ig_epic: "CS.D.XRPUSD.CFD.IP"}
 ])
