@@ -39,12 +39,12 @@ module IG
     end
 
     def send_request(method, url, headers = {}, body = nil, extra_options = {})
-      case method 
-      when :get
-        klass = Net::HTTP::Get
-      when :post
-        klass = Net::HTTP::Post
-      end
+      klass = case method 
+              when :get    then Net::HTTP::Get
+              when :post   then Net::HTTP::Post
+              when :put    then Net::HTTP::Put
+              when :delete then Net::HTTP::Delete
+              end
 
       puts "#{method.to_s.upcase} #{url}"
       uri = URI(url)
@@ -70,21 +70,15 @@ module IG
     end
 
     def get(path, options = {})
-      send_request(
-        :get, 
-        "#{ENV['IG_API_HOST']}/#{path}", 
-        options[:headers], 
-        options[:body]
-      )
+      send_request(:get, "#{ENV['IG_API_HOST']}/#{path}", options[:headers], options[:body])
     end
 
     def post(path, options)
-      send_request(
-        :post,
-        "#{ENV['IG_API_HOST']}/#{path}",
-        options[:headers], 
-        options[:body]
-      )
+      send_request(:post, "#{ENV['IG_API_HOST']}/#{path}", options[:headers], options[:body])
+    end
+
+    def delete(path, options)
+      send_request(:delete, "#{ENV['IG_API_HOST']}/#{path}", options[:headers], options[:body])
     end
 
     def watchlist(list_id)
@@ -171,6 +165,10 @@ module IG
         headers: (options[:headers] || {}).merge("Version" => "2"),
         body: body.to_json
       )
+    end
+
+    def delete_order(ig_deal_id)
+      delete("gateway/deal/workingorders/otc/#{ig_deal_id}", headers: { "Version" => "2" })
     end
 
   end
