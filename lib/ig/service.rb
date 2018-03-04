@@ -26,7 +26,7 @@ module IG
         @cst = res.header["CST"]
         puts @cst
         @xst = res.header["X-SECURITY-TOKEN"]
-        puts xst
+        puts @xst
       end
     end
 
