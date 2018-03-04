@@ -18,6 +18,10 @@ tr.danger {
   background-color: #ffd7d7;
 }
 
+tr.gray {
+  background-color: gray;
+}
+
 tr.success {
   background-color: #dff0d8;
 }

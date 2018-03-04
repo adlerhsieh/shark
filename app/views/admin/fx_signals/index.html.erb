@@ -24,9 +24,9 @@
         <td><%= signal.entry %></td>
         <td><%= signal.take_profit %></td>
         <td><%= signal.stop_loss %></td>
-        <td><%= signal.created_at.try(:strftime, "%m/%d %H:%M") %></td>
-        <td><%= signal.opened_at.try(:strftime, "%m/%d %H:%M") %></td>
-        <td><%= signal.closed_at.try(:strftime, "%m/%d %H:%M") %></td>
+        <td><%= signal.created_at.try(:strftime, "%d %b %H:%M") %></td>
+        <td><%= signal.opened_at.try(:strftime, "%d %b %H:%M") %></td>
+        <td><%= signal.closed_at.try(:strftime, "%d %b %H:%M") %></td>
         <td><%= signal.closed %></td>
       </tr>
     <% end %>

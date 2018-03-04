@@ -1,6 +1,6 @@
 class Admin::FxSignalsController < Admin::BaseController
   before_action :load_fx_signal, only: %i[show edit update destroy]
-  before_action :load_pairs
+  before_action :load_pairs, only: %i[new edit]
 
   def index
     @signals = FxSignal.includes(:pair).all.order(created_at: :desc)

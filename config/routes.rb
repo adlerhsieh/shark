@@ -5,12 +5,9 @@ Rails.application.routes.draw do
   root "admin/fx_signals#index"
 
   namespace :admin do
-    resources :positions do
-
-    end
-    resources :fx_signals do
-
-    end
+    resources :orders
+    resources :positions
+    resources :fx_signals
   end
 
 end

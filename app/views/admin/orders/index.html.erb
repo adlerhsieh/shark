@@ -1,0 +1,33 @@
+<%= link_to "New", new_admin_order_path, class: "btn btn-primary", style: "margin-bottom: 10px; margin-top: 5px;" %>
+
+<table class="table">
+  <thead>
+    <th>#</th>
+    <th>Pair</th>
+    <th>IG Deal #</th>
+    <th>Direction</th>
+    <th>Entry</th>
+    <th>TP</th>
+    <th>SL</th>
+    <th>Created at</th>
+    <th>Expired at</th>
+    <th>Opened at</th>
+  </thead>
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr class="">
+        <td><%= link_to order.id, edit_admin_order_path(order) %></td>
+        <td><%= order.pair.pair %></td>
+        <td><%= order.ig_deal_id %></td>
+        <td><%= order.direction %></td>
+        <td><%= order.entry %></td>
+        <td><%= order.take_profit %></td>
+        <td><%= order.stop_loss %></td>
+        <td><%= order.created_at.try(:strftime, "%d %b %H:%M") %></td>
+        <td><%= order.expired_at.try(:strftime, "%d %b %H:%M") %></td>
+        <td><%= order.position.try(:strftime, "%d %b %H:%M") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

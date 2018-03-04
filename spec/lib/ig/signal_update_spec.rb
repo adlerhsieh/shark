@@ -1,4 +1,4 @@
-describe IG::PriceUpdate do
+describe IG::SignalUpdate do
 
   describe "#update!" do
     let(:pair) { create(:pair, :audusd) }
@@ -46,7 +46,7 @@ describe IG::PriceUpdate do
       }
     end
 
-    subject { described_class.new(price_list, fx_signal).update! }
+    subject { described_class.new(price_list, fx_signal.id).update! }
 
     before do
       subject
