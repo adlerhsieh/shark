@@ -11,6 +11,16 @@ module Crawler
 
     attr_accessor :document
 
+    def login
+      puts "opening page"
+      visit("/en/login")
+      puts "taking action"
+      fill_in "user_name", with: "nkj20932@gmail.com", id: "user_name"
+      fill_in "user_password", with: "nkj20932@gmail.com", id: "user_password"
+      click_button "Log in"
+      puts "clicked button"
+    end
+
     def access
       visit("/en")
       sleep(2)
@@ -20,26 +30,41 @@ module Crawler
 
     def process!
       if @document.to_s.include?("Daily limit for unauthenticated use exceeded")
-        log.write("Webiste warns that our unauthenticated daily limit is exceeded.")
+        log.write("Website warns that our unauthenticated daily limit is exceeded.")
       end
 
       signal_cells = @document.css(".signal-cell")
-        
+
       signal_cells.each do |signal_cell|
-        signal = FxSignal.new
+        process_cell!(signal_cell)
+      end # end signal-cell
 
-        title = signal_cell.css(".col-sm-8").first.text.remove("\n", "\r", "\t")
-        signal.pair_id = pair_id(title)
+      wrap_up
+    end
 
+    def process_cell!(signal_cell)
+      title = signal_cell.css(".col-sm-8").first.text.remove("\n", "\r", "\t")
+      log.write(title)
 
-        signal_cell.css(".signal-item").each do |item|
+      if signal_cell.text.include?("Filled")
+        log.write("signal closed")
+        return 
+      end
+      if signal_cell.text.include?("Wait") && signal_cell.text.include?("to open")
+        log.write("signal not opened yet")
+        return 
+      end
 
-          # Parse time if it's a time slot
-          time_slot = nil
-          if item.text.include?("shotDTgmt")
-            time_string = item.text.match(/showDTgmt\(.*\)/)
-            time_slot = parse_time(time_string)
-          end
+      signal = FxSignal.new(source: source)
+      signal.pair_id = pair_id(title)
+
+      signal_cell.css(".signal-item").each do |item|
+
+        # Parse time if it's a time slot
+        time_slot = nil
+        if item.text.include?("shotDTgmt")
+          time_string = item.text.match(/showDTgmt\(.*\)/).to_s
+          time_slot = parse_time(time_string)
 
           # From
           if item.text.include?("From")
@@ -50,37 +75,43 @@ module Crawler
               return 
             end
           end
-
-          # # Direction
-          # if item.text.include?("Buy")
-          #   signal.direction = "buy"
-          # elsif item.text.include?("Sell")
-          #   signal.direction = "sell"
-          # end
-
-          # Bought at
-          if item.text.include?("Bought at")
-            log.write("Processing 'Bought at'")
-            encrypted_value = item.css(".signal-value").text.remove("\t", "f('", "')", ";")
-            log.write("Encrypted value: #{encrypted_value}")
-            # if the value includes both encrypted value & decrypted value, then we just remove the former.
-            if encrypted_value.match(/[A-Z]*[\d\.]*/)
-              log.write("Value has both encrypted & decrypted value. Use decrypted value instead.")
-              signal.entry = encrypted_value.gsub(/[A-Z]*/, "")
-            # or decode as it as
-            else
-              log.write("Processing encrypted value...")
-              signal.entry = decode_function.call(encrypted_value)
-            end
+         
+          # Till
+          if item.text.include?("Till")
+            log.write("Processing 'Till' with time_slot: #{time_slot}")
+            signal.force_close_at = time_slot
           end
 
-        end # end signal-item
+        end
 
-        signal.save!
+        # Direction
+        if item.text.include?("signal-status")
+          if item.text.include?("Buy")
+            signal.direction = "buy"
+          elsif item.text.include?("Sell")
+            signal.direction = "sell"
+          end
+        end
 
-      end # end signal-cell
+        # Buy
+        if item.text.include?("Buy at") || item.text.include?("Sell at")
+          log.write("Processing 'Buy/Sell at'")
+          encrypted_value = item.css(".signal-value").text.remove("\t", "f('", "')", ";")
+          log.write("Encrypted value: #{encrypted_value}")
+          # if the value includes both encrypted value & decrypted value, then we just remove the former.
+          if encrypted_value.match(/[A-Z]*[\d\.]*/)
+            log.write("Value is already decrypted.")
+            signal.entry = encrypted_value.gsub(/[A-Z]*/, "")
+            # or decode as it as
+          else
+            log.write("Processing encrypted value...")
+            signal.entry = decode_function.call(encrypted_value)
+          end
+        end
 
-      wrap_up
+      end # end signal-item
+
+      signal.save!
     end
 
     def pair_id(pair_string)
@@ -124,11 +155,15 @@ module Crawler
       end
 
       @decode_function = -> (str) do
-                            str.split("").map do |char|
-                              i = char.ord - offset.to_i - str.index(char)
-                              char_list[i]
-                            end.join
-                          end
+        str.split("").map do |char|
+          i = char.ord - offset.to_i - str.index(char)
+          char_list[i]
+        end.join
+      end
+    end
+
+    def source
+      @source ||= FxSignalSource.find_by!(name: "live-forex-signals.com")
     end
 
   end

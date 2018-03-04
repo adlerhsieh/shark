@@ -7,11 +7,12 @@ Capybara.run_server = true
 Capybara.current_driver = :poltergeist
 Capybara.javascript_driver = :poltergeist
 # Capybara.app_host = "https://live-forex-signals.com"
+Capybara.default_max_wait_time = 5
 
 Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, {
-
-  })
+  Capybara::Poltergeist::Driver.new(app,
+    js_errors: false
+  )
 end
 
 module Crawler
@@ -29,6 +30,10 @@ module Crawler
              else
                AuditLog.new(event: self.class)
              end
+    end
+
+    def log
+      @log
     end
 
     def get_document(url, use_ssl = true, headers = {})
