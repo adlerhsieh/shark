@@ -20,15 +20,12 @@ gem 'google-api-client'
 gem 'pry-rails'
 gem 'bulk_insert'
 gem 'nokogiri', '~> 1.8.1'
-# gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'turbolinks'
 gem 'uglifier'
 gem 'slack-notifier'
-
 gem 'capistrano-rails', group: :development
 gem 'capistrano-rbenv'
 gem 'capistrano-bundler'
-
 gem 'capybara', '~> 2.13'
 gem 'poltergeist'
 gem 'selenium-webdriver'
@@ -40,7 +37,3 @@ group :development, :test do
   gem 'seed_dump'
   gem 'spring'
 end
-
-group :development do
-end
-
