@@ -99,6 +99,10 @@ module IG
         authorize_and_request(:delete, "#{ENV['IG_API_HOST']}/#{path}", options[:headers], options[:body])
       end
 
+      def confirm(deal_reference)
+        authorize_and_request(:get, "#{ENV["IG_API_HOST"]}/gateway/deal/confirms/#{deal_reference}", { "Version" => "1" }, nil)
+      end
+
     end
 
   end

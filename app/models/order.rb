@@ -3,8 +3,13 @@ class Order < ApplicationRecord
   belongs_to :pair
   belongs_to :position, optional: true
 
-  def ig_open
-    
+  validates :pair_id, presence: true
+  validates :direction, presence: true
+  validates :size, presence: true
+  validates :entry, presence: true
+
+  def ig_sync
+    IgSyncOrderJob.perform_later(id)
   end
 
 end

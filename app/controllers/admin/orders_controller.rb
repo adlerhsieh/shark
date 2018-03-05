@@ -17,10 +17,7 @@ class Admin::OrdersController < Admin::BaseController
 
   def create
     @order = Order.new(order_params)
-
-    if @order.save
-      SyncOrderJob.perform_later(@order.id)
-    end
+    @order.ig_sync if @order.save
 
     redirect_to admin_orders_path
   end

@@ -5,7 +5,7 @@ class Pair < ApplicationRecord
   has_many :orders
 
   def pair
-    "#{base}/#{quote}"
+    "#{base}/#{quote} #{"MINI" if mini?}"
   end
 
 end

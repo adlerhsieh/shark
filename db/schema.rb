@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180304002506) do
+ActiveRecord::Schema.define(version: 20180305115213) do
 
   create_table "audit_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "source_type"
+    t.string "source_type"
     t.integer "source_id"
     t.string "event"
     t.text "content"
@@ -63,6 +63,8 @@ ActiveRecord::Schema.define(version: 20180304002506) do
     t.datetime "expired_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "ig_deal_reference"
+    t.string "ig_status"
     t.index ["ig_deal_id"], name: "index_orders_on_ig_deal_id"
     t.index ["pair_id"], name: "index_orders_on_pair_id"
     t.index ["position_id"], name: "index_orders_on_position_id"
