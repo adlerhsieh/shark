@@ -4,7 +4,6 @@
   <thead>
     <th>#</th>
     <th>Pair</th>
-    <th>IG Deal #</th>
     <th>Direction</th>
     <th>Entry</th>
     <th>TP</th>
@@ -12,13 +11,13 @@
     <th>Created at</th>
     <th>Expired at</th>
     <th>Opened at</th>
+    <th>IG Status</th>
   </thead>
   <tbody>
     <% @orders.each do |order| %>
       <tr class="">
         <td><%= link_to order.id, edit_admin_order_path(order) %></td>
         <td><%= order.pair.pair %></td>
-        <td><%= order.ig_deal_id %></td>
         <td><%= order.direction %></td>
         <td><%= order.entry %></td>
         <td><%= order.take_profit %></td>
@@ -26,6 +25,16 @@
         <td><%= order.created_at.try(:strftime, "%d %b %H:%M") %></td>
         <td><%= order.expired_at.try(:strftime, "%d %b %H:%M") %></td>
         <td><%= order.position.try(:strftime, "%d %b %H:%M") %></td>
+        <td>
+          <% if order.ig_status == "accepted" %>
+            <i class="fa fa-check" style="color: green;"></i></td>
+          <% elsif order.ig_status == "rejected" %>
+            <i class="fa fa-times" style="color: red;"></i></td>
+          <% elsif order.ig_status.nil? %>
+            <i class="fa fa-cloud-upload"></i></td>
+          <% else %>
+            <%= order.ig_status %>
+          <% end %>
       </tr>
     <% end %>
   </tbody>
