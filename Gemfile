@@ -20,7 +20,7 @@ gem 'google-api-client'
 gem 'pry-rails'
 gem 'bulk_insert'
 gem 'nokogiri', '~> 1.8.1'
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+# gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'turbolinks'
 gem 'uglifier'
 gem 'slack-notifier'
@@ -38,6 +38,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'seed_dump'
+  gem 'spring'
 end
 
 group :development do
