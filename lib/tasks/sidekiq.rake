@@ -8,9 +8,9 @@ namespace :sidekiq do
       )
 
       Sidekiq::Cron::Job.create(
-        name: "Crawl love-forex-signals.com", 
+        name: "Convert Orders to Positions", 
         cron: "*/10 * * * *", 
-        class: "IgUpdateOrdersJob"
+        class: "ConvertOrdersToPositionsJob"
       )
     end
 
