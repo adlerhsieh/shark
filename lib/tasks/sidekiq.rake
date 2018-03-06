@@ -7,11 +7,11 @@ namespace :sidekiq do
         class: "UpdateAllAvailableSignalsJob"
       )
 
-      # Sidekiq::Cron::Job.create(
-      #   name: "Crawl love-forex-signals.com", 
-      #   cron: "*/20 * * * *", 
-      #   class: "CrawlerLiveForexSignalsJob"
-      # )
+      Sidekiq::Cron::Job.create(
+        name: "Crawl love-forex-signals.com", 
+        cron: "*/10 * * * *", 
+        class: "IgUpdateOrdersJob"
+      )
     end
 
     task :destroy_all do

@@ -4,6 +4,12 @@ module IG
 
     class Position < IG::Service::Base
 
+      def all
+        get("gateway/deal/positions", 
+            headers: { "Version" => "2" }
+           )
+      end
+
       # Reference: https://labs.ig.com/rest-trading-api-reference/service-detail?id=542
       def create(pair, options)
         body = {

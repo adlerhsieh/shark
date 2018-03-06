@@ -12,8 +12,8 @@ class IgSyncOrderJob < ApplicationJob
       direction:  @order.direction.upcase,
       size:       @order.size.to_i.to_s,
       level:      @order.entry.to_s,
-      stopLevel:  @order.stop_loss.to_s,
-      limitLevel: @order.take_profit.to_s
+      stopLevel:  @order.stop_loss&.to_s,
+      limitLevel: @order.take_profit&.to_s
     })
 
     log.write("Response: #{response.to_s}")
