@@ -12,6 +12,7 @@
     <th>Expired at</th>
     <th>Opened at</th>
     <th>IG Status</th>
+    <th></th>
   </thead>
   <tbody>
     <% @orders.each do |order| %>
@@ -35,6 +36,11 @@
           <% else %>
             <%= order.ig_status %>
           <% end %>
+        <td>
+          <% if order.ig_status != "accepted" %>
+            <%= link_to "Remove", admin_order_path(order), method: :delete, class: "btn btn-sm btn-danger" %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
