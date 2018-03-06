@@ -23,7 +23,7 @@ module Shark
     config.time_zone = "Sydney"
 
     Dir["#{Rails.root}/lib/**/*.rb"].each do |file|
-      require file if File.file?(file)
+      require file
     end
     
     config.generators do |g|
