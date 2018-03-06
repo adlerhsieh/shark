@@ -1,5 +1,7 @@
 class Order < ApplicationRecord
 
+  has_many :logs, class_name: "AuditLog", as: :source
+
   belongs_to :pair
   belongs_to :position, optional: true
 
