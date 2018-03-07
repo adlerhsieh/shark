@@ -1,4 +1,4 @@
-class IgConvertOrdersToPostionsJob < ApplicationJob
+class IgConvertOrdersToPositionsJob < ApplicationJob
   queue_as :default
 
   def perform

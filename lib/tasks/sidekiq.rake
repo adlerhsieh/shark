@@ -10,7 +10,7 @@ namespace :sidekiq do
       Sidekiq::Cron::Job.create(
         name: "Convert Orders to Positions", 
         cron: "*/11 * * * *", 
-        class: "ConvertOrdersToPositionsJob"
+        class: "IgConvertOrdersToPositionsJob"
       )
 
       Sidekiq::Cron::Job.create(
