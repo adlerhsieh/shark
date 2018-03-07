@@ -4,7 +4,6 @@ class Admin::OrdersController < Admin::BaseController
 
   def index
     @orders = Order.all.includes(:position).order(created_at: :desc)
-    @signals = FxSignal.includes(:pair).all.order(created_at: :desc)
   end
 
   def show
@@ -47,7 +46,7 @@ class Admin::OrdersController < Admin::BaseController
     end
 
     def load_pairs
-      @pairs = Pair.all.order(:base, :quote)
+      @pairs = Pair.where(mini: true).order(:base, :quote)
     end
 
 end
