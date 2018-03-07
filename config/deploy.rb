@@ -77,17 +77,9 @@ namespace :deploy do
     end
   end
 
-  namespace :sidekiq do
-    task :jobs do
-      on roles(:web) do
-        execute "cd #{fetch(:deploy_to)}/current && RAILS_ENV=production /home/#{ENV["DEPLOY_USERNAME"]}/.rbenv/shims/bundle exec rake sidekiq:cron:update"
-      end
-    end
-  end
 end
 
 after :deploy, "deploy:config"
 after :deploy, "deploy:db:migrate"
-after :deploy, "deploy:sidekiq:jobs"
 after :deploy, "deploy:restart:puma"
 after :deploy, "deploy:restart:sidekiq"

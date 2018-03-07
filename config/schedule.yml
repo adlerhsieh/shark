@@ -1,0 +1,15 @@
+update_all_signals:
+  cron: "*/10 * * * *"
+  class: "UpdateAllAvailableSignalsJob"
+  queue: "default"
+
+convert_orders_to_positions:
+  cron: "*/9 * * * *"
+  class: "IgConvertOrdersToPositionsJob"
+  queue: "default"
+
+close_positions:
+  cron: "*/11 * * * *"
+  class: "IgClosePositionsJob"
+  queue: "default"
+
