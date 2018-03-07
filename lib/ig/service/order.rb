@@ -16,8 +16,13 @@ module IG
           "size": "1",
           "level": "1.0", # when to enter
           "forceOpen": true,
-          # "type": options[:direction] == "BUY" ? "LIMIT" : "STOP",
-          "type": "STOP",
+          # type => stop
+          #   - buy:  target_price > current_price
+          #   - sell: target_price < current_price
+          # type => limit
+          #   - buy:  target_price < current_price
+          #   - sell: target_price > current_price
+          "type": "LIMIT",
           "currencyCode": pair.quote,
           "timeInForce": "GOOD_TILL_DATE", # or GOOD_TILL_CANCELLED
           "goodTillDate": (Time.now + 48.hours).strftime("%Y/%m/%d %H:%M:%S"),

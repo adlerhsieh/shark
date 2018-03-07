@@ -14,4 +14,12 @@ class Order < ApplicationRecord
     IgSyncOrderJob.perform_later(id)
   end
 
+  def buy?
+    direction == "buy"
+  end
+
+  def sell?
+    direction == "sell"
+  end
+
 end

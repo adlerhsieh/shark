@@ -13,7 +13,8 @@ class IgSyncOrderJob < ApplicationJob
       size:       @order.size.to_i.to_s,
       level:      @order.entry.to_s,
       stopLevel:  @order.stop_loss&.to_s,
-      limitLevel: @order.take_profit&.to_s
+      limitLevel: @order.take_profit&.to_s,
+      type:       order_type
     })
 
     log.write("Response: #{response.to_s}")
@@ -39,8 +40,23 @@ class IgSyncOrderJob < ApplicationJob
 
   private
 
+    def order_type
+      log.write("Getting current price for pair")
+      prices = price.latest(@order.pair.ig_epic)
+      
+      if @order.buy?
+        prices[:offer] > @order.entry ? "LIMIT" : "STOP"
+      elsif @order.sell?
+        prices[:bid] > @order.entry ? "STOP" : "LIMIT"
+      end
+    end
+
     def service
       @service ||= IG::Service::Order.new
+    end
+
+    def price
+      @price ||= IG::Service::Price.new
     end
 
 end
