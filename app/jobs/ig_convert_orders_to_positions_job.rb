@@ -21,7 +21,9 @@ class IgConvertOrdersToPositionsJob < ApplicationJob
         size:        order.size,
         take_profit: order.take_profit,
         stop_loss:   order.stop_loss,
-        opened_at:   Time.parse("#{position["position"]["createdDateUTC"]} UTC")
+        # There will be a gap of difference from the actual time of 
+        # opening thie position, at most 8 minutes
+        opened_at:   Time.now
       )
 
       log.write("Updating order with position_id #{new_position.id}")
