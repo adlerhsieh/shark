@@ -1,6 +1,12 @@
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+    $(".pair").focus();
+  })
+</script>
+
 <%= form_for [:admin, @order], class: "form-group" do |form| %>
   Pair
-  <%= form.select :pair_id, @pairs.map { |pair| [pair.pair, pair.id] }, {}, class: "form-control" %>
+  <%= form.select :pair_id, @pairs.map { |pair| [pair.pair, pair.id] }, {}, class: "form-control pair" %>
   <p></p>
   Direction
   <%= form.select :direction, ["buy", "sell"], {}, { class: "form-control" }%>
