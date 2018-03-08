@@ -51,12 +51,16 @@
 <div class="mobile">
   <% @orders.each do |order| %>
     <div class="bordered item">
-      <%= link_to edit_admin_order_path(order), class: "btn btn-default banner" do %>
+      <%= link_to edit_admin_order_path(order), class: "btn btn-default banner #{order_result_class(order)}" do %>
         <span><%= order.id %>.</span>
         <span class="<%= order.direction == "buy" ? "green" : "red" %>"><%= order.direction.upcase %></span>
         <span><%= order.pair.pair %></span>
         <% if order.closed? %>
-          <span>(CLOSED)</span>
+          <% if order.position.profit? %>
+            <span>(PROFIT)</span>
+          <% else %>
+            <span>(LOSS)</span>
+          <% end %>
         <% elsif order.expired? %>
           <span>(EXPIRED)</span>
         <% end %>

@@ -54,6 +54,18 @@ tr.success {
     color: black;
     display: block;
     background-color: #F8F8F8;
+
+    &.profit {
+      background-color: #dff0d8;
+    }
+
+    &.loss {
+      background-color: #ffe7e7;
+    }
+
+    &.expired {
+      background-color: #cccccc;
+    }
   }
 
 }
