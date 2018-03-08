@@ -12,6 +12,9 @@
         <li class="nav-item">
           <%= link_to "Orders", admin_orders_path, class: "nav-link" %>
         </li>
+        <li class="nav-item">
+          <%= link_to "Sidekiq", "/sidekiq", class: "nav-link" %>
+        </li>
       <% end %>
       <li class="nav-item">
         <% if current_user.present? %>
