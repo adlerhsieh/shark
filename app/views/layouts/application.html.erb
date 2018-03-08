@@ -17,22 +17,7 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="/">Shark</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <%= link_to "Signals", admin_fx_signals_path, class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Orders", admin_orders_path, class: "nav-link" %>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <%= render "layouts/nav" %>
 
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>

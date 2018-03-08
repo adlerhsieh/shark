@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
   mount Sidekiq::Web => '/sidekiq'
 
-  root "admin/fx_signals#index"
+  root "root#show"
 
   namespace :admin do
     resources :orders
