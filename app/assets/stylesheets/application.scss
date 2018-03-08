@@ -25,3 +25,35 @@ tr.gray {
 tr.success {
   background-color: #dff0d8;
 }
+
+@media screen and (min-width: 800px) {
+  .mobile {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .desktop {
+    display: none;
+  }
+}
+
+.item {
+  border: 1px solid gray;
+  color: gray;
+  margin-bottom: 10px;
+
+  a.banner {
+    color: black;
+    display: block;
+    background-color: #F8F8F8;
+  }
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
