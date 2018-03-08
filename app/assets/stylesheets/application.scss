@@ -30,11 +30,18 @@ tr.success {
   .mobile {
     display: none;
   }
+
 }
 
 @media screen and (max-width: 800px) {
   .desktop {
     display: none;
+  }
+
+  div, a, button {
+    .btn-wide {
+      width: 100%;
+    }
   }
 }
 
@@ -48,6 +55,7 @@ tr.success {
     display: block;
     background-color: #F8F8F8;
   }
+
 }
 
 .green {
@@ -56,4 +64,9 @@ tr.success {
 
 .red {
   color: red;
+}
+
+.btn-wide {
+  width: 150px;
+  margin: 5px 0;
 }
