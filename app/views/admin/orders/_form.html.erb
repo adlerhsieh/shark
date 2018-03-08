@@ -19,7 +19,7 @@
   Stop Loss
   <%= form.number_field :stop_loss, class: "form-control", step: :any, value: (@order.stop_loss || 0.0), pattern: "\\d*" %>
   Expired at
-  <%= form.text_field :expired_at, class: "form-control", value: (@order.expired_at || Time.now + 48.hours).strftime("%Y-%m-%d %H:%M") %>
+  <%= form.text_field :expired_at, class: "form-control", value: (@order.expired_at || Time.now + 24.hours).strftime("%Y-%m-%d %H:%M") %>
   <p></p>
 
   <%= form.submit "Save", class: "btn btn-primary btn-wide" %>
