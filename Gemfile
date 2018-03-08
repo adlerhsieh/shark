@@ -10,6 +10,7 @@ gem 'mysql2'
 gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
 gem 'therubyracer', platforms: :ruby
+gem 'devise'
 gem 'jbuilder', '~> 2.5'
 gem 'redis', '~> 3.0'
 gem 'sidekiq'
