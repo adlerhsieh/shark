@@ -11,13 +11,13 @@
   Direction
   <%= form.select :direction, ["buy", "sell"], {}, { class: "form-control" }%>
   Size
-  <%= form.number_field :size, class: "form-control", value: @order.size || 1 %>
+  <%= form.number_field :size, class: "form-control", value: (@order.size || 1), pattern: "\\d*" %>
   Entry
-  <%= form.number_field :entry, class: "form-control", step: :any %>
+  <%= form.number_field :entry, class: "form-control", step: :any, pattern: "\\d*" %>
   Take Profit
-  <%= form.number_field :take_profit, class: "form-control", step: :any %>
+  <%= form.number_field :take_profit, class: "form-control", step: :any, pattern: "\\d*" %>
   Stop Loss
-  <%= form.number_field :stop_loss, class: "form-control", step: :any %>
+  <%= form.number_field :stop_loss, class: "form-control", step: :any, pattern: "\\d*" %>
   Expired at
   <%= form.text_field :expired_at, class: "form-control", value: (@order.expired_at || Time.now + 48.hours).strftime("%Y-%m-%d %H:%M") %>
   <p></p>
