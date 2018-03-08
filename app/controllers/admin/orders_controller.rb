@@ -1,5 +1,5 @@
 class Admin::OrdersController < Admin::BaseController
-  before_action :load_order, only: %i[show edit update destroy]
+  before_action :load_order, only: %i[show edit update destroy remove]
   before_action :load_pairs, only: %i[new edit]
 
   def index
@@ -16,7 +16,7 @@ class Admin::OrdersController < Admin::BaseController
 
   def create
     @order = Order.new(order_params)
-    @order.ig_sync if @order.save
+    @order.ig_place_order if @order.save
 
     redirect_to admin_orders_path
   end
@@ -30,6 +30,13 @@ class Admin::OrdersController < Admin::BaseController
     redirect_to admin_orders_path
   end
 
+  # remove from IG and mark as deleted
+  def remove
+    @order.ig_remove_order
+    redirect_to admin_orders_path
+  end
+
+  # force destroy
   def destroy
     @order.destroy
     redirect_to admin_orders_path

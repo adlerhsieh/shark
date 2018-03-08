@@ -43,7 +43,7 @@ module IG
             )
       end
 
-      def delete(ig_deal_id)
+      def remove(ig_deal_id)
         delete("gateway/deal/workingorders/otc/#{ig_deal_id}", headers: { "Version" => "2" })
       end
 

@@ -10,8 +10,12 @@ class Order < ApplicationRecord
   validates :size, presence: true
   validates :entry, presence: true
 
-  def ig_sync
-    IgSyncOrderJob.perform_later(id)
+  def ig_place_order
+    IgPlaceOrderJob.perform_later(id)
+  end
+
+  def ig_remove_order
+    IgRemoveOrderJob.perform_later(id)
   end
 
   def buy?

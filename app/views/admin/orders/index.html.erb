@@ -55,7 +55,9 @@
         <span><%= order.id %>.</span>
         <span class="<%= order.direction == "buy" ? "green" : "red" %>"><%= order.direction.upcase %></span>
         <span><%= order.pair.pair %></span>
-        <% if order.closed? %>
+        <% if order.deleted? %>
+          <span>(DELETED)</span>
+        <% elsif order.closed? %>
           <% if order.position.profit? %>
             <span>(PROFIT)</span>
           <% else %>
@@ -66,7 +68,7 @@
         <% end %>
       <% end %>
 
-      <% if order.closed?.! && order.expired?.! %>
+      <% if order.closed?.! && order.expired?.! && order.deleted?.! %>
 
         <div style="margin-bottom: 10px;"></div>
 

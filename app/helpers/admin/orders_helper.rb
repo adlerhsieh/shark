@@ -6,7 +6,7 @@ module Admin::OrdersHelper
       else
         "loss"
       end
-    elsif order.expired?
+    elsif order.expired? || order.deleted?
       "expired"
     end
   end

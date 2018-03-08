@@ -9,7 +9,11 @@ Rails.application.routes.draw do
   root "root#show"
 
   namespace :admin do
-    resources :orders
+    resources :orders do
+      member do
+        delete :remove
+      end
+    end
     resources :positions
     resources :fx_signals
   end
