@@ -22,4 +22,12 @@ class Order < ApplicationRecord
     direction == "sell"
   end
 
+  def expired?
+    expired_at < Time.now
+  end
+
+  def closed?
+    position.try(:closed_at).present?
+  end
+
 end

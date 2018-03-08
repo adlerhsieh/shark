@@ -55,54 +55,63 @@
         <span><%= order.id %>.</span>
         <span class="<%= order.direction == "buy" ? "green" : "red" %>"><%= order.direction.upcase %></span>
         <span><%= order.pair.pair %></span>
+        <% if order.closed? %>
+          <span>(CLOSED)</span>
+        <% elsif order.expired? %>
+          <span>(EXPIRED)</span>
+        <% end %>
       <% end %>
 
-      <div style="margin-bottom: 10px;"></div>
+      <% if order.closed?.! && order.expired?.! %>
 
-      <div class="row container">
-        <div class="col">
-          <span>EN: <%= order.entry %></span>
-        </div>
-        <div class="col">
-          <span>@ <%= order.created_at.try(:strftime, "%d %b %H:%M") %></span>
-        </div>
-      </div>
+        <div style="margin-bottom: 10px;"></div>
 
-      <div class="row container">
-        <div class="col">
-          <% if order.take_profit %>
-            <span>TP: <%= order.take_profit %></span>
-          <% end %>
+        <div class="row container">
+          <div class="col">
+            <span>EN: <%= order.entry %></span>
+          </div>
+          <div class="col">
+            <span>@ <%= order.created_at.try(:strftime, "%d %b %H:%M") %></span>
+          </div>
         </div>
-        <div class="col">
-          <% if order.stop_loss %>
-            <span>SL: <%= order.stop_loss %></span>
-          <% end %>
-        </div>
-      </div>
 
-      <div class="row container">
-        <div class="col">
-          <% if order.position.try(:opened_at).present? %>
-            <span>OP: <%= order.position.try(:opened_at).try(:strftime, "%d %b %H:%M") %></span>
-          <% end %>
+        <div class="row container">
+          <div class="col">
+            <% if order.take_profit %>
+              <span>TP: <%= order.take_profit %></span>
+            <% end %>
+          </div>
+          <div class="col">
+            <% if order.stop_loss %>
+              <span>SL: <%= order.stop_loss %></span>
+            <% end %>
+          </div>
         </div>
-        <div class="col">
-          <span>IG:
-          <% if order.ig_status == "accepted" %>
-            <i class="fa fa-check" style="color: green;"></i></td>
-          <% elsif order.ig_status == "rejected" %>
-            <i class="fa fa-times" style="color: red;"></i></td>
-          <% elsif order.ig_status.nil? %>
-            <i class="fa fa-cloud-upload"></i></td>
-          <% else %>
-            <%= order.ig_status %>
-          <% end %>
-        </span>
-        </div>
-      </div>
 
-      <div style="margin-bottom: 15px;"></div>
+        <div class="row container">
+          <div class="col">
+            <% if order.position.try(:opened_at).present? %>
+              <span>OP: <%= order.position.try(:opened_at).try(:strftime, "%d %b %H:%M") %></span>
+            <% end %>
+          </div>
+          <div class="col">
+            <span>IG:
+            <% if order.ig_status == "accepted" %>
+              <i class="fa fa-check" style="color: green;"></i></td>
+            <% elsif order.ig_status == "rejected" %>
+              <i class="fa fa-times" style="color: red;"></i></td>
+            <% elsif order.ig_status.nil? %>
+              <i class="fa fa-cloud-upload"></i></td>
+            <% else %>
+              <%= order.ig_status %>
+            <% end %>
+          </span>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 15px;"></div>
+
+      <% end %>
 
     </div>
   <% end %>
