@@ -3,20 +3,24 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
+  <div class="collapse navbar-collapse pull-right" id="navbarNav">
     <ul class="navbar-nav">
       <% if current_user && current_user.admin? %>
-        <li class="nav-item">
+        <li class="nav-item nav-item-bordered">
           <%= link_to "Signals", admin_fx_signals_path, class: "nav-link" %>
         </li>
-        <li class="nav-item">
+        <li class="nav-item nav-item-bordered">
           <%= link_to "Orders", admin_orders_path, class: "nav-link" %>
         </li>
-        <li class="nav-item">
+        <li class="nav-item nav-item-bordered">
           <%= link_to "Sidekiq", "/sidekiq", class: "nav-link" %>
         </li>
+        <li class="nav-item nav-item-bordered">
+          <i class="fa fa-spinner js-spinner gray-center"></i>
+          <span class="js-account-info gray-center"></span>
+        </li>
       <% end %>
-      <li class="nav-item">
+      <li class="nav-item nav-item-bordered">
         <% if current_user.present? %>
           <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "nav-link" %>
         <% else %>

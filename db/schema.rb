@@ -96,6 +96,8 @@ ActiveRecord::Schema.define(version: 20180308205533) do
     t.datetime "closed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["ig_deal_id"], name: "index_positions_on_ig_deal_id"
+    t.index ["pair_id"], name: "index_positions_on_pair_id"
   end
 
   create_table "tokens", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

@@ -9,6 +9,11 @@ Rails.application.routes.draw do
   root "root#show"
 
   namespace :admin do
+    resources :account, only: [] do
+      collection do
+        get :balance
+      end
+    end
     resources :orders do
       member do
         delete :remove

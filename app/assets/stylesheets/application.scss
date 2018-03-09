@@ -82,3 +82,14 @@ tr.success {
   width: 150px;
   margin: 5px 0;
 }
+
+.nav-item-bordered {
+  border-left: 1px solid #E9E9E9;
+  padding: 0px 5px;
+}
+
+.gray-center {
+  display: block;
+  padding: .5rem 1rem;
+  color: rgba(0,0,0,.5);
+}

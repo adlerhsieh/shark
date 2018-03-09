@@ -30,6 +30,7 @@ gem 'capistrano-bundler'
 gem 'capybara', '~> 2.13'
 gem 'poltergeist'
 gem 'selenium-webdriver'
+gem 'gon'
 
 group :development, :test do
   gem 'rspec-rails'

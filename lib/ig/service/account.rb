@@ -6,6 +6,12 @@ module IG
 
     class Account < IG::Service::Base
 
+      def info
+        get("gateway/deal/accounts",
+            headers: { "Version" => "1" }
+        )
+      end
+
       def transactions(start_time = (Time.current - 2.hour), end_time = Time.current, options = {})
         from = start_time.utc.strftime("%Y-%m-%dT%H:%M:%S")
         to   = end_time.utc.strftime("%Y-%m-%dT%H:%M:%S")
