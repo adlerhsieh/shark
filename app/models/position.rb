@@ -2,6 +2,7 @@ class Position < ApplicationRecord
 
   has_one :order
   belongs_to :pair
+  belongs_to :source, optional: true
 
   def buy?
     direction == "buy"

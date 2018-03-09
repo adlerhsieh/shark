@@ -3,6 +3,7 @@ class Order < ApplicationRecord
   has_many :logs, class_name: "AuditLog", as: :source
 
   belongs_to :pair
+  belongs_to :source, optional: true
   belongs_to :position, optional: true
 
   validates :pair_id, presence: true

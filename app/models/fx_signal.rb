@@ -1,7 +1,7 @@
 class FxSignal < ApplicationRecord
 
   belongs_to :pair
-  belongs_to :source, class_name: "FxSignalSource", foreign_key: :source_id, optional: true
+  belongs_to :source, class_name: "Source", optional: true
 
   scope :recent, -> { where("created_at > ?", (Date.today - 1.day).to_s + " 00:00:00") }
   scope :closed, -> { where.not(closed_at: nil) }
