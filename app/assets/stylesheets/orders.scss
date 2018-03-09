@@ -1,0 +1,48 @@
+@media screen and (min-width: 800px) {
+  .mobile {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .desktop {
+    display: none;
+  }
+
+  div, a, button {
+    .btn-wide {
+      width: 100%;
+    }
+  }
+}
+
+.item {
+  border: 1px solid gray;
+  color: gray;
+  margin: 5px 0px;
+  padding: 0px;
+
+  a.banner {
+    color: black;
+    display: block;
+    background-color: #F8F8F8;
+    text-align: center;
+    height: 35px;
+    line-height: 35px;
+    text-decoration: none;
+
+    &.profit {
+      background-color: #dff0d8;
+    }
+
+    &.loss {
+      background-color: #ffe7e7;
+    }
+
+    &.expired {
+      background-color: #cccccc;
+    }
+  }
+
+}
+

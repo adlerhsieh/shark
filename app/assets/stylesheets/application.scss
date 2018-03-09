@@ -14,62 +14,6 @@
  *= require_self
  */
 
-tr.danger {
-  background-color: #ffd7d7;
-}
-
-tr.gray {
-  background-color: gray;
-}
-
-tr.success {
-  background-color: #dff0d8;
-}
-
-@media screen and (min-width: 800px) {
-  .mobile {
-    display: none;
-  }
-
-}
-
-@media screen and (max-width: 800px) {
-  .desktop {
-    display: none;
-  }
-
-  div, a, button {
-    .btn-wide {
-      width: 100%;
-    }
-  }
-}
-
-.item {
-  border: 1px solid gray;
-  color: gray;
-  margin-bottom: 10px;
-
-  a.banner {
-    color: black;
-    display: block;
-    background-color: #F8F8F8;
-
-    &.profit {
-      background-color: #dff0d8;
-    }
-
-    &.loss {
-      background-color: #ffe7e7;
-    }
-
-    &.expired {
-      background-color: #cccccc;
-    }
-  }
-
-}
-
 .green {
   color: green;
 }
