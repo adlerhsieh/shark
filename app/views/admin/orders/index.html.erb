@@ -1,74 +1,14 @@
 <%= link_to "New", new_admin_order_path, class: "btn btn-primary btn-wide", style: "margin-bottom: 10px; margin-top: 5px;" %>
 
-<div class="desktop">
-  <table class="table">
-    <thead>
-      <th>#</th>
-      <th>Pair</th>
-      <th>Direction</th>
-      <th>Entry</th>
-      <th>TP</th>
-      <th>SL</th>
-      <th>Created at</th>
-      <th>Expired at</th>
-      <th>Opened at</th>
-      <th>IG Status</th>
-      <th></th>
-    </thead>
-    <tbody>
-      <% @orders.each do |order| %>
-        <tr class="">
-          <td><%= link_to order.id, edit_admin_order_path(order) %></td>
-          <td><%= order.pair.pair %></td>
-          <td><%= order.direction %></td>
-          <td><%= order.entry %></td>
-          <td><%= order.take_profit %></td>
-          <td><%= order.stop_loss %></td>
-          <td><%= order.created_at.try(:strftime, "%d %b %H:%M") %></td>
-          <td><%= order.expired_at.try(:strftime, "%d %b %H:%M") %></td>
-          <td><%= order.position.try(:opened_at).try(:strftime, "%d %b %H:%M") %></td>
-          <td>
-            <% if order.ig_status == "accepted" %>
-              <i class="fa fa-check" style="color: green;"></i></td>
-            <% elsif order.ig_status == "rejected" %>
-              <i class="fa fa-times" style="color: red;"></i></td>
-            <% elsif order.ig_status.nil? %>
-              <i class="fa fa-cloud-upload"></i></td>
-            <% else %>
-              <%= order.ig_status %>
-            <% end %>
-          <td>
-            <% if order.ig_status != "accepted" %>
-              <%= link_to "Remove", admin_order_path(order), method: :delete, class: "btn btn-sm btn-danger" %>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-
-<div class="mobile">
+<div class="row" style="margin: 0px 0px;">
+  
   <% @orders.each do |order| %>
-    <div class="bordered item">
-      <%= link_to edit_admin_order_path(order), class: "btn btn-default banner #{order_result_class(order)}" do %>
-        <span><%= order.id %>.</span>
+    <div class="item col-lg-4">
+      <%= link_to edit_admin_order_path(order), class: "banner #{order_result_class(order)}" do %>
+        <span><%= order.id %></span>
         <span class="<%= order.direction == "buy" ? "green" : "red" %>"><%= order.direction.upcase %></span>
         <span><%= order.pair.pair %></span>
-        <% if order.deleted? %>
-          <span>(DELETED)</span>
-        <% elsif order.closed? %>
-          <% if order.position.profit? %>
-            <span>(PROFIT)</span>
-          <% else %>
-            <span>(LOSS)</span>
-          <% end %>
-        <% elsif order.expired? %>
-          <span>(EXPIRED)</span>
-        <% end %>
       <% end %>
-
-      <% if order.closed?.! && order.expired?.! && order.deleted?.! %>
 
         <div style="margin-bottom: 10px;"></div>
 
@@ -77,7 +17,7 @@
             <span>EN: <%= order.entry %></span>
           </div>
           <div class="col">
-            <span>@ <%= order.created_at.try(:strftime, "%d %b %H:%M") %></span>
+            <span><%= order.created_at.try(:strftime, "%d %b %H:%M") %></span>
           </div>
         </div>
 
@@ -94,33 +34,38 @@
           </div>
         </div>
 
+        <hr />
+
         <div class="row container">
           <div class="col">
-            <% if order.position.try(:opened_at).present? %>
-              <span>OP: <%= order.position.try(:opened_at).try(:strftime, "%d %b %H:%M") %></span>
-            <% end %>
+            <span>IG:
+              <% if order.position.try(:closed_at).present? || order.deleted? || order.expired? %>
+                <i class="fa fa-stop"></i></td>
+              <% elsif order.position.try(:opened_at).present? %>
+                <i class="fa fa-play"></i></td>
+              <% elsif order.ig_status == "accepted" %>
+                <i class="fa fa-pause"></i></td>
+              <% elsif order.ig_status == "rejected" %>
+                <i class="fa fa-times" style="color: red;"></i></td>
+              <% elsif order.ig_status.nil? %>
+                <i class="fa fa-cloud-upload"></i></td>
+              <% else %>
+                <%= order.ig_status %>
+              <% end %>
+            </span>
           </div>
           <div class="col">
-            <span>IG:
-            <% if order.ig_status == "accepted" %>
-              <i class="fa fa-check" style="color: green;"></i></td>
-            <% elsif order.ig_status == "rejected" %>
-              <i class="fa fa-times" style="color: red;"></i></td>
-            <% elsif order.ig_status.nil? %>
-              <i class="fa fa-cloud-upload"></i></td>
-            <% else %>
-              <%= order.ig_status %>
+            <% if order.position.try(:opened_at).present? %>
+              <span><%= order.position.try(:opened_at).try(:strftime, "%d %b %H:%M") %></span>
             <% end %>
-          </span>
           </div>
         </div>
 
         <div style="margin-bottom: 15px;"></div>
 
-      <% end %>
-
     </div>
   <% end %>
+
 </div>
 
 <div style="margin-bottom: 20px;"></div>
