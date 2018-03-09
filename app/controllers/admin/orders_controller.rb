@@ -1,6 +1,7 @@
 class Admin::OrdersController < Admin::BaseController
   before_action :load_order, only: %i[show edit update destroy remove]
   before_action :load_pairs, only: %i[new edit]
+  before_action :load_sources, only: %i[new edit]
 
   def index
     @orders = Order.all.includes(:position).order(created_at: :desc)
@@ -54,6 +55,10 @@ class Admin::OrdersController < Admin::BaseController
 
     def load_pairs
       @pairs = Pair.where(mini: true).order(:base, :quote)
+    end
+
+    def load_sources
+      @sources = Source.active.all
     end
 
 end

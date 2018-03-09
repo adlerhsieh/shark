@@ -5,6 +5,8 @@
 </script>
 
 <%= form_for [:admin, @order], class: "form-group" do |form| %>
+  Source
+  <%= form.select :source_id, @sources.map { |source| [source.name, source.id] }, {}, class: "form-control" %>
   Pair
   <%= form.select :pair_id, @pairs.map { |pair| [pair.pair, pair.id] }, {}, class: "form-control pair" %>
   <p></p>
