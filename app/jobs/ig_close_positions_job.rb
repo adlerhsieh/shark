@@ -39,6 +39,8 @@ class IgClosePositionsJob < ApplicationJob
       end
     end
 
+  rescue ::IG::Service::NotAvailable => ex
+    log.write("Error: #{ex}")
   rescue => ex
     log.error(ex)
   end

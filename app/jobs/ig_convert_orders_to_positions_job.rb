@@ -30,6 +30,11 @@ class IgConvertOrdersToPositionsJob < ApplicationJob
       order.update(position_id: new_position.id)
     end
     log.write("Done")
+
+  rescue ::IG::Service::NotAvailable => ex
+    log.write("Error: #{ex}")
+  rescue => ex
+    log.error(ex)
   end
 
   private

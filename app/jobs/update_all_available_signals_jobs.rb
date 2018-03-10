@@ -18,6 +18,9 @@ class UpdateAllAvailableSignalsJob < ApplicationJob
       IG::SignalUpdate.new(price_list, signal.id).update!
       log.write("Updated: signal evaluated_at to #{signal.reload.evaluated_at}")
     end
+
+  rescue ::IG::Service::NotAvailable => ex
+    log.write("Error: #{ex}")
   rescue => ex
     log.error(ex)
   end

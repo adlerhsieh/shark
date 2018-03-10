@@ -2,6 +2,8 @@ module IG
 
   module Service
 
+    class NotAvailable < StandardError; end
+
     class Base
 
       DEAL_HOST = "https://deal.ig.com"
@@ -24,6 +26,10 @@ module IG
             "password" => ENV["IG_PASSWORD"]
           }.to_json)
           puts res.code
+
+          if res.code.match(/^50/)
+            raise ::IG::Service::NotAvailable, "Status code: #{res.code}"
+          end
 
           update_token!("xst", res.header["X-SECURITY-TOKEN"])
           update_token!("cst", res.header["CST"])

@@ -34,6 +34,8 @@ class IgPlaceOrderJob < ApplicationJob
       ig_deal_id: confirmation["dealId"],
       ig_status: confirmation["dealStatus"].downcase
     )
+  rescue ::IG::Service::NotAvailable => ex
+    log.write("Error: #{ex}")
   rescue => ex
     log.error(ex)
   end
