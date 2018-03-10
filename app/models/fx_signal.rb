@@ -2,6 +2,8 @@ class FxSignal < ApplicationRecord
 
   include DealHelper
 
+  has_many :logs, class_name: "AuditLog", as: :source
+
   belongs_to :pair
   belongs_to :source, class_name: "Source", optional: true
 
@@ -15,10 +17,6 @@ class FxSignal < ApplicationRecord
 
   def pending?
     opened_at.blank? && closed_at.blank?
-  end
-
-  def source
-    
   end
 
   def init_evaluated_at

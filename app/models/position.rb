@@ -2,6 +2,8 @@ class Position < ApplicationRecord
 
   include DealHelper
 
+  has_many :logs, class_name: "AuditLog", as: :source
+
   has_one :order
   belongs_to :pair
   belongs_to :source, optional: true
