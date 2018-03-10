@@ -1,0 +1,66 @@
+<%= link_to "New", new_admin_position_path, class: "btn btn-primary btn-wide", style: "margin-bottom: 10px; margin-top: 5px;" %>
+
+<div class="row" style="margin: 0px 0px;">
+  
+  <% @positions.each do |position| %>
+    <div class="item col-lg-4">
+      <%= link_to edit_admin_position_path(position), class: "banner" do %>
+        <span><%= position.id %></span>
+        <span class="<%= position.direction == "buy" ? "green" : "red" %>"><%= position.direction.upcase %></span>
+        <span><%= position.pair.pair %></span>
+      <% end %>
+
+        <div style="margin-bottom: 10px;"></div>
+
+        <div class="row container">
+          <div class="col">
+            <span>EN: <%= position.entry %></span>
+          </div>
+          <div class="col">
+            <span><%= position.created_at.try(:strftime, "%d %b %H:%M") %></span>
+          </div>
+        </div>
+
+        <div class="row container">
+          <div class="col">
+            <% if position.take_profit %>
+              <span>TP: <%= position.take_profit %></span>
+            <% end %>
+          </div>
+          <div class="col">
+            <% if position.stop_loss %>
+              <span>SL: <%= position.stop_loss %></span>
+            <% end %>
+          </div>
+        </div>
+
+        <hr />
+
+        <div class="row container">
+          <div class="col">
+            <span>IG:
+              <% if position.closed_at.present? %>
+                <i class="fa fa-stop"></i></td>
+              <% elsif position.opened_at.present? %>
+                <i class="fa fa-play"></i></td>
+              <% else %>
+                <%= position.ig_status %>
+              <% end %>
+            </span>
+          </div>
+          <div class="col">
+            <% if position.opened_at.present? %>
+              <span><%= position.opened_at.strftime("%d %b %H:%M") %></span>
+            <% end %>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 15px;"></div>
+
+    </div>
+  <% end %>
+
+</div>
+
+<div style="margin-bottom: 20px;"></div>
+
