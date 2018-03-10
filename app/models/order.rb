@@ -1,5 +1,8 @@
 class Order < ApplicationRecord
 
+  include DealHelper
+  delegate :opened?, :closed?, to: :position, allow_nil: true
+
   has_many :logs, class_name: "AuditLog", as: :source
 
   belongs_to :pair
@@ -19,24 +22,8 @@ class Order < ApplicationRecord
     IgRemoveOrderJob.perform_later(id)
   end
 
-  def buy?
-    direction == "buy"
-  end
-
-  def sell?
-    direction == "sell"
-  end
-
   def expired?
     expired_at < Time.now
-  end
-
-  def opened?
-    position.try(:opened_at).present?
-  end
-
-  def closed?
-    position.try(:closed_at).present?
   end
 
 end

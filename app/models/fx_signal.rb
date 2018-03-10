@@ -1,5 +1,7 @@
 class FxSignal < ApplicationRecord
 
+  include DealHelper
+
   belongs_to :pair
   belongs_to :source, class_name: "Source", optional: true
 
@@ -11,14 +13,6 @@ class FxSignal < ApplicationRecord
 
   before_create :init_evaluated_at
 
-  def opened?
-    opened_at.present? && closed_at.blank?
-  end
-
-  def closed?
-    closed_at.present?
-  end
-
   def pending?
     opened_at.blank? && closed_at.blank?
   end
@@ -29,14 +23,6 @@ class FxSignal < ApplicationRecord
 
   def init_evaluated_at
     self.evaluated_at ||= Time.current
-  end
-
-  def long?
-    direction == "buy"
-  end
-
-  def short?
-    direction == "sell"
   end
 
 end
