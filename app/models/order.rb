@@ -31,6 +31,10 @@ class Order < ApplicationRecord
     expired_at < Time.now
   end
 
+  def opened?
+    position.try(:opened_at).present?
+  end
+
   def closed?
     position.try(:closed_at).present?
   end

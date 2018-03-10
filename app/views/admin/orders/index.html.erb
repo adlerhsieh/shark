@@ -39,10 +39,12 @@
         <div class="row container">
           <div class="col">
             <span>IG:
-              <% if order.position.try(:closed_at).present? || order.deleted? || order.expired? %>
+              <% if order.position.try(:closed_at).present? %>
                 <i class="fa fa-stop"></i></td>
               <% elsif order.position.try(:opened_at).present? %>
                 <i class="fa fa-play"></i></td>
+              <% elsif order.deleted? || order.expired? %>
+                <i class="fa fa-stop"></i></td>
               <% elsif order.ig_status == "accepted" %>
                 <i class="fa fa-pause"></i></td>
               <% elsif order.ig_status == "rejected" %>
