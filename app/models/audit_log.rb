@@ -8,6 +8,6 @@ class AuditLog < ApplicationRecord
 
   def error(ex)
     write("#{ex}\n#{ex.backtrace.join("\n")}")
-    $slack.ping("Error when executing #{self.class}. Check audit log for more info.") if Rails.env.production?
+    # $slack.ping("Error when executing #{self.class}. Check audit log for more info.") if Rails.env.production?
   end
 end
