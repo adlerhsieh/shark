@@ -1,19 +1,15 @@
-@media screen and (min-width: 800px) {
-  .mobile {
-    display: none;
-  }
+@media screen and (min-width: 768px) {
+
 }
 
-@media screen and (max-width: 800px) {
-  .desktop {
-    display: none;
-  }
+@media screen and (max-width: 768px) {
 
   div, a, button {
     .btn-wide {
       width: 100%;
     }
   }
+
 }
 
 .item {

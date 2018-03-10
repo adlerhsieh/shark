@@ -8,7 +8,7 @@ class Admin::BaseController < ApplicationController
 
   def push_admin_to_gon
     gon.push(
-      admin: true
+      
     )
   end
 

@@ -9,7 +9,9 @@ Rails.application.routes.draw do
   root "root#show"
 
   namespace :admin do
-    resources :account, only: [] do
+    get "/account", to: "account#root"
+
+    resources :account, only: %i[] do
       collection do
         get :balance
       end

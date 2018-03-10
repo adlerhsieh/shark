@@ -3,7 +3,7 @@
 <div class="row" style="margin: 0px 0px;">
   
   <% @orders.each do |order| %>
-    <div class="item col-lg-4">
+    <div class="item col-md-4">
       <%= link_to edit_admin_order_path(order), class: "banner #{order_result_class(order)}" do %>
         <span><%= order.id %></span>
         <span class="<%= order.direction == "buy" ? "green" : "red" %>"><%= order.direction.upcase %></span>

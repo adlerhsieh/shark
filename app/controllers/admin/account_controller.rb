@@ -1,5 +1,11 @@
 class Admin::AccountController < Admin::BaseController
 
+  def root
+    gon.push(
+      account: true
+    )
+  end
+
   def balance
     info = service.info
     balance = info["accounts"].first["balance"]

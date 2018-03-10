@@ -16,6 +16,9 @@
           <%= link_to "Positions", admin_positions_path, class: "nav-link" %>
         </li>
         <li class="nav-item nav-item-bordered">
+          <%= link_to "Account", admin_account_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item nav-item-bordered">
           <%= link_to "Sidekiq", "/sidekiq", class: "nav-link" %>
         </li>
         <li class="nav-item nav-item-bordered">
@@ -24,10 +27,6 @@
           <% else %>
             <%= link_to "Sign In", new_user_session_path, class: "nav-link" %>
           <% end %>
-        </li>
-        <li class="nav-item nav-item-bordered">
-          <i class="fa fa-spinner js-spinner gray-center"></i>
-          <span class="js-account-info gray-center"></span>
         </li>
       <% end %>
     </ul>

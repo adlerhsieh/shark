@@ -17,19 +17,15 @@
 $(document).ready(function(){
   $(".js-account-info").hide();
 
-  if(gon.admin) {
+  if(gon.account) {
     displayAccountInfo();
   };
 })
 
 function displayAccountInfo() {
   $.get("/admin/account/balance", function(data) {
-    $(".js-spinner").hide();
-
-    var t = "Available: $" + data.available +
-            "; Margin: $" + data.margin +
-            "; P/L: $" + data.profit_loss
-    $(".js-account-info").text(t);
-    $(".js-account-info").show();
+    $(".js-balance-available").text(data.available);
+    $(".js-balance-margin").text(data.margin);
+    $(".js-balance-pl").text(data.profit_loss);
   })
 };
