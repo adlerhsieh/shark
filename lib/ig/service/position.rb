@@ -23,13 +23,13 @@ module IG
           "guaranteedStop": "false",
           "stopLevel": nil,
           "stopDistance": nil,
-          "trailingStop": nil,
+          "trailingStop": "false",
           "trailingStopIncrement": nil,
           "forceOpen": "true",
           "limitLevel": nil,
           "limitDistance": nil,
           "quoteId": nil,
-          "currencyCode": "AUD"
+          "currencyCode": pair.quote
         }
 
         options.except(:headers).each do |key, value|
@@ -37,7 +37,7 @@ module IG
         end
 
         post("gateway/deal/positions/otc", {
-          headers: options[:headers],
+          headers: (options[:headers] || {}).merge("Version" => "2"),
           body: body.to_json
         })
       end
