@@ -31,6 +31,7 @@ gem 'capybara', '~> 2.13'
 gem 'poltergeist'
 gem 'selenium-webdriver'
 gem 'gon'
+gem "sentry-raven"
 # gem 'telegram-rb', require: 'telegram'
 
 group :development, :test do
