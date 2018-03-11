@@ -18,7 +18,7 @@ module IG
           "direction": "BUY",
           "size": "1",
           "orderType": "MARKET",
-          "timeInForce": "EXECUTE_AND_ELIMINATE",
+          "timeInForce": "FILL_OR_KILL",
           "level": nil,
           "guaranteedStop": "false",
           "stopLevel": nil,

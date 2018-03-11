@@ -1,0 +1,32 @@
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+    $(".pair").focus();
+  })
+</script>
+
+<%= form_for [:admin, @position], class: "form-group" do |form| %>
+  Source
+  <%= form.select :source_id, @sources.map { |source| [source.name, source.id] }, {}, class: "form-control" %>
+  Pair
+  <%= form.select :pair_id, @pairs.map { |pair| [pair.pair, pair.id] }, {}, class: "form-control pair" %>
+  <p></p>
+  Direction
+  <%= form.select :direction, ["buy", "sell"], {}, { class: "form-control" }%>
+  Size
+  <%= form.number_field :size, class: "form-control", value: (@position.size || 1.0) %>
+  Take Profit
+  <%= form.number_field :take_profit, class: "form-control", step: :any, value: (@position.take_profit || 0.0) %>
+  Stop Loss
+  <%= form.number_field :stop_loss, class: "form-control", step: :any, value: (@position.stop_loss || 0.0) %>
+  <p></p>
+
+  <%= form.submit "Save", class: "btn btn-primary btn-wide" %>
+
+  <% if params[:action] == "edit" %>
+    <%= link_to "Delete", admin_position_path(@position), method: :delete, class: "btn btn-danger btn-wide", data: { confirm: "Sure?" } %>
+  <% end %>
+
+  <%= link_to "Back", admin_positions_path, class: "btn btn-default btn-wide" %>
+<% end %>
+
+

@@ -8,6 +8,10 @@ class Position < ApplicationRecord
   belongs_to :pair
   belongs_to :source, optional: true
 
+  def ig_open_position
+    IgOpenPositionJob.perform_now(id)
+  end
+
   def profit?
     return if closed.blank?
 

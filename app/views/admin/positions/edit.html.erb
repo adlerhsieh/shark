@@ -1,1 +1,14 @@
 <%= render "form" %>
+
+<p></p>
+
+<% @position.logs.each do |log| %>
+  <ul class="list-group">
+    <li class="list-group-item active">#<%= log.id %></li>
+    <% log.content.split("\n").each do |line| %>
+      <li class="list-group-item"><%= line %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<p></p>
