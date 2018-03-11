@@ -4,7 +4,7 @@ class Admin::PositionsController < Admin::BaseController
   before_action :load_sources, only: %i[new edit]
 
   def index
-    @positions = Position.all.order(created_at: :desc)
+    @positions = Position.all.includes(:source).order(created_at: :desc)
   end
 
   def new
@@ -15,7 +15,7 @@ class Admin::PositionsController < Admin::BaseController
     @position = Position.new(position_params)
     @position.ig_open_position if @position.save
 
-    redirect_to admin_orders_path
+    redirect_to admin_positions_path
   end
 
   def edit
@@ -29,7 +29,7 @@ class Admin::PositionsController < Admin::BaseController
 
   def destroy
     @position.destroy
-    redirect_to admin_position_path
+    redirect_to admin_positions_path
   end
 
   private
@@ -43,11 +43,11 @@ class Admin::PositionsController < Admin::BaseController
     end
 
     def load_pairs
-      @pairs = Pair.where(mini: true).order(:base, :quote)
+      @pairs = Pair.order(:base, :quote)
     end
 
     def load_sources
-      @sources = Source.active.all
+      @sources = Source.all
     end
 
 end

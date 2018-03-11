@@ -4,7 +4,7 @@ class Admin::OrdersController < Admin::BaseController
   before_action :load_sources, only: %i[new edit]
 
   def index
-    @orders = Order.all.includes(:position).order(created_at: :desc)
+    @orders = Order.all.includes(:position, :source).order(created_at: :desc)
   end
 
   def show
@@ -58,7 +58,7 @@ class Admin::OrdersController < Admin::BaseController
     end
 
     def load_sources
-      @sources = Source.active.all
+      @sources = Source.all
     end
 
 end

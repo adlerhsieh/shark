@@ -8,6 +8,17 @@
         <span><%= position.id %>.</span>
         <span class="<%= position.direction == "buy" ? "green" : "red" %>"><%= position.direction.upcase %></span>
         <span><%= position.pair.pair %></span>
+        <span style="margin-left: 8px;">
+          <% if position.closed_at.present? %>
+            <i class="fa fa-stop"></i></td>
+          <% elsif position.opened_at.present? %>
+            <i class="fa fa-play"></i></td>
+          <% elsif position.ig_status == "rejected" %>
+            <i class="fa fa-times" style="color: red;"></i></td>
+          <% else %>
+            <%= position.ig_status %>
+          <% end %>
+        </span>
       <% end %>
 
         <div style="margin-bottom: 10px;"></div>
@@ -34,28 +45,7 @@
           </div>
         </div>
 
-        <hr />
-
-        <div class="row container">
-          <div class="col">
-            <span>IG:
-              <% if position.closed_at.present? %>
-                <i class="fa fa-stop"></i></td>
-              <% elsif position.opened_at.present? %>
-                <i class="fa fa-play"></i></td>
-              <% else %>
-                <%= position.ig_status %>
-              <% end %>
-            </span>
-          </div>
-          <div class="col">
-            <% if position.opened_at.present? %>
-              <span><%= position.opened_at.strftime("%d %b %H:%M") %></span>
-            <% end %>
-          </div>
-        </div>
-
-        <div style="margin-bottom: 15px;"></div>
+        <span class="source"><%= position.source.try(:name) || "-" %></span>
 
     </div>
   <% end %>
