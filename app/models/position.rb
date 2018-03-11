@@ -9,7 +9,7 @@ class Position < ApplicationRecord
   belongs_to :source, optional: true
 
   def ig_open_position
-    IgOpenPositionJob.perform_now(id)
+    IgOpenPositionJob.perform_later(id)
   end
 
   def profit?

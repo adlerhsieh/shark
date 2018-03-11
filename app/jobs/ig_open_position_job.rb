@@ -28,10 +28,13 @@ class IgOpenPositionJob < ApplicationJob
 
     log.write("Status: #{confirmation["dealStatus"]}")
     log.write(confirmation.to_s)
-    @position.update(
+    attrs = {
       ig_deal_id: confirmation["dealId"],
-      ig_status: confirmation["dealStatus"].downcase
-    )
+      ig_status: confirmation["dealStatus"].downcase,
+      entry: confirmation["level"]
+    }
+    attrs.merge!(opened_at: "#{confirmation["date"]} UTC") if attrs[:ig_status].downcase == "accepted"
+    @position.update(attrs)
   rescue ::IG::Service::NotAvailable => ex
     log.write("Error: #{ex}")
   rescue => ex
