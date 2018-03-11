@@ -4,7 +4,7 @@ class Admin::PositionsController < Admin::BaseController
   before_action :load_sources, only: %i[new edit]
 
   def index
-    @positions = Position.all.includes(:source).order(created_at: :desc)
+    @positions = Position.all.includes(:pair, :source).order(created_at: :desc)
   end
 
   def new
