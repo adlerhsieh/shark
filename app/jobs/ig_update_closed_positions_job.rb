@@ -1,4 +1,4 @@
-class IgClosePositionsJob < ApplicationJob
+class IgUpdateClosedPositionsJob < ApplicationJob
   queue_as :default
 
   def perform(start_time = (Time.current - 1.day), end_time = Time.current)

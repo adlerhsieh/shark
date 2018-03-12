@@ -10,9 +10,14 @@ convert_orders_to_positions:
   queue: "default"
   active_job: true
 
-close_positions:
+update_closed_positions:
   cron: "*/11 * * * *"
-  class: "IgClosePositionsJob"
+  class: "IgUpdateClosedPositionsJob"
   queue: "default"
   active_job: true
 
+close_positions:
+  cron: "*/5 * * * *"
+  class: "IgClosePositionsJob"
+  queue: "default"
+  active_job: true
