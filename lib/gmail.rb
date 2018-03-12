@@ -66,6 +66,10 @@ module Gmail
       messages(max_results: 20, q: "ForexSignals")
     end
 
+    def lf
+      messages(max_results: 20, q: "live-forex-signals")
+    end
+
     def message(id)
       @service.get_user_message('me', id)
     end
