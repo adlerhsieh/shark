@@ -21,7 +21,8 @@ class FxSignal < ApplicationRecord
       pair_id: pair_id,
       direction: direction,
       size: options[:size] || 1,
-      signal_id: id
+      signal_id: id,
+      source_id: source_id
     )
 
     IgOpenPositionJob.perform_later(position.id)
