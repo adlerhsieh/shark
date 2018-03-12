@@ -10,7 +10,7 @@ class IgUpdateClosedPositionsJob < ApplicationJob
 
     transactions["transactions"].each do |transaction|
       pair_name = transaction["instrumentName"].match(/\S{3}\/\S{3}/).to_s
-      mini = transaction["instrumentName"].include?("MINI")
+      mini = transaction["instrumentName"].match(/mini/i) ? true : false
       log.write("Processing: #{pair_name} #{"MINI" if mini}")
       pair = Pair.find_by(
         base: pair_name.split("/").first,
@@ -27,7 +27,6 @@ class IgUpdateClosedPositionsJob < ApplicationJob
 
       position = Position.find_by(
         entry: transaction["openLevel"],
-        opened_at: Time.parse("#{transaction["openDateUtc"]} UTC"),
         pair_id: pair.id
       )
 
