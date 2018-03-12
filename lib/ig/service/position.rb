@@ -42,6 +42,25 @@ module IG
         })
       end
 
+      def close(position)
+        body = {
+            "dealId": position.ig_deal_id,
+            "epic": nil,
+            "expiry": nil,
+            "direction": position.opposite_direction.upcase,
+            "size": position.size.to_i.to_s,
+            "level": nil,
+            "orderType": "MARKET",
+            "timeInForce": nil,
+            "quoteId": nil
+        }
+
+        post("gateway/deal/positions/otc", {
+              headers: {"Version" => "1", "_METHOD" => "DELETE" },
+              body: body.to_json
+             })
+      end
+
     end
 
   end

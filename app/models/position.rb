@@ -30,4 +30,8 @@ class Position < ApplicationRecord
     !profit?
   end
 
+  def opposite_direction
+    buy? ? "sell" : "buy"
+  end
+
 end
