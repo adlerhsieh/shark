@@ -55,8 +55,9 @@ namespace :deploy do
 
   task :config do
     on roles(:web) do
-      execute "cp #{fetch(:deploy_to)}/shared/.env #{fetch(:deploy_to)}/current"
-      execute "cp #{fetch(:deploy_to)}/shared/secrets.yml #{fetch(:deploy_to)}/current/config"
+      execute "cp #{fetch(:deploy_to)}/shared/config/.env #{fetch(:deploy_to)}/current"
+      execute "cp #{fetch(:deploy_to)}/shared/config/secrets.yml #{fetch(:deploy_to)}/current/config"
+      execute "cp #{fetch(:deploy_to)}/shared/config/google_api_client_secret.json #{fetch(:deploy_to)}/current/config"
     end
   end
 
