@@ -12,7 +12,11 @@ class IgTerminatePositionsJob < ApplicationJob
   private
 
     def positions
-      Position.includes(:signal).joins(:signal).where.not(fx_signals: { terminated_at: nil })
+      Position
+        .includes(:signal)
+        .joins(:signal)
+        .where.not(fx_signals: { terminated_at: nil })
+        .where(closed_at: nil)
     end
 
 end
