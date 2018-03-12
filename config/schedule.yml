@@ -16,8 +16,8 @@ update_closed_positions:
   queue: "default"
   active_job: true
 
-close_positions:
+terminate_positions:
   cron: "*/5 * * * *"
-  class: "IgClosePositionsJob"
+  class: "IgTerminatePositionsJob"
   queue: "default"
   active_job: true
