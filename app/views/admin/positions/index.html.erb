@@ -4,7 +4,7 @@
   
   <% @positions.each do |position| %>
     <div class="item col-lg-4">
-      <%= link_to edit_admin_position_path(position), class: "banner" do %>
+      <%= link_to edit_admin_position_path(position), class: "banner #{position_class(position)}" do %>
         <span><%= position.id %>.</span>
         <span class="<%= position.direction == "buy" ? "green" : "red" %>"><%= position.direction.upcase %></span>
         <span><%= position.pair.pair %></span>
