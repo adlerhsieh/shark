@@ -16,6 +16,17 @@ class FxSignal < ApplicationRecord
 
   before_create :init_evaluated_at
 
+  def open_position!(options = {})
+    position = Position.create(
+      pair_id: pair_id,
+      direction: direction,
+      size: options[:size] || 1,
+      signal_id: id
+    )
+
+    IgOpenPositionJob.perform_later(position.id)
+  end
+
   def pending?
     opened_at.blank? && closed_at.blank?
   end

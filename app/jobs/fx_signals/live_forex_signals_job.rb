@@ -14,13 +14,15 @@ class FxSignals::LiveForexSignalsJob < ApplicationJob
       direction = matched[1].downcase
       pair = Pair.find_by(base: matched[2], quote: matched[3])
 
-      FxSignal.create!(
+      signal = FxSignal.create(
         source: Source.find_or_create_by(name: "live-forex-signals.com"),
         source_secondary_id: m.id,
         terminated_at: Time.current + 4.hours,
         pair: pair,
         direction: direction
       )
+
+      signal.open_position!
     end
 
   rescue Timeout::Error
