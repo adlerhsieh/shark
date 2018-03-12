@@ -1,7 +1,10 @@
 class IgClosePositionsJob < ApplicationJob
   queue_as :default
 
-  def perform
+  def perform(start_time = (Time.current - 1.day), end_time = Time.current)
+    @start_time = start_time
+    @end_time = end_time
+
     log.write("Getting all transactions from IG")
     log.write(transactions.to_json)
 
@@ -48,7 +51,7 @@ class IgClosePositionsJob < ApplicationJob
   private
 
     def transactions
-      @transactions ||= service.transactions
+      @transactions ||= service.transactions(@start_time, @end_time)
     end
 
     def service

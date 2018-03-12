@@ -12,7 +12,7 @@ module IG
         )
       end
 
-      def transactions(start_time = (Time.current - 2.hour), end_time = Time.current, options = {})
+      def transactions(start_time = (Time.current - 1.day), end_time = Time.current, options = {})
         from = start_time.utc.strftime("%Y-%m-%dT%H:%M:%S")
         to   = end_time.utc.strftime("%Y-%m-%dT%H:%M:%S")
 
