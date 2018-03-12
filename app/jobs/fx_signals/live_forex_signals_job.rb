@@ -3,7 +3,7 @@ class FxSignals::LiveForexSignalsJob < ApplicationJob
 
   def perform
     messages.messages.each do |m|
-      next if FxSignal.exists?(source_id: m.id)
+      next if FxSignal.exists?(source_secondary_id: m.id)
 
       message = service.message(m.id)
       data    = message.payload.body.data
