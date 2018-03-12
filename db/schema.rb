@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180312095648) do
+ActiveRecord::Schema.define(version: 20180312111731) do
 
   create_table "audit_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "source_type"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20180312095648) do
   end
 
   create_table "fx_signals", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "source_id"
+    t.integer "source_id"
     t.integer "pair_id"
     t.string "direction"
     t.decimal "entry", precision: 10, scale: 5
@@ -39,9 +39,11 @@ ActiveRecord::Schema.define(version: 20180312095648) do
     t.decimal "closed_price", precision: 10, scale: 5
     t.datetime "evaluated_at"
     t.datetime "terminated_at"
+    t.string "source_secondary_id"
     t.index ["created_at"], name: "index_fx_signals_on_created_at"
     t.index ["pair_id"], name: "index_fx_signals_on_pair_id"
     t.index ["source_id"], name: "index_fx_signals_on_source_id"
+    t.index ["source_secondary_id"], name: "index_fx_signals_on_source_secondary_id"
   end
 
   create_table "orders", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
