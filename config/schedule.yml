@@ -16,8 +16,14 @@ update_closed_positions:
   queue: "default"
   active_job: true
 
+live_forex_signals:
+  cron: "*/2 * * * *"
+  class: "FxSignals::LiveForexSignalsJob"
+  queue: "default"
+  active_job: true
+
 terminate_positions:
-  cron: "*/5 * * * *"
+  cron: "*/4 * * * *"
   class: "IgTerminatePositionsJob"
   queue: "default"
   active_job: true
