@@ -5,7 +5,9 @@ class Position < ApplicationRecord
   has_many :logs, class_name: "AuditLog", as: :source
 
   has_one :order
+  
   belongs_to :pair
+  belongs_to :signal, class_name: "FxSignal", foreign_key: :signal_id, optional: true
   belongs_to :source, optional: true
 
   def ig_open_position

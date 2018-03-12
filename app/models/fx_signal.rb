@@ -3,6 +3,7 @@ class FxSignal < ApplicationRecord
   include DealHelper
 
   has_many :logs, class_name: "AuditLog", as: :source
+  has_one :position, foreign_key: :signal_id
 
   belongs_to :pair
   belongs_to :source, class_name: "Source", optional: true
