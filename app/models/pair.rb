@@ -4,8 +4,8 @@ class Pair < ApplicationRecord
   has_many :positions
   has_many :orders
 
-  def pair
-    "#{base}/#{quote} #{"MINI" if mini?}"
+  def pair(show_mini = true)
+    "#{base}/#{quote} #{"MINI" if show_mini && mini?}".squish
   end
 
 end

@@ -14,6 +14,10 @@ class Position < ApplicationRecord
     IgOpenPositionJob.perform_later(id)
   end
 
+  def ig_update_tpsl
+    IgUpdateOpsitionJob.perform_later(id)
+  end
+
   def profit?
     return if closed.blank?
 
