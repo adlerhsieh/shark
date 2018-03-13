@@ -1,4 +1,4 @@
-class CrawlerLiveForexSignalsJob < ApplicationJob
+class Lfs::CrawlerLiveForexSignalsJob < ApplicationJob
   queue_as :default
 
   def perform
