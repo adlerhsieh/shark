@@ -1,7 +1,7 @@
 class IgUpdateClosedPositionsJob < ApplicationJob
   queue_as :default
 
-  def perform(start_time = (Time.current - 1.day), end_time = Time.current)
+  def perform(start_time = (Time.current - 4.hours), end_time = Time.current)
     @start_time = start_time
     @end_time = end_time
 
@@ -12,6 +12,12 @@ class IgUpdateClosedPositionsJob < ApplicationJob
       pair_name = transaction["instrumentName"].match(/\S{3}\/\S{3}/).to_s
       mini = transaction["instrumentName"].match(/mini/i) ? true : false
       log.write("Processing: #{pair_name} #{"MINI" if mini}")
+      pl_info = transaction["profitAndLoss"].match(/^(\S*)\$(.*)$/)
+      currency = {
+        "A" => "AUD"
+      }[pl_info[1]]
+      pl = pl_info[2]
+
       pair = Pair.find_by(
         base: pair_name.split("/").first,
         quote: pair_name.split("/").last,
@@ -31,10 +37,13 @@ class IgUpdateClosedPositionsJob < ApplicationJob
       )
 
       if position.present?
+        next if position.closed && position.closed_at
         log.write("Updating Position ##{position.id}")
         position.update(
           closed: transaction["closeLevel"],
-          closed_at: Time.parse("#{transaction["dateUtc"]} UTC")
+          closed_at: Time.parse("#{transaction["dateUtc"]} UTC"),
+          pl: pl,
+          currency: currency
         )
       else
         log.write("Position not found")

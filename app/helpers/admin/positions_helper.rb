@@ -8,4 +8,8 @@ module Admin::PositionsHelper
     end
   end
 
+  def pl(position)
+    (position.pl.positive? ? "+" : "-") + "$" + position.pl.abs.to_s
+  end
+
 end

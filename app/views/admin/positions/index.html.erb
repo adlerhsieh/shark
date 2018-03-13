@@ -45,6 +45,19 @@
           </div>
         </div>
 
+        <div class="row container">
+          <div class="col">
+            <% if position.closed %>
+              <span>CL: <%= position.closed %></span>
+            <% end %>
+          </div>
+          <div class="col">
+            <% if position.pl %>
+              <span>PL: <%= pl(position) %></span>
+            <% end %>
+          </div>
+        </div>
+
         <span class="source"><%= position.source.try(:name) || "-" %></span>
 
     </div>
