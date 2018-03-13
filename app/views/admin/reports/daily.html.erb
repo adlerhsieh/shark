@@ -1,0 +1,23 @@
+<%= render "nav" %>
+
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Positions</th>
+      <th scope="col">P/L</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @daily.each do |row| %>
+      <tr class="<%= pl_class(row.pl) %>">
+        <td><%= row.created_at.strftime("%b %d %a") %></td>
+        <td><%= row.count %></td>
+        <td><%= row.pl %></td>
+      </tr>
+    <% end %>
+    <tr>
+      
+    </tr>
+  </tbody>
+</table>

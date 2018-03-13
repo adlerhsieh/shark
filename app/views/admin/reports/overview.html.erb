@@ -1,0 +1,11 @@
+<%= render "nav" %>
+
+<div class="card" style="width: 20rem;">
+  <div class="card-body">
+    <h5 class="card-title">Balance</h5>
+    <hr />
+    <p>Available: <%= @balance[:available] %></p>
+    <p>Margin: <%= @balance[:margin] %></p>
+    <p>P/L: <%= @balance[:profit_loss] %></p>
+  </div>
+</div>

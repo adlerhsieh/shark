@@ -14,18 +14,18 @@
 //= require turbolinks
 //= require_tree .
 
-$(document).ready(function(){
-  $(".js-account-info").hide();
-
-  if(gon.account) {
-    displayAccountInfo();
-  };
-})
-
-function displayAccountInfo() {
-  $.get("/admin/account/balance", function(data) {
-    $(".js-balance-available").text(data.available);
-    $(".js-balance-margin").text(data.margin);
-    $(".js-balance-pl").text(data.profit_loss);
-  })
-};
+// $(document).ready(function(){
+//   $(".js-account-info").hide();
+//
+//   if(gon.account) {
+//     displayAccountInfo();
+//   };
+// })
+//
+// function displayAccountInfo() {
+//   $.get("/admin/reports/balance", function(data) {
+//     $(".js-balance-available").text(data.available);
+//     $(".js-balance-margin").text(data.margin);
+//     $(".js-balance-pl").text(data.profit_loss);
+//   })
+// };
