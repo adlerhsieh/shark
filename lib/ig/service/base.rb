@@ -42,15 +42,15 @@ module IG
       end
 
       def xst
-        Token.find_or_create_by(name: "xst").token
+        Token.find_or_create_by(name: "xst", scope: "ig").token
       end
 
       def cst
-        Token.find_or_create_by(name: "cst").token
+        Token.find_or_create_by(name: "cst", scope: "ig").token
       end
 
       def update_token!(token_name, value)
-        Token.find_or_create_by(name: token_name).update(token: value)
+        Token.find_or_create_by(name: token_name, scope: "ig").update(token: value)
       end
 
       def send_request(method, url, headers = {}, body = nil, extra_options = {})
