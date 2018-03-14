@@ -1,14 +1,17 @@
 class Lfs::UpdateTpSlJob < ApplicationJob
   queue_as :default
 
-  def perform(position_id)
-    @position = Position.find(position_id)
+  def perform(signal_id)
+    @signal = FxSignal.find(signal_id)
 
-    return if @position.source_ref.blank?
+    return if @signal.source_ref.blank?
 
     service.login
-    service.get(@position.source_ref)
-    cell = service.document.css(".signal-cell").to_a.find {s| s.text.include?(pair_text)}.text
+    service.get(@signal.source_ref)
+    cell = service.document.css(".signal-cell").to_a.find {s| s.text.include?(pair_text)}
+
+    raise Crawler::SignalNotFound, "Failed locating #{@signal.pair.pair} for Signal ##{@signal.id} "\
+      " on its reference page: #{@signal.source_ref}"
 
     tp_cell = cell.css(".row").to_a.find { |s| s.text.downcase.include?("take profit") }
     tp = tp_cell.css(".signal-price").text.match(/\d*\.\d*/).to_s
@@ -20,8 +23,10 @@ class Lfs::UpdateTpSlJob < ApplicationJob
     tpsl.merge!(take_profit: tp.to_f) if tp.present?
     tpsl.merge!(stop_loss: sl.to_f) if sl.present?
 
-    @position.update(tpsl)
-    @position.ig_update_tpsl
+    if (position = @signal.position) 
+      position.update(tpsl)
+      # position.ig_update_tpsl
+    end
   end
 
   private

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180313104705) do
+ActiveRecord::Schema.define(version: 20180314104643) do
 
   create_table "audit_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "source_type"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20180313104705) do
     t.datetime "evaluated_at"
     t.datetime "terminated_at"
     t.string "source_secondary_id"
+    t.string "source_ref", limit: 800
     t.index ["created_at"], name: "index_fx_signals_on_created_at"
     t.index ["pair_id"], name: "index_fx_signals_on_pair_id"
     t.index ["source_id"], name: "index_fx_signals_on_source_id"
@@ -99,7 +100,6 @@ ActiveRecord::Schema.define(version: 20180313104705) do
     t.integer "signal_id"
     t.decimal "pl", precision: 10, scale: 5
     t.string "currency"
-    t.string "source_ref"
     t.index ["ig_deal_id"], name: "index_positions_on_ig_deal_id"
     t.index ["pair_id"], name: "index_positions_on_pair_id"
     t.index ["signal_id"], name: "index_positions_on_signal_id"

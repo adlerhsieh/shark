@@ -16,6 +16,10 @@ Capybara.register_driver :poltergeist do |app|
 end
 
 module Crawler
+
+  # Failed locating a signal on a page
+  class SignalNotFound < StandardError; end
+
   class Base
     include Capybara::DSL
 

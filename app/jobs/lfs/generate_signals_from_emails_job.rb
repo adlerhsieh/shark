@@ -10,6 +10,11 @@ class Lfs::GenerateSignalsFromEmailsJob < ApplicationJob
 
       next if data.blank?
 
+      url = Nokogiri::HTML(data)
+        .css("a").first
+        .attributes["href"].value
+        .split("?").first
+
       matched = data.match(/(buy|sell) (\S{3})\/(\S{3})/i)
 
       next if matched.blank?
@@ -22,7 +27,8 @@ class Lfs::GenerateSignalsFromEmailsJob < ApplicationJob
         source_secondary_id: m.id,
         terminated_at: Time.current + 4.hours,
         pair: pair,
-        direction: direction
+        direction: direction,
+        source_ref: url
       )
 
       signal.open_position!
@@ -35,7 +41,7 @@ class Lfs::GenerateSignalsFromEmailsJob < ApplicationJob
   private
 
     def messages
-      Timeout::timeout(10) { service.lf }
+      Timeout::timeout(100) { service.lf }
     end
 
     def service
