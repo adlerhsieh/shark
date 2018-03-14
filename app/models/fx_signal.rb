@@ -21,6 +21,9 @@ class FxSignal < ApplicationRecord
       pair_id: pair_id,
       direction: direction,
       size: options[:size] || 1,
+      entry: entry,
+      take_profit: take_profit,
+      stop_loss: stop_loss,
       signal_id: id,
       source_id: source_id
     )

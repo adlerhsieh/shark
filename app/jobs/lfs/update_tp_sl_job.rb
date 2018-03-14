@@ -3,25 +3,34 @@ class Lfs::UpdateTpSlJob < ApplicationJob
 
   def perform(signal_id)
     @signal = FxSignal.find(signal_id)
+    log.update(source: @signal)
 
-    return if @signal.source_ref.blank?
+    if @signal.source_ref.blank?
+      log.write("Skipped: No ref url")
+      return 
+    end
 
-    service.login
-    service.get(@signal.source_ref)
-    cell = service.document.css(".signal-cell").to_a.find {s| s.text.include?(pair_text)}
+    tpsl = find_tpsl
 
-    raise Crawler::SignalNotFound, "Failed locating #{@signal.pair.pair} for Signal ##{@signal.id} "\
-      " on its reference page: #{@signal.source_ref}"
+    if tpsl[:sold]
+      log.write("Skipped: signal already closed")
+      return
+    end
 
-    tp_cell = cell.css(".row").to_a.find { |s| s.text.downcase.include?("take profit") }
-    tp = tp_cell.css(".signal-price").text.match(/\d*\.\d*/).to_s
+    log.write("TP/SL: #{tpsl}")
 
-    sl_cell = cell.css(".row").to_a.find { |s| s.text.downcase.include?("stop loss") }
-    sl = sl_cell.css(".signal-price").text.match(/\d*\.\d*/).to_s
+    if tpsl.blank?
+      log.write("TP/SL not found. Try logging in again.")
+      service.login
+      tpsl = find_tpsl
+      log.write("TP/SL: #{tpsl}")
+    end
 
-    tpsl = {}
-    tpsl.merge!(take_profit: tp.to_f) if tp.present?
-    tpsl.merge!(stop_loss: sl.to_f) if sl.present?
+    if tpsl.blank?
+      log.write("Skipped: TP/SL not found.")
+    end
+
+    @signal.update(tpsl)
 
     if (position = @signal.position) 
       position.update(tpsl)
@@ -31,12 +40,15 @@ class Lfs::UpdateTpSlJob < ApplicationJob
 
   private
 
-    def pair_text
-      @position.pair.pair
-    end
+    def find_tpsl
+      service.get(@signal.source_ref)
 
-    def ref
-      @position.source_ref
+      finder = Crawler::LiveForexSignals::FindTpSl.new(
+        service.document, 
+        @signal.pair.pair(false)
+      )
+
+      finder.find.tpsl
     end
 
     def service

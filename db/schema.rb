@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180314104643) do
+ActiveRecord::Schema.define(version: 20180314111541) do
 
   create_table "audit_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "source_type"
@@ -116,9 +116,12 @@ ActiveRecord::Schema.define(version: 20180314104643) do
 
   create_table "tokens", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
-    t.string "token"
+    t.text "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "scope"
+    t.index ["name"], name: "index_tokens_on_name"
+    t.index ["scope"], name: "index_tokens_on_scope"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

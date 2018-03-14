@@ -15,7 +15,7 @@ class Position < ApplicationRecord
   end
 
   def ig_update_tpsl
-    IgUpdateOpsitionJob.perform_later(id)
+    IgUpdatePositionJob.perform_later(id)
   end
 
   def profit?

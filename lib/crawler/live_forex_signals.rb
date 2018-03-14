@@ -21,6 +21,7 @@ module Crawler
 
     def login
       puts "opening page"
+      set_default_headers! 
       visit("/en/login")
       puts "taking action"
       fill_in "user_name", with: ENV["LIVE_FOREX_SIGNALS_USERNAME"], id: "user_name"
@@ -30,6 +31,13 @@ module Crawler
     end
 
     def get(url)
+      set_default_headers! 
+      visit(url)
+      sleep(2)
+      @document = Nokogiri::HTML(page.body)
+    end 
+
+    def set_default_headers!
       page.driver.headers = {}
       page.driver.add_headers(
         "Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
@@ -43,11 +51,7 @@ module Crawler
         "Upgrade-Insecure-Requests" => "1",
         "User-Agent" => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36"
       )
-
-      visit(url)
-      sleep(2)
-      @document = Nokogiri::HTML(page.body)
-    end 
+    end
 
     def access
       visit("/en")
