@@ -1,5 +1,8 @@
 module Crawler
 
+  # For solving NameError
+  class Base; end
+
   # which direction?
   # how long is the lag for opened_at and closed_at?
   # determine how to close
