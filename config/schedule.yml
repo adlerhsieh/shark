@@ -10,9 +10,9 @@ update_closed_positions:
   queue: "default"
   active_job: true
 
-live_forex_signals:
+lfs_generate_signals_from_emails:
   cron: "*/2 * * * *"
-  class: "FxSignals::LiveForexSignalsJob"
+  class: "Lfs::GenerateSignalsFromEmailsJob"
   queue: "default"
   active_job: true
 

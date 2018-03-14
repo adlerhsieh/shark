@@ -1,4 +1,4 @@
-class FxSignals::LiveForexSignalsJob < ApplicationJob
+class Lfs::GenerateSignalsFromEmailsJob < ApplicationJob
   queue_as :default
 
   def perform
