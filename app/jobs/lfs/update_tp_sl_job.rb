@@ -28,14 +28,15 @@ class Lfs::UpdateTpSlJob < ApplicationJob
 
     if tpsl.blank?
       log.write("Skipped: TP/SL not found.")
+      return
     end
 
     @signal.update(tpsl)
 
-    if (position = @signal.position) 
-      position.update(tpsl)
+    # if (position = @signal.position) 
+    #   position.update(tpsl)
       # position.ig_update_tpsl
-    end
+    # end
   end
 
   private

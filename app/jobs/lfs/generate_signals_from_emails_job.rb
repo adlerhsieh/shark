@@ -31,7 +31,7 @@ class Lfs::GenerateSignalsFromEmailsJob < ApplicationJob
         source_ref: url
       )
 
-      # Lfs::UpdateTpSlJob.perform_later(signal.id)
+      Lfs::UpdateTpSlJob.perform_later(signal.id)
       signal.open_position!
     end
 
