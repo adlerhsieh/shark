@@ -7,9 +7,12 @@ class FxSignals::LiveForexSignalsJob < ApplicationJob
 
       message = service.message(m.id)
       data    = message.payload.body.data
+
+      next if data.blank?
+
       matched = data.match(/(buy|sell) (\S{3})\/(\S{3})/i)
 
-      next if matched.nil?
+      next if matched.blank?
 
       direction = matched[1].downcase
       pair = Pair.find_by(base: matched[2], quote: matched[3])
