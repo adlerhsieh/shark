@@ -1,9 +1,3 @@
-update_all_signals:
-  cron: "*/10 * * * *"
-  class: "UpdateAllAvailableSignalsJob"
-  queue: "default"
-  active_job: true
-
 convert_orders_to_positions:
   cron: "*/9 * * * *"
   class: "IgConvertOrdersToPositionsJob"

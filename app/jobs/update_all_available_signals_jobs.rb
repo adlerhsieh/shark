@@ -1,3 +1,4 @@
+# Not used
 class UpdateAllAvailableSignalsJob < ApplicationJob
   queue_as :default
  
