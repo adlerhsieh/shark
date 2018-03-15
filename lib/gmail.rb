@@ -67,7 +67,7 @@ module Gmail
     end
 
     def lf
-      messages(max_results: 20, q: "live-forex-signals")
+      messages(max_results: 10, q: "live-forex-signals")
     end
 
     def message(id)

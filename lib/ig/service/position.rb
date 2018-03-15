@@ -52,7 +52,7 @@ module IG
         }
 
         put("gateway/deal/positions/otc/#{deal_id}",
-            headers: { "Version" => "2" },
+            headers: (options[:headers] || {}).merge("Version" => "2"),
             body: body.to_json
            )
       end

@@ -7,9 +7,9 @@ class IgUpdatePositionJob < ApplicationJob
     log.write(@position.attributes.to_s)
 
     log.write("Sending request")
-    service.put(@position.ig_deal_id,
-                take_profit: @position.take_profit,
-                stop_loss: @position.stop_loss
+    response = service.update(@position.ig_deal_id,
+                 take_profit: @position.take_profit,
+                 stop_loss: @position.stop_loss
                )
 
     log.write("Response: #{response.to_s}")

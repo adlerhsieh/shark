@@ -66,6 +66,7 @@ module IG
         Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
           request = klass.new uri
 
+          puts "headers: #{headers}"
           headers.each do |key, value|
             request[key] = value
           end
@@ -77,6 +78,7 @@ module IG
           request["CST"] ||= cst
           request["IG-ACCOUNT-ID"] = ENV["IG_ACCOUNT_ID"]
 
+          puts "body: #{body}"
           http.request(request, body)
         end
       end

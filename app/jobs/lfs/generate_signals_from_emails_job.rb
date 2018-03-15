@@ -42,7 +42,7 @@ class Lfs::GenerateSignalsFromEmailsJob < ApplicationJob
   private
 
     def messages
-      Timeout::timeout(100) { service.lf }
+      Timeout::timeout(20) { service.lf }
     end
 
     def service
