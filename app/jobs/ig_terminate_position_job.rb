@@ -13,6 +13,9 @@ class IgTerminatePositionJob < ApplicationJob
     log.write("Response: #{response.to_s}")
     if response.present? && response["dealReference"]
       log.write("Reference: #{@position.ig_deal_reference}")
+    elsif response["errorCode"].to_s.include?("No position found")
+      log.write("Deal not found. Possibly it's already closed.")
+      return
     else
       log.write("No reference present")
     end
@@ -23,6 +26,8 @@ class IgTerminatePositionJob < ApplicationJob
     log.write("Status: #{confirmation["dealStatus"]}")
     log.write(confirmation.to_s)
 
+    # Possibly we can remove this since it's 
+    # handled in ig_update_closed_positions_job
     @position.update(closed_at: Time.current)
   end
 
