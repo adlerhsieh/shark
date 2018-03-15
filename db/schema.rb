@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180314111541) do
+ActiveRecord::Schema.define(version: 20180314204410) do
 
   create_table "audit_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "source_type"
@@ -30,13 +30,9 @@ ActiveRecord::Schema.define(version: 20180314111541) do
     t.decimal "entry", precision: 10, scale: 5
     t.decimal "take_profit", precision: 10, scale: 5
     t.decimal "stop_loss", precision: 10, scale: 5
-    t.datetime "opened_at"
-    t.decimal "closed", precision: 10, scale: 5
-    t.datetime "closed_at"
     t.text "raw"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.decimal "closed_price", precision: 10, scale: 5
     t.datetime "evaluated_at"
     t.datetime "terminated_at"
     t.string "source_secondary_id"
