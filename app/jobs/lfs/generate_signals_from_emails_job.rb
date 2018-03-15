@@ -31,6 +31,10 @@ class Lfs::GenerateSignalsFromEmailsJob < ApplicationJob
         source_ref: url
       )
 
+      # TODO: Might not happen but can be issue if ig_open position is slower
+      #       than lfs/update_tp_sl_job. The latter requires the former to fill
+      #       entry for a position to calculate tp & sl. Both of them are async.
+      #       
       signal
         .create_position
         .ig_open_position

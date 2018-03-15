@@ -34,7 +34,7 @@ class Lfs::UpdateTpSlJob < ApplicationJob
     @signal.update(tpsl)
 
     if (position = @signal.position) 
-      position.update(tpsl.except(:entry))
+      position.update_on(tpsl)
       position.ig_update_tpsl
     end
   end

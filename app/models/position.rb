@@ -38,4 +38,20 @@ class Position < ApplicationRecord
     buy? ? "sell" : "buy"
   end
 
+  # {
+  #   entry: 1.0,
+  #   take_profit: 1.1,
+  #   stop_loss: 1.2
+  # }
+  def update_on(tpsl)
+    # if response from ig hasn't come back and update entry
+    if entry.present?
+      entry_diff = entry - tpsl[:entry].to_f
+      tpsl[:take_profit] += entry_diff
+      tpsl[:stop_loss] += entry_diff
+    end
+    
+    update(tpsl.except(:entry))
+  end
+
 end
