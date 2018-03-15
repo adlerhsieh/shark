@@ -31,8 +31,11 @@ class Lfs::GenerateSignalsFromEmailsJob < ApplicationJob
         source_ref: url
       )
 
+      signal
+        .create_position
+        .ig_open_position
+
       Lfs::UpdateTpSlJob.perform_later(signal.id)
-      signal.open_position!
     end
 
   rescue Timeout::Error
