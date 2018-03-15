@@ -22,4 +22,4 @@
 /yarn-error.log
 
 .byebug_history
-lib/google_api_client_secret.json
+config/google_api_client_secret.json
