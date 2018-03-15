@@ -101,6 +101,10 @@ module IG
         authorize_and_request(:post, "#{ENV['IG_API_HOST']}/#{path}", options[:headers], options[:body])
       end
 
+      def put(path, options)
+        authorize_and_request(:put, "#{ENV['IG_API_HOST']}/#{path}", options[:headers], options[:body])
+      end
+
       def delete(path, options)
         authorize_and_request(:delete, "#{ENV['IG_API_HOST']}/#{path}", options[:headers], options[:body])
       end

@@ -42,6 +42,21 @@ module IG
         })
       end
 
+      def update(deal_id, options = {})
+        body = {
+          "stopLevel": options[:stop_loss].to_f.to_s,
+          "limitLevel": options[:take_profit].to_f.to_s,
+          "trailingStop": "false",
+          "trailingStopDistance": nil,
+          "trailingStopIncrement": nil
+        }
+
+        put("gateway/deal/positions/otc/#{deal_id}",
+            headers: { "Version" => "2" },
+            body: body.to_json
+           )
+      end
+
       def close(position)
         body = {
             "dealId": position.ig_deal_id,
