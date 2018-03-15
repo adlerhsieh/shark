@@ -26,6 +26,13 @@ module Crawler
           return self
         end
 
+        entry_cell = cell.css(".row").to_a.find { |s| s.text.downcase.match(/(buy|sell) at/) }
+        if entry_cell.blank?
+          @found = false
+          return self
+        end
+        @entry = entry_cell.css(".signal-price").text.match(/\d*\.\d*/).to_s.to_f
+
         tp_cell = cell.css(".row").to_a.find { |s| s.text.downcase.include?("take profit") }
         if tp_cell.blank?
           @found = false
@@ -47,6 +54,7 @@ module Crawler
       def tpsl
         if @found
           {
+            entry: @entry,
             take_profit: @tp,
             stop_loss: @sl
           }
