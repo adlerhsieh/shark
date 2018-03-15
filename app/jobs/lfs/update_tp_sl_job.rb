@@ -33,10 +33,10 @@ class Lfs::UpdateTpSlJob < ApplicationJob
 
     @signal.update(tpsl)
 
-    # if (position = @signal.position) 
-    #   position.update(tpsl)
-      # position.ig_update_tpsl
-    # end
+    if (position = @signal.position) 
+      position.update(tpsl)
+      position.ig_update_tpsl
+    end
   end
 
   private
