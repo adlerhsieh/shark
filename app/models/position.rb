@@ -11,11 +11,11 @@ class Position < ApplicationRecord
   belongs_to :source, optional: true
 
   def ig_open_position
-    IgOpenPositionJob.perform_later(id)
+    IG::OpenPositionJob.perform_later(id)
   end
 
   def ig_update_tpsl
-    IgUpdatePositionJob.perform_later(id)
+    IG::UpdatePositionJob.perform_later(id)
   end
 
   def profit?

@@ -15,11 +15,11 @@ class Order < ApplicationRecord
   validates :entry, presence: true
 
   def ig_place_order
-    IgPlaceOrderJob.perform_later(id)
+    IG::PlaceOrderJob.perform_later(id)
   end
 
   def ig_remove_order
-    IgRemoveOrderJob.perform_later(id)
+    IG::RemoveOrderJob.perform_later(id)
   end
 
   def expired?

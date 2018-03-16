@@ -1,12 +1,12 @@
 convert_orders_to_positions:
   cron: "*/9 * * * *"
-  class: "IgConvertOrdersToPositionsJob"
+  class: "IG::ConvertOrdersToPositionsJob"
   queue: "default"
   active_job: true
 
 update_closed_positions:
   cron: "*/11 * * * *"
-  class: "IgUpdateClosedPositionsJob"
+  class: "IG::UpdateClosedPositionsJob"
   queue: "default"
   active_job: true
 
@@ -18,6 +18,6 @@ lfs_generate_signals_from_emails:
 
 terminate_positions:
   cron: "*/4 * * * *"
-  class: "IgTerminatePositionsJob"
+  class: "IG::TerminatePositionsJob"
   queue: "default"
   active_job: true
