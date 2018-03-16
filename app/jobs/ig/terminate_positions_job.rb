@@ -17,6 +17,7 @@ module IG
           .includes(:signal)
           .joins(:signal)
           .where.not(fx_signals: { terminated_at: nil })
+          .where.not(opened_at: nil)
           .where(closed_at: nil)
       end
 
