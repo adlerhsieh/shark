@@ -10,24 +10,18 @@
     <th>TP</th>
     <th>SL</th>
     <th>Created at</th>
-    <th>Opened at</th>
-    <th>Closed at</th>
-    <th>Result</th>
   </thead>
   <tbody>
     <% @signals.each do |signal| %>
-      <tr class="<%= result_class(signal) %>">
+      <tr>
         <td><%= link_to signal.id, edit_admin_fx_signal_path(signal) %></td>
-        <td><%= signal.source %></td>
+        <td><%= signal.source.name %></td>
         <td><%= signal.pair.pair %></td>
         <td><%= signal.direction %></td>
         <td><%= signal.entry %></td>
         <td><%= signal.take_profit %></td>
         <td><%= signal.stop_loss %></td>
         <td><%= signal.created_at.try(:strftime, "%d %b %H:%M") %></td>
-        <td><%= signal.opened_at.try(:strftime, "%d %b %H:%M") %></td>
-        <td><%= signal.closed_at.try(:strftime, "%d %b %H:%M") %></td>
-        <td><%= signal.closed %></td>
       </tr>
     <% end %>
   </tbody>

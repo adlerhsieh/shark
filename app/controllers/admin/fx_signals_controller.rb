@@ -3,7 +3,7 @@ class Admin::FxSignalsController < Admin::BaseController
   before_action :load_pairs, only: %i[new edit]
 
   def index
-    @signals = FxSignal.includes(:pair).all.order(created_at: :desc)
+    @signals = FxSignal.includes(:pair, :source).all.order(created_at: :desc)
   end
 
   def show
