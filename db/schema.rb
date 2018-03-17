@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180314204410) do
+ActiveRecord::Schema.define(version: 20180317094543) do
 
   create_table "audit_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "source_type"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20180314204410) do
     t.datetime "terminated_at"
     t.string "source_secondary_id"
     t.string "source_ref", limit: 800
+    t.datetime "expired_at"
     t.index ["created_at"], name: "index_fx_signals_on_created_at"
     t.index ["pair_id"], name: "index_fx_signals_on_pair_id"
     t.index ["source_id"], name: "index_fx_signals_on_source_id"
@@ -59,10 +60,12 @@ ActiveRecord::Schema.define(version: 20180314204410) do
     t.string "ig_status"
     t.boolean "deleted", default: false
     t.integer "source_id"
+    t.integer "signal_id"
     t.index ["deleted"], name: "index_orders_on_deleted"
     t.index ["ig_deal_id"], name: "index_orders_on_ig_deal_id"
     t.index ["pair_id"], name: "index_orders_on_pair_id"
     t.index ["position_id"], name: "index_orders_on_position_id"
+    t.index ["signal_id"], name: "index_orders_on_signal_id"
     t.index ["source_id"], name: "index_orders_on_source_id"
   end
 
