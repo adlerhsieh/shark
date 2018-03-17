@@ -10,14 +10,20 @@ update_closed_positions:
   queue: "default"
   active_job: true
 
+terminate_positions:
+  cron: "*/4 * * * *"
+  class: "IG::TerminatePositionsJob"
+  queue: "default"
+  active_job: true
+
 # lfs_generate_signals_from_emails:
 #   cron: "*/2 * * * *"
 #   class: "Lfs::GenerateSignalsFromEmailsJob"
 #   queue: "default"
 #   active_job: true
-
-terminate_positions:
-  cron: "*/4 * * * *"
-  class: "IG::TerminatePositionsJob"
+    
+fs_generate_signals_from_emails:
+  cron: "*/2 * * * *"
+  class: "Fs::GenerateSignalsFromEmailsJob"
   queue: "default"
   active_job: true
