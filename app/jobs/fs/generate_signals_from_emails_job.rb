@@ -53,6 +53,13 @@ module Fs
         end
 
         signal = FxSignal.create!(attrs)
+
+        if signal.take_profit == 0.0 || sinal.stop_loss == 0.0
+          signal.update(expired_at: nil)
+          log.write("Skipped: Missing TP or SL")
+          next
+        end
+
         order = signal.create_order
         order.ig_place_order
       end
