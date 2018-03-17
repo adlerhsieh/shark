@@ -18,7 +18,7 @@ module Fs
 
         attrs = {
           source_secondary_id: m.id,
-          expired_at: Time.current + 3.days
+          expired_at: Time.current + 7.days
         }
         data    = message.payload.parts.first.body.data
         parts = data.match(/\r\n(.*)\r\n.*(SHORT|LONG)[ ]?(\S{6,8})[ ]?@[ ]?(\d{0,5}\.\d{0,5})/i)
