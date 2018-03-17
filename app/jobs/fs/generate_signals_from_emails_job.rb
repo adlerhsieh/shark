@@ -21,7 +21,7 @@ module Fs
           expired_at: Time.current + 3.days
         }
         data    = message.payload.parts.first.body.data
-        parts = data.match(/\r\n(.*)\r\n.*(SHORT|LONG)[ ]?(\S{6})[ ]?@[ ]?(\d{0,5}\.\d{0,5})/)
+        parts = data.match(/\r\n(.*)\r\n.*(SHORT|LONG)[ ]?(\S{6,8})[ ]?@[ ]?(\d{0,5}\.\d{0,5})/i)
         username = parts[1].squish
         attrs[:source] = Source.find_or_create_by(name: "forexsignals.com", username: username) do |source|
           source.active = true
