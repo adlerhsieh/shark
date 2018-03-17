@@ -10,12 +10,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
 
-    resources :reports, only: %i[] do
+    resources :reports, only: %i[index] do
       collection do
-        get :overview
         get :balance
-        get :monthly
-        get :daily
       end
     end
     resources :account, only: %i[] do

@@ -1,6 +1,14 @@
 class Admin::ReportsController < Admin::BaseController
 
-  def overview
+  def index
+    @daily = Position
+      .select("created_at, count(*) as count, sum(pl) as pl")
+      .group("date(created_at)")
+      .order("created_at desc")
+      .all
+  end
+
+  def balance
     # gon.push(
     #   account: true
     # )
@@ -13,21 +21,6 @@ class Admin::ReportsController < Admin::BaseController
       margin: balance["deposit"],
       profit_loss: balance["profitLoss"]
     }
-  end
-
-  def daily
-    @daily = Position
-      .select("created_at, count(*) as count, sum(pl) as pl")
-      .group("date(created_at)")
-      .order("created_at desc")
-      .all
-  end
-
-  def monthly
-    
-  end
-
-  def balance
   end
 
   private

@@ -1,0 +1,36 @@
+<%= render "nav" %>
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Overview</h5>
+    <!-- <h6 class="card&#45;subtitle mb&#45;2 text&#45;muted">Card subtitle</h6> -->
+    <!-- <p class="card&#45;text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+
+    <table class="table table-bordered table-sm">
+      <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Positions</th>
+          <th scope="col">P/L</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @daily.each do |row| %>
+          <tr class="<%= pl_class(row.pl) %>">
+            <td><%= row.created_at.strftime("%b %d %a") %></td>
+            <td><%= row.count %></td>
+            <td><%= row.pl %></td>
+          </tr>
+        <% end %>
+        <tr>
+          
+        </tr>
+      </tbody>
+    </table>
+
+
+    <!-- <a href="#" class="card&#45;link">Card link</a> -->
+    <!-- <a href="#" class="card&#45;link">Another link</a> -->
+  </div>
+</div>
+
