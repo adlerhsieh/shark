@@ -4,6 +4,7 @@ class FxSignal < ApplicationRecord
 
   has_many :logs, class_name: "AuditLog", as: :source
   has_one :position, foreign_key: :signal_id
+  has_one :order, foreign_key: :signal_id
 
   belongs_to :pair
   belongs_to :source, class_name: "Source", optional: true
@@ -26,6 +27,20 @@ class FxSignal < ApplicationRecord
       stop_loss: stop_loss,
       signal_id: id,
       source_id: source_id
+    )
+  end
+
+  def create_order(options = {})
+    Order.create(
+      pair_id: pair_id,
+      direction: direction,
+      size: options[:size] || 1,
+      entry: entry,
+      take_profit: take_profit,
+      stop_loss: stop_loss,
+      signal_id: id,
+      source_id: source_id,
+      expired_at: expired_at
     )
   end
 

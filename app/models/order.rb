@@ -7,6 +7,7 @@ class Order < ApplicationRecord
 
   belongs_to :pair
   belongs_to :source, optional: true
+  belongs_to :signal, class_name: "FxSignal", optional: true, foreign_key: :signal_id
   belongs_to :position, optional: true
 
   validates :pair_id, presence: true
