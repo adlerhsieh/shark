@@ -3,4 +3,8 @@ class Source < ApplicationRecord
   has_many :positions
 
   scope :active, -> { where(active: true) }
+
+  # For reporting
+  attr_accessor :signals_by_date, :positions_by_date, :pl
+
 end
