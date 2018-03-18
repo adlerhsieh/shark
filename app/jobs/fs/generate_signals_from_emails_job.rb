@@ -54,7 +54,7 @@ module Fs
 
         signal = FxSignal.create!(attrs)
 
-        if signal.take_profit == 0.0 || sinal.stop_loss == 0.0
+        if signal.take_profit == 0.0 || signal.stop_loss == 0.0
           signal.update(expired_at: nil)
           log.write("Skipped: Missing TP or SL")
           next
