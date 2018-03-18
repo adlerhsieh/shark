@@ -77,7 +77,7 @@ module Fs
 
       def expired?(message)
         time = message.payload.headers.find {|h| h.name == "Received" }.value.split(";").last.squish
-        Time.parse(time).in_time_zone
+        (Time.parse(time).in_time_zone + 24.hours) < Time.current
       end
 
   end
