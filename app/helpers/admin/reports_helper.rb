@@ -22,7 +22,12 @@ module Admin::ReportsHelper
   end
 
   def no_source_data?(source, date)
-    source.signals_by_date.blank? && source.positions_by_date.blank?
+    signals_from(source, date).blank? && positions_from(source, date).blank?
+  end
+
+  def no_source_data_at_all?(source)
+    source.signals_by_date.all? {|k, v| v.blank? } &&
+      source.positions_by_date.all? {|k, v| v.blank? }
   end
 
 end

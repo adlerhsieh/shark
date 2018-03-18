@@ -1,7 +1,7 @@
 <%= render "nav" %>
 
 <% @sources.each do |source| %>
-  <% next if source.signals.blank? && source.positions.blank? %>
+  <% next if no_source_data_at_all?(source) %>
 
   <div class="card">
     <div class="card-body">
