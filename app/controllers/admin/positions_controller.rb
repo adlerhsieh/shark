@@ -4,7 +4,27 @@ class Admin::PositionsController < Admin::BaseController
   before_action :load_sources, only: %i[new edit]
 
   def index
-    @positions = Position.all.includes(:pair, :source).order(created_at: :desc)
+    @positions = Position
+      .all
+      .includes(:pair, :source)
+      .order(created_at: :desc)
+
+    if params[:from] 
+      @positions = @positions.where(
+        "created_at > ?", 
+        Time.parse("#{params[:from]} 00:00:00 #{Time.zone.name}").utc.to_s(:db)
+      )
+    end
+    if params[:to]
+      @positions = @positions.where(
+        "created_at < ?", 
+        Time.parse("#{params[:to]} 00:00:00 #{Time.zone.name}").utc.to_s(:db)
+      )
+    end
+    if params[:source_id]
+      @positions = @positions.where(source_id: params[:source_id])
+    end
+
   end
 
   def new

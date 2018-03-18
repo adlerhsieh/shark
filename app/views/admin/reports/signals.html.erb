@@ -14,21 +14,31 @@
         <thead>
           <tr>
             <th scope="col">Date</th>
-            <th scope="col"># of signals</th>
-            <th scope="col"># of positions</th>
+            <th scope="col">Total signals</th>
+            <th scope="col">Total positions</th>
+            <th scope="col">Ongoing positions</th>
             <th scope="col">P/L</th>
           </tr>
         </thead>
         <tbody>
           <% dates = ((Date.today - 7.days)..Date.today).to_a %>
-          <% signals = source.signals.group_by {|s| s.created_at.strftime("%Y-%m-%d") } %>
-          <% positions = source.positions.group_by {|p| p.created_at.strftime("%Y-%m-%d") } %>
+          <% signals = source.signals.group_by {|s| s.created_at.to_s(:date) } %>
+          <% positions = source.positions.group_by {|p| p.created_at.to_s(:date) } %>
           <% dates.each do |date| %>
-            <% pl = positions[date.strftime("%Y-%m-%d")].try(:map) {|p| p.pl }.try(:compact).try(:sum) || 0 %>
+            <% pl = positions[date.to_s(:date)].try(:map) {|p| p.pl }.try(:compact).try(:sum) || 0 %>
             <tr class="<%= pl_class(pl) %>">
               <td><%= date.strftime("%b %d %a") %></td>
-              <td><%= signals[date.strftime("%Y-%m-%d")].try(:size) || 0 %></td>
-              <td><%= positions[date.strftime("%Y-%m-%d")].try(:size) || 0 %></td>
+              <td><%= signals[date.to_s(:date)].try(:size) || 0 %></td>
+              <td>
+                <% if (positions[date.to_s(:date)].try(:size) || 0) > 0 %>
+                  <%= link_to admin_positions_path(from: date.to_s(:date), to: (date + 1.day).to_s(:date), source_id: source.id) do %>
+                    <%= positions[date.to_s(:date)].try(:size) || 0 %>
+                  <% end %>
+                <% else %>
+                  <%= positions[date.to_s(:date)].try(:size) || 0 %>
+                <% end %>
+              </td>
+              <td><%= positions[date.to_s(:date)].try(:select) {|p| p.opened_at && p.closed_at.nil? }.try(:size) || 0 %></td>
               <td><%= pl %></td>
             </tr>
           <% end %>
