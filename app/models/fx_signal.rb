@@ -18,7 +18,7 @@ class FxSignal < ApplicationRecord
   before_create :init_evaluated_at
 
   def create_position(options = {})
-    Position.create(
+    Position.create!(
       pair_id: pair_id,
       direction: direction,
       size: options[:size] || 1,
@@ -31,7 +31,7 @@ class FxSignal < ApplicationRecord
   end
 
   def create_order(options = {})
-    Order.create(
+    Order.create!(
       pair_id: pair_id,
       direction: direction,
       size: options[:size] || 1,
