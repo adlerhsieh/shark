@@ -5,4 +5,24 @@ module Admin::ReportsHelper
     pl.positive? ? "table-success" : "table-danger"
   end
 
+  def ongoing_positions_from(source, date)
+    positions_from(source, date).try(:select) {|p| p.opened_at && p.closed_at.nil? }
+  end
+
+  def positions_from(source, date)
+    source.positions_by_date[date.to_s(:date)] 
+  end
+
+  def signals_from(source, date)
+    source.signals_by_date[date.to_s(:date)]
+  end
+
+  def pl_from(source, date)
+    source.positions_by_date[date.to_s(:date)].try(:map) {|p| p.pl }.try(:compact).try(:sum) || 0
+  end
+
+  def no_source_data?(source, date)
+    source.signals_by_date.blank? && source.positions_by_date.blank?
+  end
+
 end

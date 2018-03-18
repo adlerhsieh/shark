@@ -22,21 +22,22 @@
         </thead>
         <tbody>
           <% @dates.each do |date| %>
-            <% pl = source.positions_by_date[date.to_s(:date)].try(:map) {|p| p.pl }.try(:compact).try(:sum) || 0 %>
-            <tr class="<%= pl_class(pl) %>">
+            <% next if no_source_data?(source, date) %>
+
+            <tr class="<%= pl_class(pl_from(source, date)) %>">
               <td><%= date.strftime("%b %d %a") %></td>
-              <td><%= source.signals_by_date[date.to_s(:date)].try(:size) || 0 %></td>
+              <td><%= signals_from(source, date).try(:size) || 0 %></td>
               <td>
-                <% if (source.positions_by_date[date.to_s(:date)].try(:size) || 0) > 0 %>
+                <% if (positions_from(source, date).try(:size) || 0) > 0 %>
                   <%= link_to admin_positions_path(from: date.to_s(:date), to: (date + 1.day).to_s(:date), source_id: source.id) do %>
-                    <%= source.positions_by_date[date.to_s(:date)].try(:size) || 0 %>
+                    <%= positions_from(source, date).try(:size) || 0 %>
                   <% end %>
                 <% else %>
-                  <%= source.positions_by_date[date.to_s(:date)].try(:size) || 0 %>
+                  <%= positions_from(source, date).try(:size) || 0 %>
                 <% end %>
               </td>
-              <td><%= source.positions_by_date[date.to_s(:date)].try(:select) {|p| p.opened_at && p.closed_at.nil? }.try(:size) || 0 %></td>
-              <td><%= pl %></td>
+              <td><%= ongoing_positions_from(source, date).try(:size) || 0 %></td>
+              <td><%= pl_from(source, date) %></td>
             </tr>
           <% end %>
           <tr>
