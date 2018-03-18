@@ -5,7 +5,7 @@ class Admin::ReportsController < Admin::BaseController
   end
 
   def signals
-    @sources = Source.includes(:signals, :positions).all
+    @sources = Source.active.includes(:signals, :positions).all
   end
 
   def balance
