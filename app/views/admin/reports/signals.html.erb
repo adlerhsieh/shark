@@ -1,0 +1,49 @@
+<%= render "nav" %>
+
+<% @sources.each do |source| %>
+  <% next if source.signals.blank? && source.positions.blank? %>
+
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title"><%= source.name %></h5>
+      <% if source.username %>
+        <h6 class="card-subtitle mb-2 text-muted"><%= source.username %></h6>
+      <% end %>
+
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col"># of signals</th>
+            <th scope="col"># of positions</th>
+            <th scope="col">P/L</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% dates = ((Date.today - 7.days)..Date.today).to_a %>
+          <% signals = source.signals.group_by {|s| s.created_at.strftime("%Y-%m-%d") } %>
+          <% positions = source.positions.group_by {|p| p.created_at.strftime("%Y-%m-%d") } %>
+          <% dates.each do |date| %>
+            <% pl = positions[date.strftime("%Y-%m-%d")].try(:map) {|p| p.pl }.try(:compact).try(:sum) || 0 %>
+            <tr class="<%= pl_class(pl) %>">
+              <td><%= date.strftime("%b %d %a") %></td>
+              <td><%= signals[date.strftime("%Y-%m-%d")].try(:size) || 0 %></td>
+              <td><%= positions[date.strftime("%Y-%m-%d")].try(:size) || 0 %></td>
+              <td><%= pl %></td>
+            </tr>
+          <% end %>
+          <tr>
+            
+          </tr>
+        </tbody>
+      </table>
+
+
+      <!-- <a href="#" class="card&#45;link">Card link</a> -->
+      <!-- <a href="#" class="card&#45;link">Another link</a> -->
+    </div>
+  </div>
+
+
+
+<% end %>

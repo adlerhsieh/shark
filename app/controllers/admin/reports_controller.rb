@@ -1,11 +1,11 @@
 class Admin::ReportsController < Admin::BaseController
 
   def index
-    @daily = Position
-      .select("created_at, count(*) as count, sum(pl) as pl")
-      .group("date(created_at)")
-      .order("created_at desc")
-      .all
+    @daily_reports = Position.daily_report
+  end
+
+  def signals
+    @sources = Source.includes(:signals, :positions).all
   end
 
   def balance

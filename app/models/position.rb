@@ -54,4 +54,11 @@ class Position < ApplicationRecord
     update(tpsl.except(:entry))
   end
 
+  def self.daily_report
+    select("created_at, count(*) as count, sum(pl) as pl")
+    .group("date(created_at)")
+    .order("created_at desc")
+    .all
+  end
+
 end

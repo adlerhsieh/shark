@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :reports, only: %i[index] do
       collection do
         get :balance
+        get :signals
       end
     end
     resources :account, only: %i[] do

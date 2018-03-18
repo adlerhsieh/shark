@@ -15,7 +15,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @daily.each do |row| %>
+        <% @daily_reports.each do |row| %>
           <tr class="<%= pl_class(row.pl) %>">
             <td><%= row.created_at.strftime("%b %d %a") %></td>
             <td><%= row.count %></td>
