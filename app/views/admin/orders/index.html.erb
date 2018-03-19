@@ -1,61 +1,72 @@
 <%= link_to "New", new_admin_order_path, class: "btn btn-primary btn-wide", style: "margin-bottom: 10px; margin-top: 5px;" %>
 
 <div class="row" style="margin: 0px 0px;">
-  
-  <% @orders.each do |order| %>
-    <div class="item col-md-4">
-      <%= link_to edit_admin_order_path(order), class: "banner #{order_result_class(order)}" do %>
-        <span><%= order.id %></span>
-        <span class="<%= order.direction == "buy" ? "green" : "red" %>"><%= order.direction.upcase %></span>
-        <span><%= order.pair.pair %></span>
-        <span style="margin-left: 8px;">
-          <% if order.position.try(:closed_at).present? %>
-            <i class="fa fa-stop"></i></td>
-          <% elsif order.position.try(:opened_at).present? %>
-            <i class="fa fa-play"></i></td>
-          <% elsif order.deleted? || order.expired? %>
-            <i class="fa fa-stop"></i></td>
-          <% elsif order.ig_status == "accepted" %>
-            <i class="fa fa-pause"></i></td>
-          <% elsif order.ig_status == "rejected" %>
-            <i class="fa fa-times" style="color: red;"></i></td>
-          <% elsif order.ig_status.nil? %>
-            <i class="fa fa-cloud-upload"></i></td>
-          <% else %>
-            <%= order.ig_status %>
-          <% end %>
-        </span>
+  <table class="table table-responsive-md">
+    <thead>
+      <th>#</th>
+      <th>Source</th>
+      <th>Pair</th>
+      <th>Direction</th>
+      <th>Created at</th>
+      <th>Status</th>
+      <th>P#</th>
+      <th>Entry</th>
+      <th>TP</th>
+      <th>SL</th>
+      <th>Expired at</th>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr class="order-item">
+          <td>
+            <%= order.id %>
+          </td>
+          <td>
+            <%= order.source.try(:fullname) %>
+          </td>
+          <td>
+            <span><%= order.pair.pair(false) %></span>
+          </td>
+          <td>
+            <span class="<%= order.direction == "buy" ? "green" : "red" %>"><%= order.direction.upcase %></span>
+          </td>
+          <td>
+            <span><%= order.created_at.strftime("%b %d %H:%M") %></span>
+          </td>
+          <td>
+            <span style="margin-left: 8px;">
+              <% if order.position.present? %>
+                <i class="fa fa-check"></i>
+              <% elsif order.deleted? || order.expired? %>
+                <i class="fa fa-stop"></i>
+              <% elsif order.ig_status == "accepted" %>
+                <i class="fa fa-pause"></i>
+              <% elsif order.ig_status == "rejected" %>
+                <i class="fa fa-times" style="color: red;"></i>
+              <% elsif order.ig_status.nil? %>
+                <i class="fa fa-cloud-upload"></i>
+              <% else %>
+                <%= order.ig_status %>
+              <% end %>
+            </span>
+          </td>
+          <td>
+            <span><%= order.position.try(:id) %></span>
+          </td>
+          <td>
+            <span><%= order.entry %></span>
+          </td>
+          <td>
+            <span><%= order.take_profit if order.take_profit %></span>
+          </td>
+          <td>
+            <span><%= order.stop_loss if order.stop_loss %></span>
+          </td>
+          <td>
+            <span><%= order.expired_at.strftime("%b %d %H:%M") %></span>
+          </td>
+        </tr>
       <% end %>
-
-        <div style="margin-bottom: 10px;"></div>
-
-        <div class="row container">
-          <div class="col">
-            <span>EN: <%= order.entry %></span>
-          </div>
-          <div class="col">
-            <span><%= order.created_at.try(:strftime, "%d %b %H:%M") %></span>
-          </div>
-        </div>
-
-        <div class="row container">
-          <div class="col">
-            <% if order.take_profit %>
-              <span>TP: <%= order.take_profit %></span>
-            <% end %>
-          </div>
-          <div class="col">
-            <% if order.stop_loss %>
-              <span>SL: <%= order.stop_loss %></span>
-            <% end %>
-          </div>
-        </div>
-
-        <span class="source"><%= order.source.try(:name) || "-" %></span>
-
-    </div>
-  <% end %>
-
+    </tbody>
+  </table>
 </div>
-
-<div style="margin-bottom: 20px;"></div>

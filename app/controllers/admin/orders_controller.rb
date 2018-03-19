@@ -4,7 +4,11 @@ class Admin::OrdersController < Admin::BaseController
   before_action :load_sources, only: %i[new edit]
 
   def index
-    @orders = Order.all.includes(:pair, :position, :source).order(created_at: :desc)
+    @orders = Order
+      .all
+      .includes(:pair, :position, :source)
+      .order(created_at: :desc)
+      .limit(100)
   end
 
   def show
