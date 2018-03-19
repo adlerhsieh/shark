@@ -10,10 +10,16 @@ module IG
       positions["positions"].each do |position|
         deal_id = position["position"]["dealId"]
         log.write("Processing #{deal_id}")
+
         position = Position.find_by(ig_deal_id: deal_id)
         next if position.present?
 
-        order = position.order
+        order = Order.find_by(ig_deal_id: deal_id)
+        if order.blank?
+          log.write("Skipped: order not found")
+          next
+        end
+
         log.write("Matched order ##{order.id}")
 
         Position.create!(
