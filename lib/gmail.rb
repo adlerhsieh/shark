@@ -70,6 +70,10 @@ module Gmail
       messages(max_results: 10, q: "live-forex-signals")
     end
 
+    def arrow
+      messages(max_results: 10, q: "signals@arrowpips.com")
+    end
+
     def message(id)
       @service.get_user_message('me', id)
     end

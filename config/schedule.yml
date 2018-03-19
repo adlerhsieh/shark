@@ -27,3 +27,9 @@ fs_generate_signals_from_emails:
   class: "Fs::GenerateSignalsFromEmailsJob"
   queue: "default"
   active_job: true
+
+arrow_generate_signals_from_emails:
+  cron: "*/2 * * * *"
+  class: "Arrow::GenerateSignalsFromEmailsJob"
+  queue: "default"
+  active_job: true
