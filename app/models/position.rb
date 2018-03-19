@@ -61,7 +61,7 @@ class Position < ApplicationRecord
   end
 
   def source
-    super || order.source
+    super || order.try(:source)
   end
 
 end
