@@ -22,7 +22,7 @@
             <%= position.id %>
           </td>
           <td>
-            <%= position.source.try(:fullname) %>
+            <%= position.source.try(:fullname) || position.order.try(:source).try(:fullname) %>
           </td>
           <td>
             <span><%= position.pair.pair(false) %></span>
