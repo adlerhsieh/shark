@@ -7,6 +7,7 @@
       <th>Source</th>
       <th>Pair</th>
       <th>Direction</th>
+      <th>Opened at</th>
       <th>Status</th>
       <th>Entry</th>
       <th>TP</th>
@@ -28,6 +29,9 @@
           </td>
           <td>
             <span class="<%= position.direction == "buy" ? "green" : "red" %>"><%= position.direction.upcase %></span>
+          </td>
+          <td>
+            <span><%= position.opened_at.strftime("%b %d %H:%M") %></span>
           </td>
           <td>
             <span style="margin-left: 8px;">
