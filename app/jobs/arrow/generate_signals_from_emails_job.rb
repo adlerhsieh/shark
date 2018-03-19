@@ -60,7 +60,7 @@ module Arrow
         end
 
         order = signal.create_order
-        # order.ig_place_order
+        order.ig_place_order
       end
     end
 
