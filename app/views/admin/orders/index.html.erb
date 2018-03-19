@@ -19,7 +19,7 @@
       <% @orders.each do |order| %>
         <tr class="order-item">
           <td>
-            <%= order.id %>
+            <%= link_to order.id, edit_admin_order_path(order) %>
           </td>
           <td>
             <%= order.source.try(:fullname) %>

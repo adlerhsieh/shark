@@ -19,7 +19,7 @@
       <% @positions.each do |position| %>
         <tr class="position-item <%= position_class(position) %>">
           <td>
-            <%= position.id %>
+            <%= link_to position.id, edit_admin_position_path(position) %>
           </td>
           <td>
             <%= position.source.try(:fullname) || position.order.try(:source).try(:fullname) %>
