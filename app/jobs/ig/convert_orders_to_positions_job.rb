@@ -24,13 +24,11 @@ module IG
           take_profit: order.take_profit,
           stop_loss:   order.stop_loss,
           signal_id:   order.signal_id,
+          order_id:    order.id,
           # There will be a gap of difference from the actual time of 
           # opening thie position, at most 8 minutes
           opened_at:   Time.now
         )
-
-        log.write("Updating order with position_id #{new_position.id}")
-        order.update(position_id: new_position.id)
       end
       log.write("Done")
 
