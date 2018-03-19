@@ -7,4 +7,8 @@ class Source < ApplicationRecord
   # For reporting
   attr_accessor :signals_by_date, :positions_by_date, :pl
 
+  def fullname
+    "#{abbreviation || name} #{"- #{username}" if username}"
+  end
+
 end

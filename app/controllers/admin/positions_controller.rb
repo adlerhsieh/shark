@@ -8,6 +8,7 @@ class Admin::PositionsController < Admin::BaseController
       .all
       .includes(:pair, :source)
       .order(created_at: :desc)
+      .limit(100)
 
     if params[:from] 
       @positions = @positions.where(

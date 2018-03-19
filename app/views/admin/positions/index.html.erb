@@ -1,69 +1,64 @@
 <%= link_to "New", new_admin_position_path, class: "btn btn-primary btn-wide", style: "margin-bottom: 10px; margin-top: 5px;" %>
 
 <div class="row" style="margin: 0px 0px;">
-  
-  <% @positions.each do |position| %>
-    <div class="item col-lg-4">
-      <%= link_to edit_admin_position_path(position), class: "banner #{position_class(position)}" do %>
-        <span><%= position.id %>.</span>
-        <span class="<%= position.direction == "buy" ? "green" : "red" %>"><%= position.direction.upcase %></span>
-        <span><%= position.pair.pair %></span>
-        <span style="margin-left: 8px;">
-          <% if position.closed_at.present? %>
-            <i class="fa fa-stop"></i></td>
-          <% elsif position.opened_at.present? %>
-            <i class="fa fa-play"></i></td>
-          <% elsif position.ig_status == "rejected" %>
-            <i class="fa fa-times" style="color: red;"></i></td>
-          <% else %>
-            <%= position.ig_status %>
-          <% end %>
-        </span>
+  <table class="table table-responsive-md">
+    <thead>
+      <th>#</th>
+      <th>Source</th>
+      <th>Pair</th>
+      <th>Direction</th>
+      <th>Status</th>
+      <th>Entry</th>
+      <th>TP</th>
+      <th>SL</th>
+      <th>CL</th>
+      <th>P/L</th>
+    </thead>
+    <tbody>
+      <% @positions.each do |position| %>
+        <tr class="position-item <%= position_class(position) %>">
+          <td>
+            <%= position.id %>
+          </td>
+          <td>
+            <%= position.source.try(:fullname) %>
+          </td>
+          <td>
+            <span><%= position.pair.pair(false) %></span>
+          </td>
+          <td>
+            <span class="<%= position.direction == "buy" ? "green" : "red" %>"><%= position.direction.upcase %></span>
+          </td>
+          <td>
+            <span style="margin-left: 8px;">
+              <% if position.closed_at.present? %>
+                <i class="fa fa-stop"></i></td>
+              <% elsif position.opened_at.present? %>
+                <i class="fa fa-play"></i></td>
+              <% elsif position.ig_status == "rejected" %>
+                <i class="fa fa-times" style="color: red;"></i></td>
+              <% else %>
+                <%= position.ig_status %>
+              <% end %>
+            </span>
+          </td>
+          <td>
+            <span><%= position.entry %></span>
+          </td>
+          <td>
+            <span><%= position.take_profit if position.take_profit %></span>
+          </td>
+          <td>
+            <span><%= position.stop_loss if position.stop_loss %></span>
+          </td>
+          <td>
+            <span><%= position.closed if position.closed %></span>
+          </td>
+          <td>
+            <span><%= pl(position) if position.pl %></span>
+          </td>
+        </tr>
       <% end %>
-
-        <div style="margin-bottom: 10px;"></div>
-
-        <div class="row container">
-          <div class="col">
-            <span>EN: <%= position.entry %></span>
-          </div>
-          <div class="col">
-            <span><%= position.created_at.try(:strftime, "%d %b %H:%M") %></span>
-          </div>
-        </div>
-
-        <div class="row container">
-          <div class="col">
-            <% if position.take_profit %>
-              <span>TP: <%= position.take_profit %></span>
-            <% end %>
-          </div>
-          <div class="col">
-            <% if position.stop_loss %>
-              <span>SL: <%= position.stop_loss %></span>
-            <% end %>
-          </div>
-        </div>
-
-        <div class="row container">
-          <div class="col">
-            <% if position.closed %>
-              <span>CL: <%= position.closed %></span>
-            <% end %>
-          </div>
-          <div class="col">
-            <% if position.pl %>
-              <span>PL: <%= pl(position) %></span>
-            <% end %>
-          </div>
-        </div>
-
-        <span class="source"><%= position.source.try(:name) || "-" %></span>
-
-    </div>
-  <% end %>
-
+    </tbody>
+  </table>
 </div>
-
-<div style="margin-bottom: 20px;"></div>
-

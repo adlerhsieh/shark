@@ -12,6 +12,16 @@
 
 }
 
+.position-item {
+  &.profit {
+    background-color: #dff0d8;
+  }
+
+  &.loss {
+    background-color: #ffe7e7;
+  }
+}
+
 .item {
   border: 1px solid gray;
   color: gray;
@@ -39,6 +49,7 @@
       background-color: #cccccc;
     }
   }
+
 
   .source {
     color: #D2D2D2;
