@@ -21,6 +21,10 @@ module Arrow
           log.write("Skipped: not a signal email")
           next
         end
+        if data.gsub("\r", "").gsub("\n", "").match(/signal status closed/i)
+          log.write("Skipped: signal closed notification")
+          next
+        end
 
         pair = data.match(/Currency Pair[ ]?(\S{3}\/\S{3})/i)[1]
         attrs[:pair] = Pair.find_by(

@@ -60,4 +60,8 @@ class Position < ApplicationRecord
     .all
   end
 
+  def source
+    super || order.source
+  end
+
 end
