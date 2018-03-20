@@ -1,5 +1,5 @@
 class Admin::PositionsController < Admin::BaseController
-  before_action :load_position, only: %i[edit update destroy]
+  before_action :load_position, only: %i[edit update destroy current_pl]
   before_action :load_pairs, only: %i[new edit]
   before_action :load_sources, only: %i[new edit]
 
@@ -51,6 +51,12 @@ class Admin::PositionsController < Admin::BaseController
   def destroy
     @position.destroy
     redirect_to admin_positions_path
+  end
+
+  def current_pl
+    render json: {
+      pl: "ongoing"
+    }
   end
 
   private

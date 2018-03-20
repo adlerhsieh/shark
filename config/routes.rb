@@ -9,7 +9,6 @@ Rails.application.routes.draw do
   root "root#show"
 
   namespace :admin do
-
     resources :reports, only: %i[index] do
       collection do
         get :balance
@@ -26,7 +25,11 @@ Rails.application.routes.draw do
         delete :remove
       end
     end
-    resources :positions
+    resources :positions do
+      member do
+        get :current_pl
+      end
+    end
     resources :fx_signals
   end
 

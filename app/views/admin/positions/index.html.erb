@@ -58,9 +58,15 @@
           <td>
             <span><%= position.closed if position.closed %></span>
           </td>
-          <td>
-            <span><%= pl(position) if position.pl %></span>
-          </td>
+          <% if position.pl %>
+            <td>
+              <span><%= pl(position)%></span>
+            </td>
+          <% else %>
+            <td class="js-ongoing-deal ongoing-deal" data-position-id="<%= position.id %>">
+              <%= image_tag("loading.gif", size: "20") %>
+            </td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>
