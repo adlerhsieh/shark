@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   root "root#show"
 
   namespace :admin do
+    resources :sources
     resources :reports, only: %i[index] do
       collection do
         get :balance

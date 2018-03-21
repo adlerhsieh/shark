@@ -1,0 +1,39 @@
+<%= link_to "New", new_admin_source_path, class: "btn btn-primary btn-wide", style: "margin-bottom: 10px; margin-top: 5px;" %>
+
+<div class="row" style="margin: 0px 0px;">
+  <table class="table table-responsive-md">
+    <thead>
+      <th>#</th>
+      <th>Name</th>
+      <th>Username</th>
+      <th>Active</th>
+      <th>Abbreviation</th>
+      <th>Created at</th>
+    </thead>
+    <tbody>
+      <% @sources.each do |source| %>
+        <tr class="<%= "gray" if source.active.! %>">
+          <td>
+            <%= link_to source.id, admin_source_path(source) %>
+          </td>
+          <td>
+            <%= source.name %>
+          </td>
+          <td>
+            <%= source.username %>
+          </td>
+          <td>
+            <%= source.active ? "Yes" : "" %>
+          </td>
+          <td>
+            <%= source.abbreviation %>
+          </td>
+          <td>
+            <%= source.created_at.to_s(:date) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+

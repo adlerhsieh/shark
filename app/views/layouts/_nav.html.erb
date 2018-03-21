@@ -7,6 +7,9 @@
     <ul class="navbar-nav">
       <% if current_user && current_user.admin? %>
         <li class="nav-item nav-item-bordered">
+          <%= link_to "Sources", admin_sources_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item nav-item-bordered">
           <%= link_to "Signals", admin_fx_signals_path, class: "nav-link" %>
         </li>
         <li class="nav-item nav-item-bordered">

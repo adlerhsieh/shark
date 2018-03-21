@@ -1,0 +1,28 @@
+<%= link_to "Go back", admin_sources_path, class: "btn btn-light" %>
+<%= link_to "Edit", edit_admin_source_path(@source), class: "btn btn-warning" %>
+
+<div class="divider"></div>
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title"><%= @source.name %></h5>
+    <% if @source.username %>
+      <h6 class="card-subtitle mb-2 text-muted"><%= @source.username %></h6>
+    <% end %>
+
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-action">
+        Signals: <%= @signals.size %>
+      </li>
+      <li class="list-group-item list-group-item-action">
+        Orders: <%= @signals.map { |s| s.order }.compact.count %>
+      </li>
+      <%= link_to admin_positions_path(source_id: @source.id), class: "list-group-item list-group-item-action" do %>
+        Positions: <%= @positions.size %>
+      <% end %>
+      <li class="list-group-item list-group-item-action">
+        P/L: <%= @positions.map(&:pl).compact.sum %>
+      </li>
+    </ul>
+  </div>
+</div>

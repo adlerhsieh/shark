@@ -23,7 +23,7 @@ class Admin::PositionsController < Admin::BaseController
       )
     end
     if params[:source_id]
-      @positions = @positions.where(source_id: params[:source_id])
+      @positions = Source.find(params[:source_id]).all_positions
     end
 
   end
