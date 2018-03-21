@@ -74,6 +74,10 @@ module Gmail
       messages(max_results: 10, q: "signals@arrowpips.com")
     end
 
+    def dux
+      messages(max_results: 10, q: "alerts@duxforex.com")
+    end
+
     def message(id)
       @service.get_user_message('me', id)
     end
