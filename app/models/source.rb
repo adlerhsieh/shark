@@ -15,7 +15,7 @@ class Source < ApplicationRecord
   def all_positions
     pos = positions.includes(:pair).to_a
     pos += orders.includes(position: :pair).map { |o| o.position }
-    pos += signals.includes(order: { position: :pair }).map { |s| s.order.position }
+    pos += signals.includes(order: { position: :pair }).map { |s| s.order.try(:position) }
     
     pos.flatten.compact.uniq.sort_by { |position| position.created_at }.reverse
   end

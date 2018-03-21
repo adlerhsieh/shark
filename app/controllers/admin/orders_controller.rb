@@ -8,7 +8,12 @@ class Admin::OrdersController < Admin::BaseController
       .all
       .includes(:pair, :position, :source)
       .order(created_at: :desc)
-      .limit(100)
+
+    if params[:source_id]
+      @orders = @orders.where(source_id: params[:source_id])
+    end
+
+    @orders = @orders.limit(100)
   end
 
   def show

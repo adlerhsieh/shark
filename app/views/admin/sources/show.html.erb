@@ -10,19 +10,23 @@
       <h6 class="card-subtitle mb-2 text-muted"><%= @source.username %></h6>
     <% end %>
 
+    <hr />
+    
+    <% if @positions.any? %>
+      <p>P/L: <%= @positions.map(&:pl).compact.sum %></p>
+      <p>P/L Rate: <%= profit_rate(@positions) %>%</p>
+    <% end %>
+
     <ul class="list-group">
-      <li class="list-group-item list-group-item-action">
+      <%= link_to admin_fx_signals_path(source_id: @source.id), class: "list-group-item list-group-item-action" do %>
         Signals: <%= @signals.size %>
-      </li>
-      <li class="list-group-item list-group-item-action">
+      <% end %>
+      <%= link_to admin_orders_path(source_id: @source.id), class: "list-group-item list-group-item-action" do %>
         Orders: <%= @signals.map { |s| s.order }.compact.count %>
-      </li>
+      <% end %>
       <%= link_to admin_positions_path(source_id: @source.id), class: "list-group-item list-group-item-action" do %>
         Positions: <%= @positions.size %>
       <% end %>
-      <li class="list-group-item list-group-item-action">
-        P/L: <%= @positions.map(&:pl).compact.sum %>
-      </li>
     </ul>
   </div>
 </div>

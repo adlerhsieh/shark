@@ -4,6 +4,12 @@ class Admin::FxSignalsController < Admin::BaseController
 
   def index
     @signals = FxSignal.includes(:pair, :source).all.order(created_at: :desc)
+
+    if params[:source_id]
+      @signals = @signals.where(source_id: params[:source_id])
+    end
+
+    @signals = @signals.limit(100)
   end
 
   def show
