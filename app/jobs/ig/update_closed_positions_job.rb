@@ -34,7 +34,8 @@ module IG
 
         position = Position.find_by(
           entry: transaction["openLevel"],
-          pair_id: pair.id
+          pair_id: pair.id,
+          closed_at: nil
         )
 
         if position.present?
