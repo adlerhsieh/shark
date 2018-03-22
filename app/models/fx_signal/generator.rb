@@ -1,0 +1,3 @@
+class FxSignal::Generator
+  
+end
