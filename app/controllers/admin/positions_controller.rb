@@ -6,7 +6,7 @@ class Admin::PositionsController < Admin::BaseController
   def index
     @positions = Position
       .all
-      .includes(:pair, :source)
+      .includes(:pair, :source, order: :source)
       .order(created_at: :desc)
       .limit(100)
 
