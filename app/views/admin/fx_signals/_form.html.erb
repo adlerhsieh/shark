@@ -1,6 +1,6 @@
 <%= form_for [:admin, @fx_signal], class: "form-group" do |form| %>
   Source
-  <%= form.select :direction, FxSignalSource.all.map { |s| [s.name, s.id] }, {}, { class: "form-control" }%>
+  <%= form.select :direction, Source.all.map { |s| [s.name, s.id] }, {}, { class: "form-control" }%>
   Pair
   <%= form.select :pair_id, @pairs.map { |pair| [pair.pair, pair.id] }, {}, class: "form-control" %>
   <p></p>
@@ -12,16 +12,10 @@
   <%= form.number_field :take_profit, class: "form-control", step: :any %>
   Stop Loss
   <%= form.number_field :stop_loss, class: "form-control", step: :any %>
-  Opened at
-  <%= form.text_field :opened_at, class: "form-control" %>
-  Closed at
-  <%= form.text_field :closed_at, class: "form-control" %>
-  Closed price
-  <%= form.number_field :closed, class: "form-control", step: :any %>
   Evaluated at
   <%= form.text_field :evaluated_at, class: "form-control" %>
   Force close at
-  <%= form.text_field :force_close_at, class: "form-control" %>
+  <%= form.text_field :terminated_at, class: "form-control" %>
   <p></p>
 
   <%= form.submit "Save", class: "btn btn-primary" %>
