@@ -10,7 +10,7 @@ module Admin::SourcesHelper
   end
 
   def profit_rate(positions)
-    (positions.select { |position| position.profit? }.size.to_f / positions.size) * 100
+    (positions.select { |position| position.profit? }.size.to_f / positions.size).to_f.round(4) * 100
   end
 
 end
