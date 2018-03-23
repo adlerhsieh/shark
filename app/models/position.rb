@@ -37,6 +37,8 @@ class Position < ApplicationRecord
     buy? ? "sell" : "buy"
   end
 
+  # Only used on lfs now. 
+  #
   # {
   #   entry: 1.0,
   #   take_profit: 1.1,
