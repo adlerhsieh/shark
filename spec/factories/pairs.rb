@@ -7,5 +7,9 @@ FactoryBot.define do
       quote "USD"
       ig_epic "AUD.USD"
     end
+
+    trait :mini do
+      mini true
+    end
   end
 end

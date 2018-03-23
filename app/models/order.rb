@@ -25,7 +25,7 @@ class Order < ApplicationRecord
   end
 
   def expired?
-    expired_at < Time.now
+    expired_at.try(:<, Time.now) || false
   end
 
 end
