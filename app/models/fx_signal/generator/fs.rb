@@ -2,7 +2,7 @@ class FxSignal::Generator::Fs < FxSignal::Generator::Base
 
   def initialize(message_id)
     @message_id = message_id
-    @document = Timeout::timeout(40) { service.message(message_id) } 
+    @document = Timeout::timeout(40) { service.message(message_id) }
   end
 
   def process!
@@ -18,7 +18,7 @@ class FxSignal::Generator::Fs < FxSignal::Generator::Base
       expired_at: Time.current + 7.days
     }
     data    = @document.payload.parts.first.body.data
-    parts = data.match(/\r\n(.*)\r\n.*(SHORT|LONG)[ ]?(\S{6,8})[ ]?@[ ]?(\d{0,5}\.\d{0,5})/i)
+    parts = data.match(/\r\n(.*)\r\n.*(SHORT|LONG)[ ]?(\S{6,12})[ ]?@[ ]?(\d{0,5}\.\d{0,5})/i)
     username = parts[1].squish
     attrs[:source] = Source.find_or_create_by(name: "forexsignals.com", username: username) do |source|
       source.active = true
@@ -42,15 +42,15 @@ class FxSignal::Generator::Fs < FxSignal::Generator::Base
     attrs[:stop_loss] = data.match(/stop loss: (\d{0,5}\.\d{0,5})/i)[1].to_f
 
     if attrs[:direction].blank? ||
-        attrs[:pair].blank? || 
+        attrs[:pair].blank? ||
         attrs[:entry].blank?
       return
     end
 
     signal = FxSignal.create!(attrs)
 
-    if signal.entry == 0.0 || 
-        signal.take_profit == 0.0 || 
+    if signal.entry == 0.0 ||
+        signal.take_profit == 0.0 ||
         signal.stop_loss == 0.0
       signal.update(expired_at: nil)
       return
