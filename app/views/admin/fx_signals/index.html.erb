@@ -16,7 +16,7 @@
     <% @signals.each do |signal| %>
       <tr>
         <td><%= link_to signal.id, edit_admin_fx_signal_path(signal) %></td>
-        <td><%= signal.source.name %></td>
+        <td><%= signal.source.fullname %></td>
         <td><%= signal.pair.pair %></td>
         <td><%= signal.direction %></td>
         <td><%= signal.entry %></td>

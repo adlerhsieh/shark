@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :fx_signal do
+    pair
 
     trait :buy do
       direction "buy"
