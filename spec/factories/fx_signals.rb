@@ -12,6 +12,6 @@ FactoryBot.define do
     trait :sell do
       direction "sell"
     end
-    
+
   end
 end
