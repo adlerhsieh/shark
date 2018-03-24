@@ -58,6 +58,11 @@ class FxSignal::Generator::Fs < FxSignal::Generator::Base
 
     order = signal.create_order
     order.ig_place_order
+  rescue => ex
+    Raven.capture_exception(ex, extra: { 
+      message_id: @message_id,
+      data: data
+    })
   end
 
   private
