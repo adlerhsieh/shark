@@ -1,5 +1,6 @@
 module Dux
 
+  # WIP
   class GenerateSignalsFromEmailsJob < ApplicationJob
     queue_as :default
 
@@ -17,8 +18,6 @@ module Dux
           expired_at: Time.current + 3.days
         }
         data = message.payload.parts.first.body.data
-
-
 
       end
     end
