@@ -14,7 +14,7 @@
   </thead>
   <tbody>
     <% @signals.each do |signal| %>
-      <tr>
+      <tr class="<%= issue_flag_class(signal) %>">
         <td><%= link_to signal.id, edit_admin_fx_signal_path(signal) %></td>
         <td><%= signal.source.fullname %></td>
         <td><%= signal.pair.pair %></td>

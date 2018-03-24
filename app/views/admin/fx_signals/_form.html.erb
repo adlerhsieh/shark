@@ -16,6 +16,8 @@
   <%= form.text_field :evaluated_at, class: "form-control" %>
   Force close at
   <%= form.text_field :terminated_at, class: "form-control" %>
+  Is there a bug in this Signal?
+  <%= form.select :issue, [["No", false], ["Yes", true]], {}, { class: "form-control" }%>
   <p></p>
 
   <%= form.submit "Save", class: "btn btn-primary" %>

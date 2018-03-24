@@ -46,7 +46,7 @@ class Admin::FxSignalsController < Admin::BaseController
     end
 
     def fx_signal_params
-      params.require(:fx_signal).permit(:pair_id, :direction, :entry, :take_profit, :stop_loss, :opened_at, :closed_at, :evaluated_at, :closed)
+      params.require(:fx_signal).permit(:pair_id, :direction, :entry, :take_profit, :stop_loss, :opened_at, :closed_at, :evaluated_at, :closed, :issue)
     end
 
     def load_pairs

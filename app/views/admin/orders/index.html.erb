@@ -18,7 +18,7 @@
     </thead>
     <tbody>
       <% @orders.each do |order| %>
-        <tr class="order-item">
+        <tr class="order-item <%= issue_flag_class(order) %>">
           <td>
             <%= link_to order.id, edit_admin_order_path(order) %>
           </td>

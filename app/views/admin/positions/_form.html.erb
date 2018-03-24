@@ -18,6 +18,8 @@
   <%= form.number_field :take_profit, class: "form-control", step: :any, value: (@position.take_profit || 0.0) %>
   Stop Loss
   <%= form.number_field :stop_loss, class: "form-control", step: :any, value: (@position.stop_loss || 0.0) %>
+  Is there a bug in this position?
+  <%= form.select :issue, [["No", false], ["Yes", true]], {}, { class: "form-control" }%>
   <p></p>
 
   <%= form.submit "Save", class: "btn btn-primary btn-wide" %>

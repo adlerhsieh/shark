@@ -22,6 +22,8 @@
   <%= form.number_field :stop_loss, class: "form-control", step: :any, value: (@order.stop_loss || 0.0) %>
   Expired at
   <%= form.text_field :expired_at, class: "form-control", value: (@order.expired_at || Time.now + 24.hours).strftime("%Y-%m-%d %H:%M") %>
+  Is there a bug in this order?
+  <%= form.select :issue, [["No", false], ["Yes", true]], {}, { class: "form-control" }%>
   <p></p>
 
   <%= form.submit "Save", class: "btn btn-primary btn-wide" %>

@@ -19,7 +19,7 @@
     </thead>
     <tbody>
       <% @positions.each do |position| %>
-        <tr class="position-item <%= position_class(position) %>">
+        <tr class="position-item <%= position_class(position) %> <%= issue_flag_class(position) %>">
           <td>
             <%= link_to position.id, edit_admin_position_path(position) %>
           </td>
