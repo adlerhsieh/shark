@@ -28,7 +28,7 @@ Rails.application.routes.draw do
     end
     resources :positions do
       member do
-        get :current_pl
+        get :chart
       end
     end
     resources :fx_signals

@@ -1,5 +1,5 @@
 class Admin::PositionsController < Admin::BaseController
-  before_action :load_position, only: %i[edit update destroy current_pl]
+  before_action :load_position, only: %i[edit update destroy chart]
   before_action :load_pairs, only: %i[new edit]
   before_action :load_sources, only: %i[new edit]
 
@@ -53,10 +53,20 @@ class Admin::PositionsController < Admin::BaseController
     redirect_to admin_positions_path
   end
 
-  def current_pl
-    render json: {
-      pl: "ongoing"
-    }
+  def chart
+    gon.push(
+      chart: {
+        title: @position.pair.pair,
+        data: @position.price_history
+        # data: [
+        #   ['Mon', 20, 28, 38, 45],
+        #   ['Tue', 31, 38, 55, 66],
+        #   ['Wed', 50, 55, 77, 80],
+        #   ['Thu', 77, 77, 66, 50],
+        #   ['Fri', 68, 66, 22, 15]
+        # ] 
+      }    
+    )
   end
 
   private
