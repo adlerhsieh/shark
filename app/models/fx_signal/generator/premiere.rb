@@ -22,6 +22,9 @@ class FxSignal::Generator::Premiere < FxSignal::Generator::Base
       text = element.text
       direction = text.match(/(BUY|SELL)/).to_s
       pairs = text.match(/#{direction}[ ]?([\S]{6,8})/).try(:[], 1)
+
+      next if direction.blank? || pairs.blank?
+
       pair = Pair.find_by(
         base: pairs[0..2],
         quote: pairs[3..5],
@@ -31,7 +34,7 @@ class FxSignal::Generator::Premiere < FxSignal::Generator::Base
       tp = text.match(/TP[ ]?(\d{1,5}\.\d{1,5})/).try(:[], 1)
       sl = direction == "BUY" ? entry.to_f - 0.003 : entry.to_f + 0.003
 
-      next if direction.blank? || pair.blank? || entry.blank? || tp.blank?
+      next if entry.blank? || tp.blank?
 
       signal = FxSignal.create!(
         # from parsing
