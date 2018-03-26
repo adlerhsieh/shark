@@ -32,7 +32,7 @@ class FxSignal::Generator::Premiere < FxSignal::Generator::Base
       )
       entry = text.match(/@[ ]?(\d{1,5}\.\d{1,5})/).try(:[], 1)
       tp = text.match(/TP[ ]?(\d{1,5}\.\d{1,5})/).try(:[], 1)
-      sl = direction == "BUY" ? entry.to_f - 0.003 : entry.to_f + 0.003
+      sl = direction == "BUY" ? entry.to_f - pair.pip(30) : entry.to_f + pair.pip(30)
 
       next if entry.blank? || tp.blank?
 

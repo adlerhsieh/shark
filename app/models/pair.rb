@@ -8,4 +8,12 @@ class Pair < ApplicationRecord
     "#{base}/#{quote} #{"MINI" if show_mini && mini?}".squish
   end
 
+  def pip(unit = 1)
+    if quote.downcase == "jpy"
+      unit * 0.01
+    else
+      unit * 0.0001
+    end
+  end
+
 end
