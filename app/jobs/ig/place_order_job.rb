@@ -16,7 +16,7 @@ module IG
         level:        @order.entry.to_s,
         stopLevel:    @order.stop_loss&.to_s,
         limitLevel:   @order.take_profit&.to_s,
-        googTillDate: @order.expired_at.to_s(:db),
+        goodTillDate: @order.expired_at.strftime("%Y/%m/%d %H:%M:%S"),
         type:         order_type
       })
 
@@ -31,6 +31,7 @@ module IG
       log.write("Confirming status")
       confirmation = service.confirm(@order.ig_deal_reference)
 
+
       log.write("Status: #{confirmation["dealStatus"]}")
       log.write(confirmation.to_s)
       @order.update(
@@ -38,6 +39,8 @@ module IG
         ig_status: confirmation["dealStatus"].downcase
       )
     rescue ::IG::Service::NotAvailable => ex
+      log.write("Error: #{ex}")
+    rescue JSON::ParserError => ex
       log.write("Error: #{ex}")
     rescue => ex
       log.error(ex)
