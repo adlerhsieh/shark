@@ -23,9 +23,10 @@ module Shark
     config.time_zone = "Sydney"
     # config.autoload_paths << Rails.root.join('lib')
 
-    Dir["#{Rails.root}/lib/**/*.rb"].each do |file|
-      require file
-    end
+    require Rails.root.join("lib", "ig.rb")
+    require Rails.root.join("lib", "gmail.rb")
+    require Rails.root.join("lib", "deal_helper.rb")
+    Dir["#{Rails.root}/lib/ig/**/*.rb"].each { |file| require file }
 
     config.generators do |g|
       g.test_framework :rspec
