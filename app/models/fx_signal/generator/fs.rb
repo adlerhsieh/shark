@@ -71,9 +71,4 @@ class FxSignal::Generator::Fs < FxSignal::Generator::Base
       @service ||= Gmail::Service.new
     end
 
-    def expired?
-      time = @document.payload.headers.find {|h| h.name == "Received" }.value.split(";").last.squish
-      (Time.parse(time).in_time_zone + 24.hours) < Time.current
-    end
-
 end
