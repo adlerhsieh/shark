@@ -11,12 +11,13 @@ module IG
       log.write(@order.attributes.to_s)
       log.write("Sending request")
       response = service.create(@order.pair, {
-        direction:  @order.direction.upcase,
-        size:       @order.size.to_i.to_s,
-        level:      @order.entry.to_s,
-        stopLevel:  @order.stop_loss&.to_s,
-        limitLevel: @order.take_profit&.to_s,
-        type:       order_type
+        direction:    @order.direction.upcase,
+        size:         @order.size.to_i.to_s,
+        level:        @order.entry.to_s,
+        stopLevel:    @order.stop_loss&.to_s,
+        limitLevel:   @order.take_profit&.to_s,
+        googTillDate: @order.expired_at.to_s(:db),
+        type:         order_type
       })
 
       log.write("Response: #{response.to_s}")
