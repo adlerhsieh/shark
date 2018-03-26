@@ -32,7 +32,11 @@ gem 'poltergeist'
 gem 'selenium-webdriver'
 gem 'gon'
 gem "sentry-raven"
-# gem 'telegram-rb', require: 'telegram'
+
+gem "eventmachine"
+gem "em-synchrony"
+gem "oj"
+gem "telegram-rb", require: "telegram"
 
 group :development, :test do
   gem 'rspec-rails'

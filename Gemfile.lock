@@ -88,9 +88,12 @@ GEM
     dotenv-rails (2.2.1)
       dotenv (= 2.2.1)
       railties (>= 3.2, < 5.2)
+    em-synchrony (1.0.6)
+      eventmachine (>= 1.0.0.beta.1)
     erubi (1.6.1)
     et-orbi (1.0.9)
       tzinfo
+    eventmachine (1.2.3)
     execjs (2.7.0)
     factory_bot (4.8.2)
       activesupport (>= 3.0.0)
@@ -157,6 +160,7 @@ GEM
     nio4r (2.1.0)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
+    oj (3.4.0)
     orm_adapter (0.5.0)
     os (0.9.6)
     poltergeist (1.17.0)
@@ -282,6 +286,7 @@ GEM
     sshkit (1.16.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    telegram-rb (0.1.0)
     therubyracer (0.12.3)
       libv8 (~> 3.16.14.15)
       ref
@@ -316,6 +321,8 @@ DEPENDENCIES
   database_cleaner
   devise
   dotenv-rails
+  em-synchrony
+  eventmachine
   factory_bot_rails
   gon
   google-api-client
@@ -323,6 +330,7 @@ DEPENDENCIES
   listen
   mysql2
   nokogiri (~> 1.8.1)
+  oj
   poltergeist
   pry-rails
   puma (~> 3.7)
@@ -338,6 +346,7 @@ DEPENDENCIES
   sidekiq-cron (~> 0.6.3)
   slack-notifier
   spring
+  telegram-rb
   therubyracer
   turbolinks
   uglifier
