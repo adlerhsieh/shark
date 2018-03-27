@@ -48,7 +48,7 @@ class FxSignal::Generator::Premiere < FxSignal::Generator::Base
         stop_loss: sl,
         # custom
         source_secondary_id: @message_id,
-        expired_at: Time.current + 7.days,
+        expired_at: Time.current + 1.day,
         source: Source.find_or_create_by(name: "fxpremiere.com") { |s| s.active = true }
       )
 
