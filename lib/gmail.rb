@@ -82,6 +82,10 @@ module Gmail
       messages(max_results: 10, q: "info@fxpremiere.com")
     end
 
+    def pia_first
+      messages(max_results: 6, q: "analysis@pia-first.com")
+    end
+
     def message(id)
       @service.get_user_message('me', id)
     end
