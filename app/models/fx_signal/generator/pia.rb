@@ -37,8 +37,9 @@ class FxSignal::Generator::Pia < FxSignal::Generator::Base
 
       next if pair.blank?
 
-      tp_finder = parsed_data.split(/#{pairs} -===/).last.match(/Our profit targets will be (\d{1,5}\.\d{1,5})( and \d{1,5}\.\d{1,5} )?/i)
+      tp_finder = parsed_data.split(/#{pairs} -===/).last.match(/Our profit targets will be (\d{1,5}\.\d{1,5})( and \d{1,5}\.\d{1,5})?[ ]?\.?={1,6}?Confidence Level[:]?[ ]?(\d{1,3})%/i)
       tp = tp_finder.try(:[], 1)
+      confidence = tp_finder.try(:[], 3).try(:to_f).try(:/, 100)
 
       if tp.blank?
         Raven.capture_message("Parser might be wrong in finding tp", extra: { 
@@ -60,6 +61,7 @@ class FxSignal::Generator::Pia < FxSignal::Generator::Base
         entry: entry,
         take_profit: tp,
         stop_loss: sl,
+        confidence: confidence,
         # custom
         source_secondary_id: @message_id,
         expired_at: Time.current + 1.day,
@@ -73,8 +75,8 @@ class FxSignal::Generator::Pia < FxSignal::Generator::Base
         next
       end
 
-      order = signal.create_order
-      order.ig_place_order
+      # order = signal.create_order
+      # order.ig_place_order
     end
   rescue => ex
     Raven.capture_exception(ex, extra: { 
