@@ -7,7 +7,7 @@ class Admin::PositionsController < Admin::BaseController
     @positions = Position
       .all
       .includes(:pair, :source, order: :source)
-      .order(created_at: :desc)
+      .order(created_at: :desc, id: :desc)
       .limit(100)
 
     if params[:from] 

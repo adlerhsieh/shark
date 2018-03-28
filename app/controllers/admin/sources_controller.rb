@@ -3,7 +3,7 @@ class Admin::SourcesController < Admin::BaseController
   before_action :remove_blank_values, only: %i[create update]
 
   def index
-    @sources = Source.all.order(created_at: :desc)
+    @sources = Source.all.order(created_at: :desc, id: :desc)
   end
 
   def show

@@ -7,7 +7,7 @@ class Admin::OrdersController < Admin::BaseController
     @orders = Order
       .all
       .includes(:pair, :position, :source)
-      .order(created_at: :desc)
+      .order(created_at: :desc, id: :desc)
 
     if params[:source_id]
       @orders = @orders.where(source_id: params[:source_id])
