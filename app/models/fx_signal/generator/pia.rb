@@ -6,61 +6,76 @@ class FxSignal::Generator::Pia < FxSignal::Generator::Base
   end
 
   def process!
-    next if [
+    return if [
       "fx majors",
       "fx crosses",
       "asian/pacific currencies"
     ].all? { |term| data.downcase.include?(term).! }
 
-    # first_part = data.split("****").first
-    # elements = Nokogiri::HTML.parse(first_part).xpath("//div").select do |s| 
-    #   s.children.first.is_a?(Nokogiri::XML::Text) && s.text.match(/(BUY|SELL)/)
-    # end
+    parsed_data = data.split("Risk Warning").first.gsub("\r", "").gsub("\t", "").gsub("\n", "===")
+
+    # The following will get:
     #
-    # elements.each do |element|
-    #   text = element.text
-    #   direction = text.match(/(BUY|SELL)/).to_s
-    #   pairs = text.match(/#{direction}[ ]?([\S]{6,8})/).try(:[], 1)
-    #
-    #   next if direction.blank? || pairs.blank?
-    #
-    #   pair = Pair.find_by(
-    #     base: pairs[0..2],
-    #     quote: pairs[3..5],
-    #     mini: true
-    #   )
-    #
-    #   next if pair.blank?
-    #
-    #   entry = text.match(/@[ ]?(\d{1,5}\.\d{1,5})/).try(:[], 1)
-    #   tp = text.match(/TP[ ]?(\d{1,5}\.\d{1,5})/).try(:[], 1)
-    #   sl = direction == "BUY" ? entry.to_f - pair.pip(30) : entry.to_f + pair.pip(30)
-    #
-    #   next if entry.blank? || tp.blank?
-    #
-    #   signal = FxSignal.create!(
-    #     # from parsing
-    #     direction: direction.downcase,
-    #     pair: pair,
-    #     entry: entry,
-    #     take_profit: tp,
-    #     stop_loss: sl,
-    #     # custom
-    #     source_secondary_id: @message_id,
-    #     expired_at: Time.current + 1.day,
-    #     source: Source.find_or_create_by(name: "fxpremiere.com") { |s| s.active = true }
-    #   )
-    #
-    #   if signal.entry == 0.0 ||
-    #       signal.take_profit == 0.0 ||
-    #       signal.stop_loss == 0.0
-    #     signal.update(expired_at: nil)
-    #     next
-    #   end
-    #
-    #   order = signal.create_order
-    #   order.ig_place_order
-    # end
+    # [["EURCHF", "Buy", "1.1750", "1.1725"],
+    #  ["GBPCHF", "Buy", "1.3420", "1.3370"],
+    #  ["GBPJPY", "Sell", "150.80", "151.30"],
+    #  ["AUDJPY", "Sell", "81.80", "82.10"],
+    #  ["EURSEK", "Buy", "10.1500", "10.1200"]]
+    parsed_data.scan(/([A-Z]{6,8})[ ]?-[ ]?We look to (Buy|Sell) at (\d{1,5}\.\d{1,5}) \(stop at (\d{1,5}\.\d{1,5})\)/i).each do |item|
+      pairs     = item[0]
+      direction = item[1]
+      entry     = item[2]
+      sl        = item[3]
+
+      next if pairs.nil? || direction.nil? || entry.nil? || sl.nil?
+
+      pair = Pair.find_by(
+        base: pairs[0..2],
+        quote: pairs[3..5],
+        mini: true
+      )
+
+      next if pair.blank?
+
+      tp_finder = parsed_data.split(/#{pairs} -===/).last.match(/Our profit targets will be (\d{1,5}\.\d{1,5})( and \d{1,5}\.\d{1,5} )?/i)
+      tp = tp_finder.try(:[], 1)
+
+      if tp.blank?
+        Raven.capture_message("Parser might be wrong in finding tp", extra: { 
+          message_id: @message_id,
+          pair: pairs,
+          parsed_data: parsed_data
+        })
+        next
+      end
+
+      next if FxSignal.where(direction: direction.downcase, pair: pair, entry: entry)
+                      .where("created_at > ? AND created_at < ?", Time.current - 12.hours, Time.current + 12.hours)
+                      .any?
+      
+      signal = FxSignal.create!(
+        # from parsing
+        direction: direction.downcase,
+        pair: pair,
+        entry: entry,
+        take_profit: tp,
+        stop_loss: sl,
+        # custom
+        source_secondary_id: @message_id,
+        expired_at: Time.current + 1.day,
+        source: Source.find_or_create_by(name: "PIA First") { |s| s.active = true }
+      )
+
+      if signal.entry == 0.0 ||
+          signal.take_profit == 0.0 ||
+          signal.stop_loss == 0.0
+        signal.update(expired_at: nil)
+        next
+      end
+
+      order = signal.create_order
+      order.ig_place_order
+    end
   rescue => ex
     Raven.capture_exception(ex, extra: { 
       message_id: @message_id,
@@ -80,6 +95,5 @@ class FxSignal::Generator::Pia < FxSignal::Generator::Base
     def service
       @service ||= Gmail::Service.new
     end
-
 
 end
