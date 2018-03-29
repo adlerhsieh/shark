@@ -75,8 +75,8 @@ class FxSignal::Generator::Pia < FxSignal::Generator::Base
         next
       end
 
-      # order = signal.create_order
-      # order.ig_place_order
+      order = signal.create_order
+      order.ig_place_order
     end
   rescue => ex
     Raven.capture_exception(ex, extra: { 
