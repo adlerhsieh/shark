@@ -11,7 +11,13 @@ FactoryBot.define do
     trait :eurusd do
       base "EUR"
       quote "USD"
-      ig_epic "AUD.USD"
+      ig_epic "EUR.USD"
+    end
+
+    trait :gbpusd do
+      base "GBP"
+      quote "USD"
+      ig_epic "GBP.USD"
     end
 
     trait :mini do

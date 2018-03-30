@@ -37,9 +37,9 @@ class FxSignal::Generator::Pia < FxSignal::Generator::Base
 
       next if pair.blank?
 
-      tp_finder = parsed_data.split(/#{pairs} -===/).last.match(/Our profit targets will be (\d{1,5}\.\d{1,5})( and \d{1,5}\.\d{1,5})?[ ]?\.?={1,6}?Confidence Level[:]?[ ]?(\d{1,3})%/i)
+      tp_finder = parsed_data.split(/#{pairs} -===/).last.match(/Our profit targets will be (\d{1,5}\.\d{1,5})( and \d{1,5}\.\d{1,5})?([ ]?\.?={1,6}?Confidence Level[:]?[ ]?(\d{1,3})%)?/i)
       tp = tp_finder.try(:[], 1)
-      confidence = tp_finder.try(:[], 3).try(:to_f).try(:/, 100)
+      confidence = tp_finder.try(:[], 4).try(:to_f).try(:/, 100)
 
       if tp.blank?
         Raven.capture_message("Parser might be wrong in finding tp", extra: { 
