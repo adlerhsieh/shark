@@ -9,7 +9,7 @@ class Source < ApplicationRecord
   attr_accessor :signals_by_date, :positions_by_date, :pl
 
   def fullname
-    "#{abbreviation || name} #{"- #{username}" if username}".squish
+    "#{abbreviation || name} #{"- #{username[0..3]}." if username}".squish
   end
 
   def all_positions
