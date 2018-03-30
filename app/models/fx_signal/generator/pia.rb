@@ -50,9 +50,12 @@ class FxSignal::Generator::Pia < FxSignal::Generator::Base
         next
       end
 
-      next if FxSignal.where(direction: direction.downcase, pair: pair, entry: entry)
-                      .where("created_at > ? AND created_at < ?", Time.current - 12.hours, Time.current + 12.hours)
-                      .any?
+      if FxSignal.where(direction: direction.downcase, pair: pair, entry: entry)
+                 .where("created_at > ? AND created_at < ?", Time.current - 8.hours, Time.current + 8.hours)
+                 .any?
+        Blacklist::Email.gmail.find_or_create_by(source_id: @message_id)
+        next
+      end
       
       signal = FxSignal.create!(
         # from parsing
