@@ -31,9 +31,9 @@ RSpec.describe Source, type: :model do
     end
 
     context "when there is username" do
-      let(:source) { create(:source, abbreviation: nil, name: "fn", username: "un") }
+      let(:source) { create(:source, abbreviation: nil, name: "fn", username: "Johnny") }
 
-      it { is_expected.to eq("fn - un") }
+      it { is_expected.to eq("fn - John.") }
     end
     
   end
