@@ -1,5 +1,5 @@
 convert_orders_to_positions:
-  cron: "*/9 * * * *"
+  cron: "*/3 * * * *"
   class: "IG::ConvertOrdersToPositionsJob"
   queue: "default"
   active_job: true
