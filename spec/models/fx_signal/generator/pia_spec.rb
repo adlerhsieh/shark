@@ -54,6 +54,10 @@ describe FxSignal::Generator::Pia do
       )
     end
 
+    it "does not raise any error" do
+      expect { subject }.not_to raise_error
+    end
+
     it "creates a source record" do
       expect { subject }.to change { Source.count }.by(1)
 
