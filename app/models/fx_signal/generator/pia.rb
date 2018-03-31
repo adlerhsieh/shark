@@ -65,6 +65,8 @@ class FxSignal::Generator::Pia < FxSignal::Generator::Base
         take_profit: tp,
         stop_loss: sl,
         confidence: confidence,
+        target_resource: "Order",
+        action: "create",
         # custom
         source_secondary_id: @message_id,
         expired_at: Time.current + 1.day,

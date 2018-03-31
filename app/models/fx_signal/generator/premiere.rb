@@ -46,6 +46,8 @@ class FxSignal::Generator::Premiere < FxSignal::Generator::Base
         entry: entry,
         take_profit: tp,
         stop_loss: sl,
+        target_resource: "Order",
+        action: "create",
         # custom
         source_secondary_id: @message_id,
         expired_at: Time.current + 1.day,

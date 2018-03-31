@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180331083448) do
+ActiveRecord::Schema.define(version: 20180331083838) do
 
   create_table "audit_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "source_type"
@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(version: 20180331083448) do
     t.datetime "expired_at"
     t.boolean "issue", default: false
     t.decimal "confidence", precision: 10, scale: 5
+    t.string "target_resource"
+    t.string "action"
     t.index ["created_at"], name: "index_fx_signals_on_created_at"
     t.index ["pair_id"], name: "index_fx_signals_on_pair_id"
     t.index ["source_id"], name: "index_fx_signals_on_source_id"
