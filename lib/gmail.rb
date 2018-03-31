@@ -58,20 +58,8 @@ module Gmail
       @service.list_user_messages('me', options)
     end
 
-    def shark
-      messages(max_results: 20, q: "Shark-Tips")
-    end
-
     def fs
       messages(max_results: 20, q: "ForexSignals")
-    end
-
-    def lf
-      messages(max_results: 10, q: "live-forex-signals")
-    end
-
-    def arrow
-      messages(max_results: 10, q: "signals@arrowpips.com")
     end
 
     def fx_premiere
