@@ -74,10 +74,6 @@ module Gmail
       messages(max_results: 10, q: "signals@arrowpips.com")
     end
 
-    def dux
-      messages(max_results: 10, q: "alerts@duxforex.com")
-    end
-
     def fx_premiere
       messages(max_results: 10, q: "info@fxpremiere.com")
     end
