@@ -6,6 +6,11 @@ class FxSignal::Generator::Pia < FxSignal::Generator::Base
   end
 
   def process!
+    if data.match(/update - \S{6,8} - /i)
+      FxSignal::Updater::Pia.new(@message_id).process!
+      return
+    end
+
     return if [
       "fx majors",
       "fx crosses",
