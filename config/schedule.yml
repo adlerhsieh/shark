@@ -15,12 +15,6 @@ terminate_positions:
   class: "IG::TerminatePositionsJob"
   queue: "default"
   active_job: true
-
-# lfs_generate_signals_from_emails:
-#   cron: "*/2 * * * *"
-#   class: "Lfs::GenerateSignalsFromEmailsJob"
-#   queue: "default"
-#   active_job: true
     
 fs_generate_signals_from_emails:
   cron: "*/2 * * * *"
@@ -39,9 +33,3 @@ pia_first_generate_signals_from_emails:
   class: "PiaFirst::GenerateSignalsFromEmailsJob"
   queue: "default"
   active_job: true
-
-# arrow_generate_signals_from_emails:
-#   cron: "*/2 * * * *"
-#   class: "Arrow::GenerateSignalsFromEmailsJob"
-#   queue: "default"
-#   active_job: true
