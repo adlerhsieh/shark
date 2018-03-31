@@ -5,7 +5,7 @@ module Fs
     def perform
       messages.messages.each do |m|
         if (fx_signal = FxSignal.find_by(source_secondary_id: m.id))
-          log.write("Skipped: #{m.id} exists as FxSignal id #{fx_signal.id}")
+          # log.write("Skipped: #{m.id} exists as FxSignal id #{fx_signal.id}")
           next
         end
 
