@@ -21,6 +21,7 @@ class FxSignal::Updater::Pia < FxSignal::Updater::Base
     attrs = {
       source_secondary_id: @message_id,
       expired_at: Time.current + 20.minutes,
+      source: Source.find_or_create_by(name: "PIA First") { |s| s.active = true },
       pair: pair
     }
 
@@ -52,7 +53,9 @@ class FxSignal::Updater::Pia < FxSignal::Updater::Base
       attrs[:action] = "update"
     end
 
-    FxSignal.create!(attrs)
+    signal = FxSignal.create!(attrs)
+
+    FxSignalProcessJob.set(wait: 1.minute).perform_later(signal.id)
   end
 
   private

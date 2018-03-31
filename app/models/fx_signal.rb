@@ -1,5 +1,7 @@
 class FxSignal < ApplicationRecord
 
+  class DealNotFound < StandardError; end
+
   include DealHelper
 
   has_many :logs, class_name: "AuditLog", as: :source
@@ -42,6 +44,49 @@ class FxSignal < ApplicationRecord
 
   def init_evaluated_at
     self.evaluated_at ||= Time.current
+  end
+
+  def process(options = {})
+    @log = options[:log]
+
+    case target_source
+    when "Order"
+      case action
+      when "cancel"
+        matched_order = Order
+          .where(pair_id: pair.id, source_id: source.id)
+          .where("expired_at > ?", Time.current)
+          .order(created_at: :desc)
+          .first
+        raise DealNotFound if matched_order.blank?
+        @log.write("order ##{matched_order.id}") if @log
+        order.update(deleted: true)
+        order.ig_remove_order
+      when "create"
+        create_order
+        order.ig_place_order
+      end
+    when "Position"
+      matched_position = Position
+        .where(pair_id: pair.id, source_id: source.id)
+        .where("expired_at > ?", Time.current)
+        .order(created_at: :desc)
+        .first
+      raise DealNotFound if matched_position.blank?
+      @log.write("position ##{matched_position.id}") if @log
+      case action
+      when "close"
+        matched_position.ig_close_position
+      when "update"
+        attrs = {
+          take_profit: take_profit,
+          stop_loss: stop_loss
+        }.reject { |k, v| v.nil? }
+
+        matched_position.update(attrs)
+        matched_position.ig_update_tpsl
+      end
+    end
   end
 
 end

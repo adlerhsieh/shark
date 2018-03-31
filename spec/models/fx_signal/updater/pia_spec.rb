@@ -16,6 +16,7 @@ describe FxSignal::Updater::Pia do
 
     before do
       allow_any_instance_of(Order).to receive(:ig_place_order)
+      allow(FxSignalProcessJob).to receive_message_chain(:set, :perform_later)
       allow(Gmail::Service).to receive(:new).and_return(Gmail::ServiceStub.new)
       allow_any_instance_of(Gmail::ServiceStub).to receive(:message).and_return(
         double(
@@ -59,7 +60,9 @@ describe FxSignal::Updater::Pia do
     end
 
     it "enqueues a job for updating position" do
+      expect(FxSignalProcessJob).to receive(:set).once
 
+      subject
     end
 
     context "when it moves stop to entry" do

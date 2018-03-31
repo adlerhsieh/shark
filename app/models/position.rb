@@ -17,6 +17,10 @@ class Position < ApplicationRecord
     IG::UpdatePositionJob.perform_later(id)
   end
 
+  def ig_close_position
+    IG::ClosePostionJob.perform_later(id)
+  end
+
   def profit?
     return if closed.blank?
 
