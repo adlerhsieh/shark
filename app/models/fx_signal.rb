@@ -49,7 +49,7 @@ class FxSignal < ApplicationRecord
   def process(options = {})
     @log = options[:log]
 
-    case target_source
+    case target_resource
     when "Order"
       case action
       when "cancel"
@@ -69,7 +69,7 @@ class FxSignal < ApplicationRecord
     when "Position"
       matched_position = Position
         .where(pair_id: pair.id, source_id: source.id)
-        .where("expired_at > ?", Time.current)
+        .where("opened_at > ?", Time.current - 1.day)
         .order(created_at: :desc)
         .first
       raise DealNotFound if matched_position.blank?

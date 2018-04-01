@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :source do
+    name "Foobar"
 
     trait :active do
       active true
