@@ -19,7 +19,9 @@
         <td><%= signal.source.fullname %></td>
         <td><%= signal.pair.pair %></td>
         <td>
-          <span class="<%= signal.direction == "buy" ? "green" : "red" %>"><%= signal.direction.upcase %></span>
+          <% if signal.direction %>
+            <span class="<%= signal.direction == "buy" ? "green" : "red" %>"><%= signal.direction.upcase %></span>
+          <% end %>
         </td>
         <td><%= signal.entry %></td>
         <td><%= signal.take_profit %></td>
