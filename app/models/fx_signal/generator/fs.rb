@@ -6,12 +6,7 @@ class FxSignal::Generator::Fs < FxSignal::Generator::Base
   end
 
   def process!
-    # log.write("Processing #{@message_id}")
-
-    if expired?
-      # log.write("Skipped: Signal is older than 24 hours.")
-      return
-    end
+    return if expired?
 
     attrs = {
       source_secondary_id: @message_id,

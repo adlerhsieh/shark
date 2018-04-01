@@ -5,13 +5,6 @@ class FxSignal::Generator::Premiere < FxSignal::Generator::Base
     @document = Timeout::timeout(40) { service.message(message_id) }
   end
 
-  def data
-    @data ||= (
-      @document.payload.try(:parts).try(:first).try(:body).try(:data) || 
-      @document.payload.try(:body).try(:data)
-    )
-  end
-
   def process!
     first_part = data.split("****").first
     elements = Nokogiri::HTML.parse(first_part).xpath("//div").select do |s| 

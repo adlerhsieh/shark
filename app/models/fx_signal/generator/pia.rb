@@ -97,13 +97,6 @@ class FxSignal::Generator::Pia < FxSignal::Generator::Base
 
   private
 
-    def data
-      @data ||= (
-        @document.payload.try(:parts).try(:first).try(:body).try(:data) || 
-        @document.payload.try(:body).try(:data)
-      )
-    end
-
     def service
       @service ||= Gmail::Service.new
     end

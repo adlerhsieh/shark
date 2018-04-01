@@ -9,4 +9,11 @@ class FxSignal::Generator::Base
     (Time.parse(time).in_time_zone + 24.hours) < Time.current
   end
 
+  def data
+    @data ||= (
+      @document.payload.try(:parts).try(:first).try(:body).try(:data) || 
+      @document.payload.try(:body).try(:data)
+    )
+  end
+
 end
