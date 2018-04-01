@@ -6,6 +6,10 @@ describe FxSignalProcessJob do
     
     subject { described_class.perform_now(fx_signal.id) }
 
+    before do
+      allow(IG::PlaceOrderJob).to receive(:perform_later)
+    end
+
     it "processes the fx_signal" do
       expect { subject }.to change { Order.count }.by(1)
 

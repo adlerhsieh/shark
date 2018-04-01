@@ -38,5 +38,35 @@ FactoryBot.define do
       action "cancel"
     end
 
+    trait :with_order do
+      after(:create) do |signal|
+        create(:order, 
+               pair: signal.pair,
+               source: signal.source,
+               direction: signal.direction,
+               entry: signal.entry,
+               take_profit: signal.take_profit,
+               stop_loss: signal.stop_loss,
+               signal_id: signal.id,
+               expired_at: Time.now + 1.day
+              )
+      end
+    end
+
+    trait :with_position do
+      after(:create) do |signal|
+        create(:position, 
+               pair: signal.pair,
+               source: signal.source,
+               direction: signal.direction,
+               entry: signal.entry,
+               take_profit: signal.take_profit,
+               stop_loss: signal.stop_loss,
+               signal_id: signal.id,
+               opened_at: Time.current
+              )
+      end
+    end
+
   end
 end

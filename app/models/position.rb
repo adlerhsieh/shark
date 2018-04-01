@@ -18,7 +18,7 @@ class Position < ApplicationRecord
   end
 
   def ig_close_position
-    IG::ClosePostionJob.perform_later(id)
+    IG::ClosePositionJob.perform_later(id)
   end
 
   def profit?
