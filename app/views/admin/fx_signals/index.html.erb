@@ -6,7 +6,9 @@
     <th>#</th>
     <th>Source</th>
     <th>Pair</th>
-    <th>Dir</th>
+    <th>Res.</th>
+    <th>Action</th>
+    <th>Dir.</th>
     <th>Entry</th>
     <th>TP</th>
     <th>SL</th>
@@ -17,7 +19,9 @@
       <tr class="<%= issue_flag_class(signal) %>">
         <td><%= link_to signal.id, edit_admin_fx_signal_path(signal) %></td>
         <td><%= signal.source.fullname %></td>
-        <td><%= signal.pair.pair %></td>
+        <td><%= signal.pair.pair(false) %></td>
+        <td><%= signal.target_resource.try(:[], 0..2).try(:<<, ".") %></td>
+        <td><%= signal.action %></td>
         <td>
           <% if signal.direction %>
             <span class="<%= signal.direction == "buy" ? "green" : "red" %>"><%= signal.direction.upcase %></span>
