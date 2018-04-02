@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180402025949) do
+ActiveRecord::Schema.define(version: 20180402104818) do
 
   create_table "audit_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "source_type"
@@ -89,12 +89,10 @@ ActiveRecord::Schema.define(version: 20180402025949) do
     t.string "ig_status"
     t.boolean "deleted", default: false
     t.integer "source_id"
-    t.integer "signal_id"
     t.boolean "issue", default: false
     t.index ["deleted"], name: "index_orders_on_deleted"
     t.index ["ig_deal_id"], name: "index_orders_on_ig_deal_id"
     t.index ["pair_id"], name: "index_orders_on_pair_id"
-    t.index ["signal_id"], name: "index_orders_on_signal_id"
     t.index ["source_id"], name: "index_orders_on_source_id"
   end
 
@@ -125,7 +123,6 @@ ActiveRecord::Schema.define(version: 20180402025949) do
     t.integer "source_id"
     t.string "ig_deal_reference"
     t.string "ig_status"
-    t.integer "signal_id"
     t.decimal "pl", precision: 10, scale: 5
     t.string "currency"
     t.integer "order_id"
@@ -133,7 +130,6 @@ ActiveRecord::Schema.define(version: 20180402025949) do
     t.index ["ig_deal_id"], name: "index_positions_on_ig_deal_id"
     t.index ["order_id"], name: "index_positions_on_order_id"
     t.index ["pair_id"], name: "index_positions_on_pair_id"
-    t.index ["signal_id"], name: "index_positions_on_signal_id"
     t.index ["source_id"], name: "index_positions_on_source_id"
   end
 
