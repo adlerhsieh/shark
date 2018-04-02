@@ -6,7 +6,13 @@ class FxSignal::Generator::Base
 
   def expired?
     time = @document.payload.headers.find {|h| h.name == "Received" }.value.split(";").last.squish
-    (Time.parse(time).in_time_zone + 24.hours) < Time.current
+    parsed_time = Time.parse(time).in_time_zone + 24.hours
+    if parsed_time < Time.current
+      puts "Skipped: signal expired. Signal time: #{parsed_time} Current time: #{Time.current}"
+      true
+    else
+      false
+    end
   end
 
   def data
