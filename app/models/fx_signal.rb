@@ -63,6 +63,7 @@ class FxSignal < ApplicationRecord
         raise DealNotFound if matched_order.blank?
         @log.write("order ##{matched_order.id}") if @log
         matched_order.update(deleted: true)
+        matched_order.fx_signals << self
         matched_order.ig_remove_order
       when "create"
         order = create_order
@@ -79,6 +80,7 @@ class FxSignal < ApplicationRecord
       case action
       when "close"
         matched_position.ig_close_position
+        matched_position.fx_signals << self
       when "update"
         attrs = {
           take_profit: take_profit,
@@ -87,6 +89,7 @@ class FxSignal < ApplicationRecord
 
         matched_position.update(attrs)
         matched_position.ig_update_tpsl
+        matched_position.fx_signals << self
       end
     end
   end

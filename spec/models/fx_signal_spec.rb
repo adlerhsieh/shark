@@ -66,6 +66,13 @@ RSpec.describe FxSignal, type: :model do
       expect(order.stop_loss).to eq(0.85)
     end
 
+    it "adds the signal to order" do
+      subject
+
+      order = Order.last
+      expect(order.reload.fx_signals).to include(signal)
+    end
+
     context "when cancelling order" do
       let!(:signal) { create(:fx_signal, :with_order, :buy, :order, :cancel) }
 
@@ -81,6 +88,13 @@ RSpec.describe FxSignal, type: :model do
         order = Order.last
         expect(order.deleted).to be_truthy
       end
+
+      it "adds the signal to order" do
+        subject
+
+        order = Order.last
+        expect(order.reload.fx_signals).to include(signal)
+      end
     end
 
     context "when closing a position" do
@@ -94,6 +108,14 @@ RSpec.describe FxSignal, type: :model do
         expect(IG::ClosePositionJob).to receive(:perform_later)
 
         subject
+      end
+
+      it "adds the signal to position" do
+        subject
+
+        position = Position.last
+
+        expect(position.reload.fx_signals).to include(signal)
       end
     end
 
@@ -114,6 +136,12 @@ RSpec.describe FxSignal, type: :model do
 
         expect(reloaded_position.take_profit).to eq(1.1)
         expect(reloaded_position.stop_loss).to eq(0.3)
+      end
+
+      it "adds the signal to position" do
+        subject
+
+        expect(position.reload.fx_signals).to include(signal)
       end
     end
 
