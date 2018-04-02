@@ -14,8 +14,8 @@ module IG
 
       def positions
         Position
-          .includes(:signal)
-          .joins(:signal)
+          .includes(:fx_signals)
+          .joins(:fx_signals)
           .where.not(fx_signals: { terminated_at: nil })
           .where.not(opened_at: nil)
           .where(closed_at: nil)
