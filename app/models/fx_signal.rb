@@ -5,8 +5,10 @@ class FxSignal < ApplicationRecord
   include DealHelper
 
   has_many :logs, class_name: "AuditLog", as: :source
-  has_one :position, foreign_key: :signal_id
-  has_one :order, foreign_key: :signal_id
+  has_many :fx_signals_positions
+  has_many :fx_signals_orders
+  has_many :positions, through: :fx_signals_positions
+  has_many :orders, through: :fx_signals_orders
 
   belongs_to :pair
   belongs_to :source, class_name: "Source", optional: true
@@ -16,30 +18,30 @@ class FxSignal < ApplicationRecord
   before_create :init_evaluated_at
 
   def create_position(options = {})
-    Position.create!(
+    position = Position.create!(
       pair_id: pair_id,
       direction: direction,
       size: options[:size] || 1,
       entry: entry,
       take_profit: take_profit,
       stop_loss: stop_loss,
-      signal_id: id,
       source_id: source_id
     )
+    position.tap { |pos| pos.signals << self }
   end
 
   def create_order(options = {})
-    Order.create!(
+    order = Order.create!(
       pair_id: pair_id,
       direction: direction,
       size: options[:size] || 1,
       entry: entry,
       take_profit: take_profit,
       stop_loss: stop_loss,
-      signal_id: id,
       source_id: source_id,
       expired_at: expired_at
     )
+    order.tap { |o| o.signals << self }
   end
 
   def init_evaluated_at
@@ -60,10 +62,10 @@ class FxSignal < ApplicationRecord
           .first
         raise DealNotFound if matched_order.blank?
         @log.write("order ##{matched_order.id}") if @log
-        order.update(deleted: true)
-        order.ig_remove_order
+        matched_order.update(deleted: true)
+        matched_order.ig_remove_order
       when "create"
-        create_order
+        order = create_order
         order.ig_place_order
       end
     when "Position"

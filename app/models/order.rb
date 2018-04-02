@@ -4,12 +4,13 @@ class Order < ApplicationRecord
   delegate :opened?, :closed?, to: :position, allow_nil: true
 
   has_many :logs, class_name: "AuditLog", as: :source
-
+  has_many :fx_signals_orders
+  has_many :fx_signals, through: :fx_signals_orders
   has_one :position
+  alias signals fx_signals
 
   belongs_to :pair
   belongs_to :source, optional: true
-  belongs_to :signal, class_name: "FxSignal", optional: true, foreign_key: :signal_id
 
   validates :pair_id, presence: true
   validates :direction, presence: true

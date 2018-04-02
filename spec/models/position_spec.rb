@@ -1,8 +1,8 @@
 RSpec.describe Position, type: :model do
 
   it { is_expected.to have_many(:logs) }
+  it { is_expected.to have_many(:fx_signals) }
   it { is_expected.to belong_to(:pair) }
-  it { is_expected.to belong_to(:signal) }
   it { is_expected.to belong_to(:source) }
   it { is_expected.to belong_to(:order) }
 

@@ -1,8 +1,8 @@
 RSpec.describe FxSignal, type: :model do
   
   it { is_expected.to have_many(:logs) }
-  it { is_expected.to have_one(:position) }
-  it { is_expected.to have_one(:order) }
+  it { is_expected.to have_many(:positions) }
+  it { is_expected.to have_many(:orders) }
   it { is_expected.to belong_to(:pair) }
   it { is_expected.to belong_to(:source) }
 

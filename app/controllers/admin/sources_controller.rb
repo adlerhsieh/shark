@@ -7,7 +7,7 @@ class Admin::SourcesController < Admin::BaseController
   end
 
   def show
-    @signals = @source.signals.includes(:order, :position)
+    @signals = @source.signals.includes(:orders, :positions)
     @positions = @source.all_positions
   end
 

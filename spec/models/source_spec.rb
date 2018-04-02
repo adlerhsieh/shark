@@ -50,7 +50,7 @@ RSpec.describe Source, type: :model do
 
     # associated through signal
     let(:signal) { create(:fx_signal, :buy, source: source) }
-    let(:order_b) { create(:order, source: nil, signal: signal) }
+    let(:order_b) { create(:order, source: nil, fx_signal: signal) }
     let!(:position_d) { create(:position, source: nil, order: order_b) }
 
     subject { source.all_positions }

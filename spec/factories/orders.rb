@@ -7,6 +7,14 @@ FactoryBot.define do
     size 1
     take_profit 0.9
     stop_loss 0.7
+
+    transient do
+      fx_signal nil
+    end
+
+    after(:create) do |order, evaluator|
+      order.fx_signals << evaluator.fx_signal if evaluator.fx_signal
+    end
     
   end
 end

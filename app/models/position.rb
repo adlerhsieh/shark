@@ -3,9 +3,11 @@ class Position < ApplicationRecord
   include DealHelper
 
   has_many :logs, class_name: "AuditLog", as: :source
+  has_many :fx_signals_positions
+  has_many :fx_signals, through: :fx_signals_positions
+  alias signals fx_signals
   
   belongs_to :pair
-  belongs_to :signal, class_name: "FxSignal", foreign_key: :signal_id, optional: true
   belongs_to :source, optional: true
   belongs_to :order, optional: true
 

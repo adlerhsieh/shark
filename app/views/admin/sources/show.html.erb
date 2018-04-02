@@ -22,7 +22,7 @@
         Signals: <%= @signals.size %>
       <% end %>
       <%= link_to admin_orders_path(source_id: @source.id), class: "list-group-item list-group-item-action" do %>
-        Orders: <%= @signals.map { |s| s.order }.compact.count %>
+        Orders: <%= @signals.map { |s| s.orders }.flatten.uniq.compact.count %>
       <% end %>
       <%= link_to admin_positions_path(source_id: @source.id), class: "list-group-item list-group-item-action" do %>
         Positions: <%= @positions.size %>
