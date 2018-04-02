@@ -40,31 +40,31 @@ FactoryBot.define do
 
     trait :with_order do
       after(:create) do |signal|
-        create(:order, 
-               pair: signal.pair,
-               source: signal.source,
-               direction: signal.direction,
-               entry: signal.entry,
-               take_profit: signal.take_profit,
-               stop_loss: signal.stop_loss,
-               signal_id: signal.id,
-               expired_at: Time.now + 1.day
-              )
+        order = create(:order, 
+                       pair: signal.pair,
+                       source: signal.source,
+                       direction: signal.direction,
+                       entry: signal.entry,
+                       take_profit: signal.take_profit,
+                       stop_loss: signal.stop_loss,
+                       expired_at: Time.now + 1.day
+                      )
+        order.fx_signals << signal
       end
     end
 
     trait :with_position do
       after(:create) do |signal|
-        create(:position, 
-               pair: signal.pair,
-               source: signal.source,
-               direction: signal.direction,
-               entry: signal.entry,
-               take_profit: signal.take_profit,
-               stop_loss: signal.stop_loss,
-               signal_id: signal.id,
-               opened_at: Time.current
-              )
+        position = create(:position, 
+                          pair: signal.pair,
+                          source: signal.source,
+                          direction: signal.direction,
+                          entry: signal.entry,
+                          take_profit: signal.take_profit,
+                          stop_loss: signal.stop_loss,
+                          opened_at: Time.current
+                         )
+        position.fx_signals << signal
       end
     end
 
