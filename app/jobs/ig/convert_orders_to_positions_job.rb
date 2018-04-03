@@ -31,6 +31,7 @@ module IG
           take_profit: order.take_profit,
           stop_loss:   order.stop_loss,
           order_id:    order.id,
+          source_id:   order.source_id,
           # There will be a gap of difference from the actual time of 
           # opening thie position, at most 8 minutes
           opened_at:   Time.now
