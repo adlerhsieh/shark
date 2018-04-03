@@ -79,8 +79,8 @@ class FxSignal < ApplicationRecord
       @log.write("position ##{matched_position.id}") if @log
       case action
       when "close"
-        matched_position.ig_close_position
         matched_position.fx_signals << self
+        matched_position.ig_close_position
       when "update"
         attrs = {
           take_profit: take_profit,
@@ -88,8 +88,8 @@ class FxSignal < ApplicationRecord
         }.reject { |k, v| v.nil? }
 
         matched_position.update(attrs)
-        matched_position.ig_update_tpsl
         matched_position.fx_signals << self
+        matched_position.ig_update_tpsl
       end
     end
   end
