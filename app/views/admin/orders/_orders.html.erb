@@ -1,0 +1,71 @@
+<div class="row" style="margin: 0px 0px;">
+  <table class="table table-responsive-md">
+    <thead>
+      <th>#</th>
+      <th>Source</th>
+      <th>Pair</th>
+      <th>Dir.</th>
+      <th>Created at</th>
+      <th>Stat</th>
+      <th>P#</th>
+      <th>Entry</th>
+      <th>TP</th>
+      <th>SL</th>
+      <th>Expired at</th>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr class="order-item <%= issue_flag_class(order) %>">
+          <td>
+            <%= link_to order.id, admin_order_path(order) %>
+          </td>
+          <td>
+            <%= order.source.try(:fullname) %>
+          </td>
+          <td>
+            <span><%= order.pair.pair(false) %></span>
+          </td>
+          <td>
+            <span class="<%= order.direction == "buy" ? "green" : "red" %>"><%= order.direction.upcase %></span>
+          </td>
+          <td>
+            <span><%= order.created_at.strftime("%b %d %H:%M") %></span>
+          </td>
+          <td>
+            <span style="margin-left: 8px;">
+              <% if order.position.present? %>
+                <i class="fa fa-check"></i>
+              <% elsif order.deleted? || order.expired? %>
+                <i class="fa fa-stop"></i>
+              <% elsif order.ig_status == "accepted" %>
+                <i class="fa fa-pause"></i>
+              <% elsif order.ig_status == "rejected" %>
+                <i class="fa fa-times" style="color: red;"></i>
+              <% elsif order.ig_status.nil? %>
+                <i class="fa fa-cloud-upload"></i>
+              <% else %>
+                <%= order.ig_status %>
+              <% end %>
+            </span>
+          </td>
+          <td>
+            <span><%= order.position.try(:id) %></span>
+          </td>
+          <td>
+            <span><%= order.entry %></span>
+          </td>
+          <td>
+            <span><%= order.take_profit if order.take_profit %></span>
+          </td>
+          <td>
+            <span><%= order.stop_loss if order.stop_loss %></span>
+          </td>
+          <td>
+            <span><%= order.expired_at.strftime("%b %d %H:%M") %></span>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+

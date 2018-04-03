@@ -1,0 +1,35 @@
+<table class="table">
+  <thead>
+    <th>#</th>
+    <th>Source</th>
+    <th>Pair</th>
+    <th>Res.</th>
+    <th>Action</th>
+    <th>Dir.</th>
+    <th>Entry</th>
+    <th>TP</th>
+    <th>SL</th>
+    <th>Created at</th>
+  </thead>
+  <tbody>
+    <% @fx_signals.each do |signal| %>
+      <tr class="<%= issue_flag_class(signal) %>">
+        <td><%= link_to signal.id, admin_fx_signal_path(signal) %></td>
+        <td><%= signal.source.fullname %></td>
+        <td><%= signal.pair.pair(false) %></td>
+        <td><%= signal.target_resource.try(:[], 0..2).try(:<<, ".") %></td>
+        <td><%= signal.action %></td>
+        <td>
+          <% if signal.direction %>
+            <span class="<%= signal.direction == "buy" ? "green" : "red" %>"><%= signal.direction.upcase %></span>
+          <% end %>
+        </td>
+        <td><%= signal.entry %></td>
+        <td><%= signal.take_profit %></td>
+        <td><%= signal.stop_loss %></td>
+        <td><%= signal.created_at.try(:strftime, "%d %b %H:%M") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

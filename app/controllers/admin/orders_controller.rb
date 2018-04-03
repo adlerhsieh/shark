@@ -17,7 +17,8 @@ class Admin::OrdersController < Admin::BaseController
   end
 
   def show
-    
+    @fx_signals = @order.fx_signals
+    @positions = Array.wrap(@order.position)
   end
 
   def new

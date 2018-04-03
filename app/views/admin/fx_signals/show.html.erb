@@ -1,0 +1,19 @@
+<%= link_to "Back", admin_fx_signals_path, class: "btn btn-light" %>
+<%= link_to "Edit", edit_admin_fx_signal_path(@fx_signal), class: "btn btn-warning" %>
+
+<% if @orders.any? %>
+  <div class="divider" />
+  <h5>Orders</h5>
+  <div class="divider" />
+
+  <%= render "admin/orders/orders" %>
+<% end %>
+
+
+<% if @positions.any? %>
+  <div class="divider" />
+  <h5>Positions</h5>
+  <div class="divider" />
+
+  <%= render "admin/orders/orders" %>
+<% end %>

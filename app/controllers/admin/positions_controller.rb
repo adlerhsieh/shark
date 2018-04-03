@@ -1,5 +1,5 @@
 class Admin::PositionsController < Admin::BaseController
-  before_action :load_position, only: %i[edit update destroy chart]
+  before_action :load_position, only: %i[show edit update destroy chart]
   before_action :load_pairs, only: %i[new edit]
   before_action :load_sources, only: %i[new edit]
 
@@ -26,6 +26,11 @@ class Admin::PositionsController < Admin::BaseController
       @positions = Source.find(params[:source_id]).all_positions
     end
 
+  end
+
+  def show
+    @fx_signals = @position.fx_signals
+    @orders = Array.wrap(@position.order)
   end
 
   def new

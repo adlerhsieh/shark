@@ -3,17 +3,18 @@ class Admin::FxSignalsController < Admin::BaseController
   before_action :load_pairs, only: %i[new edit]
 
   def index
-    @signals = FxSignal.includes(:pair, :source).all.order(created_at: :desc, id: :desc)
+    @fx_signals = FxSignal.includes(:pair, :source).all.order(created_at: :desc, id: :desc)
 
     if params[:source_id]
-      @signals = @signals.where(source_id: params[:source_id])
+      @fx_signals = @fx_signals.where(source_id: params[:source_id])
     end
 
-    @signals = @signals.limit(100)
+    @fx_signals = @fx_signals.limit(100)
   end
 
   def show
-    
+    @orders = @fx_signal.orders
+    @positions = @fx_signal.positions
   end
 
   def new
