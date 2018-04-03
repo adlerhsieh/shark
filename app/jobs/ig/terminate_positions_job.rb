@@ -4,7 +4,7 @@ module IG
 
     def perform
       positions.each do |position|
-        if position.signal.terminated_at < Time.current
+        if position.terminated_at < Time.current
           IG::TerminatePositionJob.perform_later(position.id)
         end
       end
@@ -14,9 +14,7 @@ module IG
 
       def positions
         Position
-          .includes(:fx_signals)
-          .joins(:fx_signals)
-          .where.not(fx_signals: { terminated_at: nil })
+          .where.not(terminated_at: nil)
           .where.not(opened_at: nil)
           .where(closed_at: nil)
       end

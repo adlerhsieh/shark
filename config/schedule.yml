@@ -11,7 +11,7 @@ update_closed_positions:
   active_job: true
 
 terminate_positions:
-  cron: "*/4 * * * *"
+  cron: "*/2 * * * *"
   class: "IG::TerminatePositionsJob"
   queue: "default"
   active_job: true
