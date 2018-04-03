@@ -75,6 +75,7 @@ class FxSignal::Generator::Pia < FxSignal::Generator::Base
         # custom
         source_secondary_id: @message_id,
         expired_at: Time.current + 1.day,
+        terminated_at: terminated_at,
         source: Source.find_or_create_by(name: "PIA First") { |s| s.active = true }
       )
 
@@ -99,6 +100,16 @@ class FxSignal::Generator::Pia < FxSignal::Generator::Base
 
     def service
       @service ||= Gmail::Service.new
+    end
+
+    # http://www.pia-first.co.uk/analysis
+    def terminated_at
+      t = Time.current + 1.day
+      if data.downcase.include?("asian/pacific currencies")
+        Time.new(t.year, t.month, t.day, 16, 0, 0)
+      else
+        Time.new(t.year, t.month, t.day, 21, 0, 0)
+      end
     end
 
 end

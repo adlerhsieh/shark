@@ -25,7 +25,8 @@ class FxSignal < ApplicationRecord
       entry: entry,
       take_profit: take_profit,
       stop_loss: stop_loss,
-      source_id: source_id
+      source_id: source_id,
+      terminated_at: terminated_at
     )
     position.tap { |pos| pos.signals << self }
   end
@@ -39,7 +40,8 @@ class FxSignal < ApplicationRecord
       take_profit: take_profit,
       stop_loss: stop_loss,
       source_id: source_id,
-      expired_at: expired_at
+      expired_at: expired_at,
+      terminated_at: terminated_at
     )
     order.tap { |o| o.signals << self }
   end
