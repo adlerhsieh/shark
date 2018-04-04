@@ -48,7 +48,7 @@ class Admin::FxSignalsController < Admin::BaseController
     when "gmail"
       s = Gmail::Service.new
       mail = Timeout::timeout(10) { s.message(@fx_signal.source_secondary_id) }
-      @html = mail.payload.parts.last.body.data
+      @html = mail.payload.try(:parts).try(:last).try(:body).try(:data) || mail.payload.try(:body).try(:data)
     end
 
     render "iframe_source", layout: false

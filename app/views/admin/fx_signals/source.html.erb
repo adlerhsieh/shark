@@ -1,7 +1,10 @@
 <%= link_to "Back", admin_fx_signal_path(@fx_signal), class: "btn btn-light" %>
 <%= link_to "Edit", edit_admin_fx_signal_path(@fx_signal), class: "btn btn-warning" %>
 
+<div class="divider"></div>
+
 <iframe src="<%= iframe_source_admin_fx_signal_path(@fx_signal) %>" class="iframe-source" frameborder="0">
   Unable to display source content
 </iframe>
 
+<div class="divider"></div>
