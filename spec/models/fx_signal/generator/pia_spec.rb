@@ -94,7 +94,6 @@ describe FxSignal::Generator::Pia do
       expect(signal.take_profit).to eq(1.5678)
       expect(signal.stop_loss).to eq(1.1212)
       expect(signal.confidence).to eq(0.65)
-      expect(signal.terminated_at).to eq(Time.new(2018, 10, 11, 21))
     end
 
     it "creates a AUDUSD fx_signal record" do
