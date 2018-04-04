@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180404114326) do
+ActiveRecord::Schema.define(version: 20180404124835) do
 
   create_table "audit_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "source_type"
@@ -143,6 +143,7 @@ ActiveRecord::Schema.define(version: 20180404114326) do
     t.boolean "active", default: false
     t.string "abbreviation"
     t.string "channel"
+    t.boolean "virtual", default: true
   end
 
   create_table "tokens", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -153,6 +154,23 @@ ActiveRecord::Schema.define(version: 20180404114326) do
     t.string "scope"
     t.index ["name"], name: "index_tokens_on_name"
     t.index ["scope"], name: "index_tokens_on_scope"
+  end
+
+  create_table "trading_strategies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.text "description"
+    t.boolean "virtual", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "trading_strategies_sources", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "trading_strategy_id"
+    t.integer "source_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["source_id"], name: "index_trading_strategies_sources_on_source_id"
+    t.index ["trading_strategy_id"], name: "index_trading_strategies_sources_on_trading_strategy_id"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

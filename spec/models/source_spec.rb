@@ -3,6 +3,7 @@ RSpec.describe Source, type: :model do
   it { is_expected.to have_many(:signals) }
   it { is_expected.to have_many(:positions) }
   it { is_expected.to have_many(:orders) }
+  it { is_expected.to have_many(:trading_strategies) }
 
   describe ".active" do
     let!(:source_a) { create(:source, :active) }

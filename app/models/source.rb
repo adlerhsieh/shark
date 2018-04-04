@@ -1,7 +1,10 @@
 class Source < ApplicationRecord
+
   has_many :signals, class_name: "FxSignal", foreign_key: :source_id
   has_many :positions
   has_many :orders
+  has_many :trading_strategies_sources
+  has_many :trading_strategies, through: :trading_strategies_sources
 
   scope :active, -> { where(active: true) }
 
