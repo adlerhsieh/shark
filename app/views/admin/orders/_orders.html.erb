@@ -7,7 +7,6 @@
       <th>Dir.</th>
       <th>Created at</th>
       <th>Stat</th>
-      <th>P#</th>
       <th>Entry</th>
       <th>TP</th>
       <th>SL</th>
@@ -17,10 +16,10 @@
       <% @orders.each do |order| %>
         <tr class="order-item <%= issue_flag_class(order) %>">
           <td>
-            <%= link_to order.id, admin_order_path(order) %>
+            <%= link_to order.id, admin_order_path(order), class: "black" %>
           </td>
           <td>
-            <%= order.source.try(:fullname) %>
+            <%= link_to order.source.try(:fullname), admin_source_path(order.source), class: "black" %>
           </td>
           <td>
             <span><%= order.pair.pair(false) %></span>
@@ -47,9 +46,6 @@
                 <%= order.ig_status %>
               <% end %>
             </span>
-          </td>
-          <td>
-            <span><%= order.position.try(:id) %></span>
           </td>
           <td>
             <span><%= order.entry %></span>

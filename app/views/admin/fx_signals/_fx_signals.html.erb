@@ -14,8 +14,8 @@
   <tbody>
     <% @fx_signals.each do |signal| %>
       <tr class="<%= issue_flag_class(signal) %>">
-        <td><%= link_to signal.id, admin_fx_signal_path(signal) %></td>
-        <td><%= signal.source.fullname %></td>
+        <td><%= link_to signal.id, admin_fx_signal_path(signal), class: "black" %></td>
+        <td><%= link_to signal.source.fullname, admin_source_path(signal.source), class: "black" %></td>
         <td><%= signal.pair.pair(false) %></td>
         <td><%= signal.target_resource.try(:[], 0..2).try(:<<, ".") %></td>
         <td><%= signal.action %></td>

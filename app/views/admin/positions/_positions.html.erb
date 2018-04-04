@@ -2,7 +2,6 @@
   <table class="table table-responsive-md">
     <thead>
       <th>#</th>
-      <th>O#</th>
       <th>Source</th>
       <th>Pair</th>
       <th>Dir.</th>
@@ -18,13 +17,10 @@
       <% @positions.each do |position| %>
         <tr class="position-item <%= position_class(position) %> <%= issue_flag_class(position) %>">
           <td>
-            <%= link_to position.id, admin_position_path(position) %>
+            <%= link_to position.id, admin_position_path(position), class: "black" %>
           </td>
           <td>
-            <span><%= position.order_id %></span>
-          </td>
-          <td>
-            <%= position.source.try(:fullname) %>
+            <%= link_to position.source.fullname, admin_source_path(position.source), class: "black" %>
           </td>
           <td>
             <span><%= position.pair.pair(false) %></span>
