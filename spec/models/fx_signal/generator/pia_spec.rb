@@ -2,6 +2,7 @@ describe FxSignal::Generator::Pia do
 
   describe "#process!" do
     let!(:eurusd) { create(:pair, :eurusd, :mini) }
+    let!(:audusd) { create(:pair, :audusd, :mini) }
     let!(:gbpusd) { create(:pair, :gbpusd, :mini) }
     let(:data) do
       "\r\nPIA First - FX Majors, Thursday's Sentiment Analysis\r\n"\
@@ -11,6 +12,7 @@ describe FxSignal::Generator::Pia do
       "following day for Asian/Pacific session. Email updates between "\
       "07:00-16:00 Hrs (UK Time)\r\n\r\n\r\n\t"\
       "EURUSD - We look to Buy at 1.2345 (stop at 1.1212)\r\n\t"\
+      "AUDUSD - We look to Buy a break of 0.7780 (stop at 0.7740)\r\n\t"\
       "GBPUSD - We look to Sell at 1.4129 (stop at 1.4169)"\
       "\r\n\r\n\r\n\t\t"\
       "EURUSD -\r\n\t\t\t\t\tPosted Mixed Daily results for the last 44 days."\
@@ -24,6 +26,8 @@ describe FxSignal::Generator::Pia do
       "cloud and our bespoke resistance (1.2345) offering incentive."\
       "\r\n\t\t\t\t\r\n\t\t\t\t\tOur profit targets will be 1.5678 and 1.6789"\
       "\t\t\r\n\t\t\t\t\tConfidence Level: 65%\r\n\t\t\r\n\r\n\t\t"\
+      "AUDUSD -\r\n\t\t\t\t\tPosted Mixed Daily results for the last 44 days."\
+      "Our profit targets will be 0.7900 Confidence Level: 65%\r\n\t\t\r\n\r\n\t\t"\
       "GBPUSD -\r\n\t\t\t\t\t2 negative daily performances in succession."\
       "\r\n\t\t\t\t\tThere is no sign that this bearish momentum is faltering "\
       "but the pair has stalled close to a previous swing low of 1.4065."\
@@ -74,7 +78,7 @@ describe FxSignal::Generator::Pia do
     end
 
     it "creates 2 fx_signal records" do
-      expect { subject }.to change { FxSignal.count }.by(2)
+      expect { subject }.to change { FxSignal.count }.by(3)
     end
 
     it "creates a EURUSD fx_signal record" do
@@ -93,6 +97,18 @@ describe FxSignal::Generator::Pia do
       expect(signal.terminated_at).to eq(Time.new(2018, 10, 11, 21))
     end
 
+    it "creates a AUDUSD fx_signal record" do
+      subject
+
+      signal = FxSignal.find_by(pair_id: audusd.id)
+
+      expect(signal).to be_truthy
+      expect(signal.source_secondary_id).to eq("foo")
+      expect(signal.entry).to eq(0.778)
+      expect(signal.take_profit).to eq(0.79)
+      expect(signal.stop_loss).to eq(0.774)
+    end
+
     it "creates a GBPUSD fx_signal record" do
       subject
 
@@ -108,7 +124,7 @@ describe FxSignal::Generator::Pia do
     end
 
     it "creates an order record" do
-      expect { subject }.to change { Order.count }.by(2)
+      expect { subject }.to change { Order.count }.by(3)
     end
 
     context "when email including duplicate signals is received" do
