@@ -31,7 +31,12 @@ Rails.application.routes.draw do
         get :chart
       end
     end
-    resources :fx_signals
+    resources :fx_signals do
+      member do
+        get :source
+        get :iframe_source
+      end
+    end
   end
 
 end

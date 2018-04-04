@@ -1,4 +1,5 @@
 <%= link_to "Back", admin_fx_signals_path, class: "btn btn-light" %>
+<%= link_to "Source Content", source_admin_fx_signal_path(@fx_signal), class: "btn btn-info" %>
 <%= link_to "Edit", edit_admin_fx_signal_path(@fx_signal), class: "btn btn-warning" %>
 
 <% if @orders.any? %>

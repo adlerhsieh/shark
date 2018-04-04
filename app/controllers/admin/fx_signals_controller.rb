@@ -1,5 +1,5 @@
 class Admin::FxSignalsController < Admin::BaseController
-  before_action :load_fx_signal, only: %i[show edit update destroy]
+  before_action :load_fx_signal, only: %i[show edit update destroy source iframe_source]
   before_action :load_pairs, only: %i[new edit]
 
   def index
@@ -38,6 +38,20 @@ class Admin::FxSignalsController < Admin::BaseController
   def destroy
     @fx_signal.destroy
     redirect_to admin_fx_signals_path
+  end
+
+  def source
+  end
+
+  def iframe_source
+    case @fx_signal.source.channel
+    when "gmail"
+      s = Gmail::Service.new
+      mail = Timeout::timeout(10) { s.message(@fx_signal.source_secondary_id) }
+      @html = mail.payload.parts.last.body.data
+    end
+
+    render "iframe_source", layout: false
   end
 
   private
