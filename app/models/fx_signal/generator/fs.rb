@@ -20,6 +20,9 @@ class FxSignal::Generator::Fs < FxSignal::Generator::Base
     attrs[:source] = Source.find_or_create_by(name: "forexsignals.com", username: username) do |source|
       source.active = true
     end
+    if attrs[:source].sources_trading_strategies.blank?
+      attrs[:source].sources_trading_strategies.create(trading_strategy_id: 2, default_strategy: true)
+    end
 
     attrs[:direction] = parts[2].to_s.downcase
     case attrs[:direction]

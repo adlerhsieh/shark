@@ -2,6 +2,7 @@ describe FxSignal::Generator::Fs do
 
   describe "#process!" do
     let!(:pair) { create(:pair, :eurusd, :mini) }
+    let!(:strategy) { create(:trading_strategy) }
 
     let(:timestamp) { Time.current }
     let(:data) do
@@ -47,6 +48,14 @@ describe FxSignal::Generator::Fs do
       expect(source.name).to eq("forexsignals.com")
       expect(source.username).to eq("nmkvijay")
       expect(source.active).to be_truthy
+    end
+
+    it "associates the source with a strategy" do
+      expect { subject }.to change { SourcesTradingStrategy.count }.by(1)
+
+      source = Source.last
+
+      expect(source.sources_trading_strategies.size).to eq 1
     end
 
     it "creates a fx_signal record" do
