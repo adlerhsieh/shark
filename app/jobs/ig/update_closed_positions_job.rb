@@ -10,8 +10,23 @@ module IG
       log.write(transactions.to_json)
 
       transactions["transactions"].each do |transaction|
-        pair_name = transaction["instrumentName"].match(/\S{3}\/\S{3}/).to_s
+        instrument = transaction["instrumentName"]
+        pair_name = instrument.match(/\S{3}\/\S{3}/).to_s
         mini = transaction["instrumentName"].match(/mini/i) ? true : false
+
+        # Exception: XAU
+        if pair_name.blank?
+          pair_name = "XAU/USD" if instrument.downcase.include?("spot gold")
+            
+          if instrument.downcase.include?("a$1")
+            pair_name = "XAU/AUD"
+            mini = true
+          end
+          if instrument.downcase.include?("a$10")
+            mini = false
+          end
+        end
+
         log.write("Processing: #{pair_name} #{"MINI" if mini}")
         pl_info = transaction["profitAndLoss"].match(/^(\S*)\$(.*)$/)
         currency = {
