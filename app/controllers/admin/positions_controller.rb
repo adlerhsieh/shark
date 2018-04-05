@@ -25,6 +25,10 @@ class Admin::PositionsController < Admin::BaseController
     if params[:source_id]
       @positions = Source.find(params[:source_id]).all_positions
     end
+    case params[:stat]
+    when "ongoing"
+      @positions = @positions.where(closed_at: nil)
+    end
 
   end
 
