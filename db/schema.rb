@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180404215818) do
+ActiveRecord::Schema.define(version: 20180405100048) do
 
   create_table "audit_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "source_type"
@@ -151,6 +151,8 @@ ActiveRecord::Schema.define(version: 20180404215818) do
     t.integer "source_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "default_strategy", default: false
+    t.boolean "virtual_trade", default: true
     t.index ["source_id"], name: "index_sources_trading_strategies_on_source_id"
     t.index ["trading_strategy_id"], name: "index_sources_trading_strategies_on_trading_strategy_id"
   end
@@ -168,7 +170,6 @@ ActiveRecord::Schema.define(version: 20180404215818) do
   create_table "trading_strategies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.text "description"
-    t.boolean "virtual", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
