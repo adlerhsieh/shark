@@ -8,6 +8,7 @@ class FxSignal::Generator::Fs < FxSignal::Generator::Base
   def process!
     attrs = FxSignal::Parser::Fs.new(@message_id, data).parse
 
+    return if attrs[:pair].blank?
     error = attrs.delete(:error)
 
     signal = FxSignal.create!(attrs)
