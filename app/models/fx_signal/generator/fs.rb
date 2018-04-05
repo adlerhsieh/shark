@@ -6,8 +6,6 @@ class FxSignal::Generator::Fs < FxSignal::Generator::Base
   end
 
   def process!
-    return if expired?
-
     attrs = {
       source_secondary_id: @message_id,
       expired_at: Time.current + 7.days,
