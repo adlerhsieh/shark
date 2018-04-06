@@ -15,6 +15,12 @@ terminate_positions:
   class: "IG::TerminatePositionsJob"
   queue: "default"
   active_job: true
+
+ig_open_markets:
+  cron: "*/3 * * * *"
+  class: "IG::OpenMarketsJob"
+  queue: "default"
+  active_job: true
     
 fs_generate_signals_from_emails:
   cron: "*/2 * * * *"
