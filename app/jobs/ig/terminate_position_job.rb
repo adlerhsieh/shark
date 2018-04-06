@@ -12,8 +12,8 @@ module IG
       response = service.close(@position)
 
       log.write("Response: #{response.to_s}")
-      if response.present? && response["dealReference"]
-        log.write("Reference: #{@position.ig_deal_reference}")
+      if response.present? && (ref = response["dealReference"])
+        log.write("Reference: #{ref}")
       elsif response["errorCode"].to_s.include?("No position found")
         log.write("Deal not found. Possibly it's already closed.")
         return
@@ -22,7 +22,7 @@ module IG
       end
 
       log.write("Confirming status")
-      confirmation = service.confirm(@position.ig_deal_reference)
+      confirmation = service.confirm(ref)
 
       log.write("Status: #{confirmation["dealStatus"]}")
       log.write(confirmation.to_s)
