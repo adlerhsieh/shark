@@ -3,6 +3,7 @@ module IG
   module Service
 
     class NotAvailable < StandardError; end
+    class NotFound < StandardError; end
 
     class Base
 
@@ -90,6 +91,10 @@ module IG
         if response.code == "401"
           authorize! 
           response = send_request(method, url, headers, body, extra_options)
+        end
+
+        if response.body.include?("Error 404")
+          raise NotFound, "URL: #{url}, body: #{body}"
         end
 
         JSON.parse(response.body)
