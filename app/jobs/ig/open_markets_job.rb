@@ -6,7 +6,9 @@ module IG
       Pair.where(ig_market_status: "closed").each do |pair|
         res = service.show(pair.ig_epic)
 
-        if res.dig("snapshot", "marketStatus").downcase != "closed"
+        status = res.dig("snapshot", "marketStatus").downcase
+
+        if status == "tradeable"
           pair.update(ig_market_status: "open")
         end
       end
