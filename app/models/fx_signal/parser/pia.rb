@@ -83,11 +83,19 @@ class FxSignal::Parser::Pia < FxSignal::Parser::Base
   # http://www.pia-first.co.uk/analysis
   def terminated_at
     t = Time.current + 1.day
-    if @data.downcase.include?("asian/pacific currencies")
-      Time.utc(t.year, t.month, t.day, 15, 0, 0)
-    else
-      Time.utc(t.year, t.month, t.day, 20, 0, 0)
+    ter = if @data.downcase.include?("asian/pacific currencies")
+            Time.utc(t.year, t.month, t.day, 15, 0, 0)
+          else
+            Time.utc(t.year, t.month, t.day, 20, 0, 0)
+          end
+
+    if ter.wday == 6
+      ter = ter + 2.days
+    elsif ter.wday == 7
+      ter = ter + 1.day
     end
+
+    ter
   end
 
 end

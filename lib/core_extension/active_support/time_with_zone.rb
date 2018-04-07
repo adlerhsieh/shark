@@ -1,0 +1,3 @@
+class ActiveSupport::TimeWithZone
+
+end
