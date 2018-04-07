@@ -8,7 +8,7 @@ class FxSignal::Generator::Premiere < FxSignal::Generator::Base
   def process!
     first_part = data.split("****").first
     elements = Nokogiri::HTML.parse(first_part).xpath("//div").select do |s| 
-      s.children.first.is_a?(Nokogiri::XML::Text) && s.text.match(/(BUY|SELL)/)
+      s.children.first.is_a?(Nokogiri::XML::Text) && s.children.first.text.match(/(BUY|SELL)/)
     end
 
     elements.each do |element|

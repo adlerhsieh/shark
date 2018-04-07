@@ -77,7 +77,7 @@ describe FxSignal::Generator::Pia do
       expect(source.active).to be_truthy
     end
 
-    it "creates 2 fx_signal records" do
+    it "creates 3 fx_signal records" do
       expect { subject }.to change { FxSignal.count }.by(3)
     end
 
@@ -122,7 +122,7 @@ describe FxSignal::Generator::Pia do
       expect(signal.stop_loss).to eq(1.4169)
     end
 
-    it "creates an order record" do
+    it "creates 3 order records" do
       expect { subject }.to change { Order.count }.by(3)
     end
 
