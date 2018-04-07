@@ -15,7 +15,7 @@ class FxSignal::Parser::Pia < FxSignal::Parser::Base
     #  ["GBPJPY", "Sell", "150.80", "151.30"],
     #  ["AUDJPY", "Sell", "81.80", "82.10"],
     #  ["EURSEK", "Buy", "10.1500", "10.1200"]]
-    parsed_data.scan(/([A-Z]{6,8})[ ]?-[ ]?we look to (buy|sell) [\s\S]{1,20}(\d{1,5}\.\d{1,5}) \(stop at (\d{1,5}\.\d{1,5})\)/i).map do |item|
+    parsed_data.scan(/([A-Z]{6,8})[ ]?-[ ]?we look to (buy|sell) [a-zA-Z\s]{1,20}(\d{1,5}\.\d{1,5}) \(stop at (\d{1,5}\.\d{1,5})\)/i).map do |item|
       pairs     = item[0]
       direction = item[1]
       entry     = item[2]

@@ -20,6 +20,12 @@ FactoryBot.define do
       ig_epic "GBP.USD"
     end
 
+    trait :gbpjpy do
+      base "GBP"
+      quote "JPY"
+      ig_epic "GBP.JPY"
+    end
+
     trait :nzdusd do
       base "NZD"
       quote "USD"

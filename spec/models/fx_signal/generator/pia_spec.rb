@@ -4,6 +4,7 @@ describe FxSignal::Generator::Pia do
     let!(:eurusd) { create(:pair, :eurusd, :mini) }
     let!(:audusd) { create(:pair, :audusd, :mini) }
     let!(:gbpusd) { create(:pair, :gbpusd, :mini) }
+    let!(:gbpjpy) { create(:pair, :gbpjpy, :mini) }
     let(:data) do
       "\r\nPIA First - FX Majors, Thursday's Sentiment Analysis\r\n"\
       "For the purposes of our performance report, our trade ideas are "\
@@ -14,6 +15,7 @@ describe FxSignal::Generator::Pia do
       "EURUSD - We look to Buy at 1.2345 (stop at 1.1212)\r\n\t"\
       "AUDUSD - We look to Buy a break of 0.7780 (stop at 0.7740)\r\n\t"\
       "GBPUSD - We look to Sell at 1.4129 (stop at 1.4169)"\
+      "GBPJPY - We look to Buy at 149.50 (stop at 149.00)"\
       "\r\n\r\n\r\n\t\t"\
       "EURUSD -\r\n\t\t\t\t\tPosted Mixed Daily results for the last 44 days."\
       "\r\n\t\t\t\t\tLevels close to the 78.6% pullback level of 1.2470 found "\
@@ -35,6 +37,10 @@ describe FxSignal::Generator::Pia do
       "Bespoke resistance is located at 1.4129.\r\n\t\t\t\t\tPreferred trade "\
       "is to sell into rallies.\r\n\t\t\t\t\r\n\t\t\t\t\tOur profit targets "\
       "will be 1.4060 and 1.3992"\
+      "GBPJPY -\r\n\t\t\t\t\tTrading within a Corrective Channel formation."\
+      "Further upside is expected although we prefer to set longs at our bespoke support levels "\
+      "at 149.50, resulting in improved risk/reward. Our profit targets will be "\
+      "150.80 and 151.80 Confidence Level: 70%"\
       "\r\n\t\t\r\n\r\nRisk Warning"
     end
 
@@ -77,8 +83,12 @@ describe FxSignal::Generator::Pia do
       expect(source.active).to be_truthy
     end
 
-    it "creates 3 fx_signal records" do
-      expect { subject }.to change { FxSignal.count }.by(3)
+    it "creates multiple fx_signal records" do
+      expect { subject }.to change { FxSignal.count }.by(4)
+    end
+
+    it "creates multiple order records" do
+      expect { subject }.to change { Order.count }.by(4)
     end
 
     it "creates a EURUSD fx_signal record" do
@@ -122,8 +132,17 @@ describe FxSignal::Generator::Pia do
       expect(signal.stop_loss).to eq(1.4169)
     end
 
-    it "creates 3 order records" do
-      expect { subject }.to change { Order.count }.by(3)
+    it "creates a GBPJPY fx_signal record" do
+      subject
+
+      signal = FxSignal.find_by(pair_id: gbpjpy.id)
+
+      expect(signal).to be_truthy
+      expect(signal.source_secondary_id).to eq("foo")
+      expect(signal.direction).to eq("buy")
+      expect(signal.entry).to eq(149.50)
+      expect(signal.take_profit).to eq(150.8)
+      expect(signal.stop_loss).to eq(149.0)
     end
 
     context "when email including duplicate signals is received" do
