@@ -84,9 +84,9 @@ class FxSignal::Parser::Pia < FxSignal::Parser::Base
   def terminated_at
     t = Time.current + 1.day
     if @data.downcase.include?("asian/pacific currencies")
-      Time.new(t.year, t.month, t.day, 16, 0, 0)
+      Time.utc(t.year, t.month, t.day, 15, 0, 0)
     else
-      Time.new(t.year, t.month, t.day, 21, 0, 0)
+      Time.utc(t.year, t.month, t.day, 20, 0, 0)
     end
   end
 
