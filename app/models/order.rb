@@ -11,6 +11,8 @@ class Order < ApplicationRecord
 
   belongs_to :pair
   belongs_to :source, optional: true
+  belongs_to :trading_strategy, optional: true
+  alias strategy trading_strategy
 
   validates :pair_id, presence: true
   validates :direction, presence: true

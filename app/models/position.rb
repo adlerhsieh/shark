@@ -10,6 +10,8 @@ class Position < ApplicationRecord
   belongs_to :pair
   belongs_to :source, optional: true
   belongs_to :order, optional: true
+  belongs_to :trading_strategy, optional: true
+  alias strategy trading_strategy
 
   def ig_open_position
     IG::OpenPositionJob.perform_later(id)

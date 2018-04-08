@@ -4,6 +4,7 @@ RSpec.describe Order, type: :model do
   it { is_expected.to have_many(:fx_signals) }
   it { is_expected.to have_one(:position) }
   it { is_expected.to belong_to(:pair) }
+  it { is_expected.to belong_to(:trading_strategy) }
 
   it { is_expected.to validate_presence_of(:pair_id) }
   it { is_expected.to validate_presence_of(:direction) }

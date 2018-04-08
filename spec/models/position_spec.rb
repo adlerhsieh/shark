@@ -5,6 +5,7 @@ RSpec.describe Position, type: :model do
   it { is_expected.to belong_to(:pair) }
   it { is_expected.to belong_to(:source) }
   it { is_expected.to belong_to(:order) }
+  it { is_expected.to belong_to(:trading_strategy) }
 
   describe "#profit?" do
     let(:position) { create(:position, :buy, :closed, :profit) }
