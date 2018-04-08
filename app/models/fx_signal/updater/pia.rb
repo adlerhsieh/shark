@@ -30,7 +30,7 @@ class FxSignal::Updater::Pia < FxSignal::Updater::Base
       attrs[:action] = "cancel"
     end
 
-    if (matched = data.match(/tak(e|ing) (some )?profit/i))
+    if data.match(/tak(e|ing) (some )?profit/i)
       attrs[:target_resource] = "Position"
       attrs[:action] = "close"
     end

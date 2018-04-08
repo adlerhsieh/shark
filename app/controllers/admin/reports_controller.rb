@@ -5,7 +5,7 @@ class Admin::ReportsController < Admin::BaseController
   end
 
   def signals
-    @dates = ((Date.today - 7.days)..Date.today).to_a
+    @dates = ((Time.zone.today - 7.days)..Time.zone.today).to_a
     @sources = Source.active.includes(:signals, :positions).all.map do |source|
       source.signals_by_date = source.signals.group_by {|s| s.created_at.to_s(:date) }
       source.positions_by_date = source.positions.group_by {|p| p.created_at.to_s(:date) }

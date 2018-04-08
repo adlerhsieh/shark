@@ -18,7 +18,4 @@ namespace :ig do
     end
   end
 
-  task signals: :environment do
-    service = IG::Service.new
-  end
 end

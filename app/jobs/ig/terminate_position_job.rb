@@ -16,7 +16,7 @@ module IG
       log.write("Sending request")
       response = service.close(@position)
 
-      log.write("Response: #{response.to_s}")
+      log.write("Response: #{response}")
       if response.present? && (ref = response["dealReference"])
         log.write("Reference: #{ref}")
       elsif response["errorCode"].to_s.include?("No position found")

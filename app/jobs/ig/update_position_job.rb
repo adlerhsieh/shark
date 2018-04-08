@@ -13,7 +13,7 @@ module IG
                    stop_loss: @position.stop_loss
                  )
 
-      log.write("Response: #{response.to_s}")
+      log.write("Response: #{response}")
       if response.present? && response["dealReference"]
         log.write("Reference: #{response["dealReference"]}")
       else

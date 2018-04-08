@@ -54,7 +54,7 @@ module IG
         Token.find_or_create_by(name: token_name, scope: "ig").update(token: value)
       end
 
-      def send_request(method, url, headers = {}, body = nil, extra_options = {})
+      def send_request(method, url, headers = {}, body = nil, _extra_options = {})
         klass = case method 
                 when :get    then Net::HTTP::Get
                 when :post   then Net::HTTP::Post

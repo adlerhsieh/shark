@@ -13,7 +13,7 @@ class FxSignal < ApplicationRecord
   belongs_to :pair
   belongs_to :source, class_name: "Source", optional: true
 
-  scope :recent, -> { where("created_at > ?", (Date.today - 1.day).to_s + " 00:00:00") }
+  scope :recent, -> { where("created_at > ?", (Time.zone.today - 1.day).to_s + " 00:00:00") }
 
   before_create :init_evaluated_at
 
