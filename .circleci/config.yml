@@ -52,7 +52,7 @@ jobs:
       # run tests!
       - run:
           name: run tests
-          command: bundle exec rspec
+          command: COVERAGE=1 bundle exec rspec
 
       # collect reports
       - store_test_results:
