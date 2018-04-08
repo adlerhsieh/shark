@@ -14,7 +14,7 @@ module Fs
     private
 
       def messages
-        Timeout::timeout(20) { service.fs }
+        Timeout.timeout(20) { service.fs }
       end
 
       def service

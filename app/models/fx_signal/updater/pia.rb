@@ -2,7 +2,7 @@ class FxSignal::Updater::Pia < FxSignal::Updater::Base
 
   def initialize(message_id)
     @message_id = message_id
-    @document = Timeout::timeout(40) { service.message(message_id) }
+    @document = Timeout.timeout(40) { service.message(message_id) }
   end
 
   def process!

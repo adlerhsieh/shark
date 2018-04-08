@@ -15,7 +15,7 @@ module PiaFirst
     private
 
       def messages
-        Timeout::timeout(20) { service.pia_first }
+        Timeout.timeout(20) { service.pia_first }
       end
 
       def service

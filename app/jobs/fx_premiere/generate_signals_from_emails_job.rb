@@ -14,7 +14,7 @@ module FxPremiere
     private
 
       def messages
-        Timeout::timeout(20) { service.fx_premiere }
+        Timeout.timeout(20) { service.fx_premiere }
       end
 
       def service
