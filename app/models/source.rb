@@ -6,6 +6,8 @@ class Source < ApplicationRecord
   has_many :sources_trading_strategies
   has_many :trading_strategies, through: :sources_trading_strategies
 
+  alias strategies sources_trading_strategies
+
   scope :active, -> { where(active: true) }
 
   # For reporting

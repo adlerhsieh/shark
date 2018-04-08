@@ -15,8 +15,9 @@ class FxSignal::Generator::Fs < FxSignal::Generator::Base
 
     return if error
 
-    order = signal.create_order
-    order.ig_place_order
+    signal.source.strategies.each do |strategy|
+      strategy.create_ig_order_from(signal)
+    end
   rescue => ex
     Raven.capture_exception(ex, extra: { 
       message_id: @message_id,

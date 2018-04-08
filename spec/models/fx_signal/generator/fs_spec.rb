@@ -17,6 +17,8 @@ describe FxSignal::Generator::Fs do
     subject { described_class.new("foo").process! }
 
     before do
+      create(:trading_strategy, :constant)
+
       allow_any_instance_of(Order).to receive(:ig_place_order)
       allow(Gmail::Service).to receive(:new).and_return(Gmail::ServiceStub.new)
       allow_any_instance_of(Gmail::ServiceStub).to receive(:message).and_return(
@@ -71,6 +73,12 @@ describe FxSignal::Generator::Fs do
       expect(signal.stop_loss).to eq(1.95)
     end
 
+    it "associates the fx_signal with the order" do
+      subject
+
+      expect(Order.last.signals).to include(FxSignal.last)
+    end
+
     it "creates an order record" do
       expect { subject }.to change { Order.count }.by(1)
 
@@ -81,6 +89,7 @@ describe FxSignal::Generator::Fs do
       expect(order.entry).to eq(1.246)
       expect(order.take_profit).to eq(1.256)
       expect(order.stop_loss).to eq(1.95)
+      expect(order.trading_strategy_id).to eq(2)
     end
 
     context "when it does not have tp/sl" do
