@@ -40,6 +40,8 @@ gem "telegram-rb", require: "telegram"
 
 group :development, :test do
   gem 'simplecov', require: false
+  gem 'codacy-coverage', :require => false
+
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'shoulda-matchers', '~> 3.1'
