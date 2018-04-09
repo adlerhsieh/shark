@@ -2,8 +2,6 @@ describe FxSignal::Generator::Fs do
 
   describe "#process!" do
     let!(:pair) { create(:pair, :eurusd, :mini) }
-    let!(:strategy) { create(:trading_strategy) }
-
     let(:timestamp) { Time.current }
     let(:data) do
       "ForexSignals <https://www.forexsignals.com>"\

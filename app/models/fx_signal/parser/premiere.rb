@@ -37,6 +37,12 @@ class FxSignal::Parser::Premiere < FxSignal::Parser::Base
         expired_at = Time.current + 1.day
       end
 
+      source = Source.find_or_create_by(name: "fxpremiere.com") { |s| s.active = true }
+      if source.sources_trading_strategies.blank?
+        source.sources_trading_strategies.create(trading_strategy_id: 2, default_strategy: true)
+      end
+
+
       {
         # from parsing
         direction: direction.downcase,
@@ -50,7 +56,7 @@ class FxSignal::Parser::Premiere < FxSignal::Parser::Base
         error: error,
         source_secondary_id: @message_id,
         expired_at: expired_at,
-        source: Source.find_or_create_by(name: "fxpremiere.com") { |s| s.active = true }
+        source: source
       }
     end.compact
   end

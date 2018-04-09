@@ -6,18 +6,18 @@ class FxSignal::Generator::Premiere < FxSignal::Generator::Base
   end
 
   def process!
-    signals = FxSignal::Parser::Premiere.new(@message_id, data).parse
+    signals_data = FxSignal::Parser::Premiere.new(@message_id, data).parse
 
-    signals.each do |signal_data|
-      error = signal_data.delete(:error)
-      signal = FxSignal.create!(signal_data)
+    signals_data.each do |signal_attrs|
+      error = signal_attrs.delete(:error)
+      signal = FxSignal.create!(signal_attrs)
 
       next if error
 
-      order = signal.create_order
-      order.ig_place_order
+      signal.source.strategies.each do |strategy|
+        strategy.create_ig_order_from(signal)
+      end
     end
-
   rescue => ex
     Raven.capture_exception(ex, extra: { 
       message_id: @message_id,

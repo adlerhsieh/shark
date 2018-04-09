@@ -52,6 +52,10 @@ class FxSignal::Parser::Pia < FxSignal::Parser::Base
       end
 
       source = Source.find_or_create_by(name: "PIA First") { |s| s.active = true }
+      if source.sources_trading_strategies.blank?
+        source.sources_trading_strategies.create(trading_strategy_id: 2, default_strategy: true)
+      end
+
       error = nil
 
       if entry == 0.0 || tp == 0.0 || sl == 0.0

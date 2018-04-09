@@ -32,6 +32,8 @@ describe FxSignal::Generator::Premiere do
     subject { described_class.new("foo").process! }
 
     before do
+      create(:trading_strategy, :constant)
+
       allow_any_instance_of(Order).to receive(:ig_place_order)
       allow(Gmail::Service).to receive(:new).and_return(Gmail::ServiceStub.new)
       allow_any_instance_of(Gmail::ServiceStub).to receive(:message).and_return(
