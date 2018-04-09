@@ -41,10 +41,6 @@ describe FxSignal::Updater::Pia do
       expect { subject }.to change { FxSignal.count }.by(1)
     end
 
-    # it "creates an audit_log record" do
-    #   expect { subject }.to change { AuditLog.count }.by(1)
-    # end
-    
     it "creates a AUDUSD fx_signal record" do
       subject
 
