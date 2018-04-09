@@ -1,9 +1,9 @@
 <%= back_to_source_link %>
 <%= link_to "New", new_admin_position_path, class: "btn btn-primary btn-wide" %>
 <% if params[:stat] %>
-  <%= link_to "All Positions", admin_positions_path, class: "btn btn-light" %>
+  <%= link_to "All Positions", admin_positions_path, class: "btn btn-light btn-wide" %>
 <% else %>
-  <%= link_to "Ongoing Positions", admin_positions_path(stat: "ongoing"), class: "btn btn-light" %>
+  <%= link_to "Ongoing Positions", admin_positions_path(stat: "ongoing"), class: "btn btn-light btn-wide" %>
 <% end %>
 
 <%= render "positions" %>
