@@ -1,6 +1,48 @@
 <%= link_to "Back", admin_positions_path, class: "btn btn-light" %>
 <%= link_to "Edit", edit_admin_position_path(@position), class: "btn btn-warning" %>
 
+<div class="divider" />
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title"><span class="<%= @position.direction == "buy" ? "green" : "red" %>"><%= @position.direction.upcase %></span> <%= @position.pair.pair(false) %></h5>
+    <h6 class="card-subtitle mb-2 text-muted">#<%= @position.id %></h6>
+    <div class="row">
+      <div class="col">
+        Source
+      </div>
+      <div class="col">
+        <%= @position.source.fullname %>
+      </div>
+    </div>
+    <% 
+        %i[
+          entry
+          size
+          take_profit
+          stop_loss
+          opened_at
+          closed
+          closed_at
+          created_at
+          pl
+          terminated_at
+        ].each do |attr|
+    %>
+      <div class="row" style="border-bottom: 1px solid #F8F8F8">
+        <div class="col">
+          <%= attr.to_s.humanize.split.map(&:capitalize).join(" ") %>
+        </div>
+        <div class="col">
+          <%= @position.send(attr) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="divider" />
+
 <% if @fx_signals.any? %>
   <div class="divider" />
   <h5>Forex Signals</h5>
