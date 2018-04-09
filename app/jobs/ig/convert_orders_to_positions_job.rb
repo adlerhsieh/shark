@@ -23,19 +23,20 @@ module IG
         # log.write("Matched order ##{order.id}")
 
         Position.create!(
-          pair_id:       order.pair_id,
-          ig_deal_id:    deal_id,
-          direction:     order.direction,
-          entry:         order.entry,
-          size:          order.size,
-          take_profit:   order.take_profit,
-          stop_loss:     order.stop_loss,
-          order_id:      order.id,
-          source_id:     order.source_id,
+          pair_id: order.pair_id,
+          ig_deal_id: deal_id,
+          direction: order.direction,
+          entry: order.entry,
+          size: order.size,
+          take_profit: order.take_profit,
+          stop_loss: order.stop_loss,
+          order_id: order.id,
+          source_id: order.source_id,
           terminated_at: order.terminated_at,
+          trading_strategy_id: order.trading_strategy_id,
           # There will be a gap of difference from the actual time of 
           # opening thie position, at most 8 minutes
-          opened_at:     Time.now
+          opened_at: Time.now
         )
       end
       # log.write("Done")
