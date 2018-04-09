@@ -16,4 +16,12 @@ class Pair < ApplicationRecord
     end
   end
 
+  def redis_current_price_key
+    "/pairs/#{id}/prices/current"
+  end
+
+  def redis_price_update_key
+    "/pairs/#{id}/prices/updating"
+  end
+
 end
