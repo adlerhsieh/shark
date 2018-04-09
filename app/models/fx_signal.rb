@@ -67,6 +67,9 @@ class FxSignal < ApplicationRecord
         matched_order.update(deleted: true)
         matched_order.fx_signals << self
         matched_order.ig_remove_order
+      when "create"
+        order = create_order
+        order.ig_place_order
       end
     when "Position"
       matched_position = Position
