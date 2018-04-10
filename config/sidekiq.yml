@@ -7,5 +7,8 @@ production:
   logfile: log/sidekiq_production.log
 :queues:
   - default
+  - update_pair_price
   - shark.production.default
   - shark.development.default
+  - shark.production.update_pair_price
+  - shark.development.update_pair_price
