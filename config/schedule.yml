@@ -41,7 +41,7 @@ pia_first_generate_signals_from_emails:
   active_job: true
 
 ig_update_pairs_price_job:
-  cron: "*/10 * * * *"
+  cron: "*/4 * * * *"
   class: "IG::UpdatePairsPriceJob"
   queue: "update_pair_price"
   active_job: true

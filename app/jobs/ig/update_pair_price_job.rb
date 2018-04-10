@@ -26,7 +26,7 @@ module IG
           ) 
         end
 
-        $redis.setex(@pair.redis_price_update_key, 120, true)
+        $redis.setex(@pair.redis_price_update_key, 60, true)
         sleep(20)
       end
     end
