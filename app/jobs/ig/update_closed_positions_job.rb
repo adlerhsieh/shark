@@ -6,8 +6,7 @@ module IG
       @start_time = start_time
       @end_time = end_time
 
-      log.write("Getting all transactions from IG")
-      log.write(transactions.to_json)
+      # log.write("Getting all transactions from IG")
 
       transactions["transactions"].each do |transaction|
         instrument = transaction["instrumentName"]
@@ -27,7 +26,7 @@ module IG
           end
         end
 
-        log.write("Processing: #{pair_name} #{"MINI" if mini}")
+        # log.write("Processing: #{pair_name} #{"MINI" if mini}")
         pl_info = transaction["profitAndLoss"].match(/^(\S*)\$(.*)$/)
         currency = {
           "A" => "AUD"
@@ -41,9 +40,9 @@ module IG
         )
 
         if pair.present?
-          log.write("Pair found: ##{pair.id}")
+          # log.write("Pair found: ##{pair.id}")
         else
-          log.write("Pair not found")
+          # log.write("Pair not found")
           next
         end
 
@@ -55,7 +54,7 @@ module IG
 
         if position.present?
           next if position.closed && position.closed_at
-          log.write("Updating Position ##{position.id}")
+          # log.write("Updating Position ##{position.id}")
           position.update(
             closed: transaction["closeLevel"],
             closed_at: Time.parse("#{transaction["dateUtc"]} UTC"),
@@ -63,13 +62,14 @@ module IG
             currency: currency
           )
         else
-          log.write("Position not found")
+          # log.write("Position not found")
         end
       end
 
     rescue ::IG::Service::NotAvailable => ex
       log.write("Error: #{ex}")
     rescue => ex
+      log.write(transactions.to_json)
       log.error(ex)
     end
     
