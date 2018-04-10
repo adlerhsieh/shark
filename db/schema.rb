@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180410100355) do
+ActiveRecord::Schema.define(version: 20180410103612) do
 
   create_table "audit_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "source_type"
@@ -105,8 +105,6 @@ ActiveRecord::Schema.define(version: 20180410100355) do
     t.integer "pair_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.decimal "high", precision: 10, scale: 5
-    t.decimal "low", precision: 10, scale: 5
     t.index ["pair_id"], name: "index_pair_current_prices_on_pair_id"
   end
 

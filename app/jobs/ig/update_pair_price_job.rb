@@ -22,8 +22,6 @@ module IG
           Pair::CurrentPrice.create!(
             buy: info["offer"],
             sell: info["bid"],
-            high: info["high"],
-            low: info["low"],
             pair_id: pair_id
           ) 
         end
