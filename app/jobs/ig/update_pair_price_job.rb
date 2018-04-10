@@ -18,10 +18,10 @@ module IG
                                        .limit(1)
                                        .first
 
-        unless last_price.present? && last_price.buy == info["bid"].to_f && last_price.sell == info["offer"].to_f
+        unless last_price.present? && last_price.sell == info["bid"].to_f && last_price.buy == info["offer"].to_f
           Pair::CurrentPrice.create!(
-            buy: info["bid"],
-            sell: info["offer"],
+            buy: info["offer"],
+            sell: info["bid"],
             high: info["high"],
             low: info["low"],
             pair_id: pair_id
